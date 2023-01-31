@@ -1,0 +1,43 @@
+---
+sidebar: sidebar 
+permalink: beegfs-deploy-high-capacity-building-block.html 
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600, EF300, HDD, Expansion 
+summary: Variaciones de implementación para un elemento básico de gran capacidad. 
+---
+= Elemento básico de gran capacidad
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+La guía de implementación de la solución BeeGFS estándar describe procedimientos y recomendaciones para requisitos de alto rendimiento en las cargas de trabajo. Los clientes que busquen cumplir requisitos de alta capacidad deben observar las variaciones en la implementación y las recomendaciones que se describen aquí.
+
+image:high-capacity-rack-diagram.png[""]
+
+
+
+== Controladoras
+
+Para los elementos básicos de gran capacidad, las controladoras EF600 deben sustituirse por controladoras EF300, cada uno con una Cascade HIC instalada para la ampliación SAS. Cada nodo de bloque tendrá un número mínimo de SSD NVMe en el compartimento de la cabina para el almacenamiento de metadatos BeeGFS y se adjuntará a bandejas de expansión completas con HDD NL-SAS para volúmenes de almacenamiento BeeGFS.
+
+La configuración del nodo de archivo al nodo de bloque sigue siendo la misma.
+
+
+
+== Ubicación de la unidad
+
+Se requiere un mínimo de 4 SSD NVMe en cada nodo de bloque para el almacenamiento de metadatos BeeGFS. Estas unidades deben colocarse en las ranuras más externas de la carcasa.
+
+image:high-capacity-drive-slots-diagram.png[""]
+
+
+
+== Bandejas de expansión
+
+El elemento básico de gran capacidad se puede ajustar con 1-7, 60 bandejas de expansión por cabina de almacenamiento.
+
+Para obtener instrucciones para conectar cada bandeja de expansión, link:https://docs.netapp.com/us-en/e-series/install-hw-cabling/driveshelf-cable-task.html#cabling-ef300^["Consulte cableado EF300 para las bandejas de unidades"].

@@ -1,0 +1,39 @@
+---
+sidebar: sidebar 
+permalink: beegfs-deploy-recommended-volume-percentages.html 
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
+summary: Si sigue los cuatro volúmenes estándar por configuración de pool de almacenamiento para bloques básicos de segunda generación, consulte estos porcentajes recomendados. 
+---
+= Se recomendaron porcentajes de sobreaprovisionamiento del pool de almacenamiento
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Si sigue los cuatro volúmenes estándar por configuración de pool de almacenamiento para bloques básicos de segunda generación, consulte la siguiente tabla.
+
+Esta tabla recomienda porcentajes para usar como el tamaño del volumen en el `eseries_storage_pool_configuration` Para cada metadatos o destino de almacenamiento de BeeGFS:
+
+|===
+| Tamaño de la unidad | Tamaño 
+
+
+| 1,92 TB | 18 
+
+
+| 3,84 TB | 21.5 
+
+
+| 7,68 TB | 22.5 
+
+
+| 15,3 TB | 24 
+|===
+
+NOTE: Las directrices anteriores no se aplican al pool de almacenamiento que contiene el servicio de gestión, lo que debería reducir sus tamaños en un 25% para asignar el 1% del pool de almacenamiento a los datos de gestión.
+
+Para entender cómo se determinaron estos valores, consulte https://www.netapp.com/media/17009-tr4800.pdf["TR-4800: Apéndice A: Aspectos sobre la resistencia de SSD y el sobreaprovisionamiento"^].

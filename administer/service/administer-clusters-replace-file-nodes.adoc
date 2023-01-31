@@ -1,0 +1,78 @@
+---
+sidebar: sidebar 
+permalink: administer-clusters-replace-file-nodes.html 
+keywords: BeeGFS on NetApp, HA, Cluster, Administration, replace 
+summary: Reemplazar un nodo de archivo si el servidor original está defectuoso. 
+---
+= Sustituya los nodos de archivo
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Reemplazar un nodo de archivo si el servidor original está defectuoso.
+
+
+
+== Descripción general
+
+Esta es una descripción general de los pasos necesarios para reemplazar un nodo de archivo del clúster. Estos pasos suponen un error en el nodo de archivo debido a un problema de hardware y se reemplazaron por un nuevo nodo de archivo idéntico.
+
+
+
+== Pasos:
+
+. Sustituya físicamente el nodo de archivo y restaure todo el cableado al nodo de bloque y a la red de almacenamiento.
+. Vuelva a instalar el sistema operativo en el nodo de archivos, incluida la adición de suscripciones a Red Hat.
+. Configure la gestión y las redes de BMC en el nodo de archivo.
+. Actualice el inventario de Ansible si el nombre de host, la IP, las asignaciones de interfaz de PCIe a lógica o cualquier otro cambio relacionado con el nodo de archivo nuevo. Generalmente, esto no es necesario si el nodo se reemplazó con un hardware de servidor idéntico y si utiliza la configuración de red original.
++
+.. Por ejemplo, si el nombre de host ha cambiado, cree (o cambie de nombre) el archivo de inventario del nodo (`host_vars/<NEW_NODE>.yml``) Luego en el archivo de inventario de Ansible (`inventory.yml`), reemplace el nombre del nodo antiguo por el nuevo nombre del nodo:
++
+[source, console]
+----
+all:
+    ...
+    children:
+    ha_cluster:
+        children:
+        mgmt:
+            hosts:
+            node_h1_new:   # Replaced "node_h1" with "node_h1_new"
+            node_h2:
+----
+
+
+. De uno de los otros nodos del clúster, quite el nodo antiguo: `pcs cluster node remove <HOSTNAME>`.
++
+
+IMPORTANT: NO CONTINÚE ANTES DE EJECUTAR ESTE PASO.
+
+. En el nodo de control Ansible:
++
+.. Quite la clave SSH antigua con:
++
+[source, console]
+----
+`ssh-keygen -R <HOSTNAME_OR_IP>`
+----
+.. Configure SSH sin contraseña al nodo de sustitución con:
++
+[source, console]
+----
+ssh-copy-id <USER>@<HOSTNAME_OR_IP>
+----
+
+
+. Vuelva a ejecutar el libro de estrategia de Ansible para configurar el nodo y añadirlo al clúster:
++
+[source, console]
+----
+ansible-playbook -i <inventory>.yml <playbook>.yml
+----
+. En este momento, corre `pcs status` y compruebe que el nodo sustituido ahora aparece y ejecuta servicios.
+

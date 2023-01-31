@@ -1,0 +1,39 @@
+---
+sidebar: sidebar 
+permalink: beegfs-deploy-scale-building-blocks.html 
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
+summary: Configure Pacemaker y Corosync para escalar más allá de cinco bloques de construcción. 
+---
+= Escalabilidad más allá de cinco elementos básicos
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Puede configurar Pacemaker y Corosync para escalar más allá de cinco bloques de construcción (10 nodos de archivo). Sin embargo, hay inconvenientes para los grandes grupos, y finalmente Pacemaker y Corosync imponen un máximo de 32 nodos.
+
+NetApp solo ha probado clústeres de alta disponibilidad de BeeGFS para un máximo de 10 nodos; no se recomienda ni admite el escalado de clústeres individuales por encima de este límite. No obstante, los sistemas de archivos BeeGFS aún deben escalar más allá de los 10 nodos, lo cual en BeeGFS en la solución de NetApp.
+
+Al poner en marcha varios clústeres de alta disponibilidad que contienen un subconjunto de los bloques de creación en cada sistema de archivos, puede escalar el sistema de archivos BeeGFS general de forma independiente de los límites recomendados o físicos en los mecanismos de agrupación en clústeres de alta disponibilidad subyacentes. En este caso, haga lo siguiente:
+
+* Cree un nuevo inventario de Ansible que represente los clústeres de alta disponibilidad adicionales y, a continuación, omita la configuración de otro servicio de gestión. En su lugar, apunte la `beegfs_ha_mgmtd_floating_ip` variable en cada clúster adicional `ha_cluster.yml` Al IP del primer servicio de gestión de BeeGFS.
+* Cuando agregue clústeres de alta disponibilidad adicionales al mismo sistema de archivos, asegúrese de lo siguiente:
++
+** Los ID del nodo BeeGFS son únicos.
+** Los nombres de archivo correspondientes a cada servicio en `group_vars` es único en todos los clústeres.
+** Las direcciones IP del cliente y del servidor BeeGFS son únicas en todos los clústeres.
+** El primer clúster de alta disponibilidad que contiene el servicio de gestión de BeeGFS se está ejecutando antes de intentar implementar o actualizar clústeres adicionales.
+
+
+* Mantener inventarios para cada clúster ha por separado en su propio árbol de directorios.
++
+Si se intenta mezclar los archivos de inventario para varios clústeres en un árbol de directorios, se podrían generar problemas en el modo en que el rol de ha de BeeGFS agrega la configuración aplicada a un clúster concreto.
+
+
+
+
+NOTE: No es necesario que cada clúster de alta disponibilidad escale hasta cinco elementos básicos antes de crear uno nuevo. En muchos casos, utilizar menos bloques básicos por clúster resulta más fácil de gestionar. Uno de los métodos consiste en configurar los elementos básicos en cada rack como un clúster de alta disponibilidad.

@@ -1,0 +1,38 @@
+---
+sidebar: sidebar 
+permalink: beegfs-gens.html 
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
+summary: BeeGFS para la solución de NetApp se encuentra en su segundo diseño generacional. 
+---
+= Generaciones de diseño
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+BeeGFS para la solución de NetApp se encuentra en su segundo diseño generacional.
+
+La primera y la segunda generación incluyen una arquitectura base que incorpora un sistema de archivos BeeGFS y un sistema de almacenamiento NVMe EF600. Sin embargo, la segunda generación se basa en la primera en incluir estas ventajas adicionales:
+
+* Duplique el rendimiento y la capacidad al añadir solo 2U de espacio en rack
+* Alta disponibilidad (ha) basada en un diseño de hardware de dos niveles y disco compartido
+* Cualificación externa para las arquitecturas DGX A100 SuperPOD y NVIDIA BasePOD
+
+
+
+
+== Segundo diseño generacional
+
+La segunda generación de BeeGFS en NetApp está optimizada para satisfacer los requisitos de rendimiento de cargas de trabajo exigentes, como la computación de alto rendimiento (HPC) y el aprendizaje automático (ML) al estilo HPC, el aprendizaje profundo (DL) y técnicas similares de inteligencia artificial (IA). Al incorporar una arquitectura de alta disponibilidad (ha) de disco compartido, BeeGFS en la solución de NetApp también cumple los requisitos de durabilidad y disponibilidad de los datos de las empresas y otras organizaciones que no pueden permitirse el lujo de sufrir tiempos de inactividad o pérdidas de datos en busca de un almacenamiento que pueda escalarse para adaptarse a sus cargas de trabajo y casos de uso. Esta solución no solo ha sido verificada por NetApp, sino que también ha superado la cualificación externa como opción de almacenamiento para NVIDIA DGX SuperPOD y DGX BasePOD.
+
+
+
+== Primer diseño generacional
+
+La primera generación de BeeGFS en NetApp se diseñó para cargas de trabajo de aprendizaje automático (ML) e inteligencia artificial (IA) mediante los sistemas de almacenamiento EF600 NVMe de NetApp, el sistema de archivos en paralelo BeeGFS, los sistemas NVIDIA DGX™ A100 y los switches IB de 200 Gbps NVIDIA® Mellanox® Quantum™ QM8700™. Este diseño también incluye InfiniBand (IB) de 200 Gbps para la estructura de interconexión de clústeres de almacenamiento y computación, con el fin de proporcionar una arquitectura completamente basada en IB para las cargas de trabajo de alto rendimiento.
+
+Para obtener más información sobre la primera generación, consulte link:https://www.netapp.com/pdf.html?item=/media/25445-nva-1156-design.pdf["IA EF-Series de NetApp con sistemas NVIDIA DGX A100 y BeeGFS"^].

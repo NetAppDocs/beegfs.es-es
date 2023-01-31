@@ -1,0 +1,75 @@
+---
+sidebar: sidebar 
+permalink: beegfs-deploy-setup-nodes.html 
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
+summary: 'Configure las redes en el controlador de administración de la placa base (BMC) de cada servidor y configure el puerto de administración en cada controladora.' 
+---
+= Configure los nodos de archivo y los nodos de bloque
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Aunque la mayoría de las tareas de configuración de software se automatizan a través de las colecciones Ansible proporcionadas por NetApp, debe configurar la red en la controladora de gestión de placa base (BMC) de cada servidor y configurar el puerto de gestión de cada controladora.
+
+
+
+== Configure los nodos de archivo
+
+. Configure la red en el controlador de administración de la placa base (BMC) de cada servidor.
++
+Para aprender a configurar la red para los nodos de archivo Lenovo SR665 validados, consulte https://thinksystem.lenovofiles.com/help/index.jsp?topic=%2F7D2W%2Fset_the_network_connection.html["Documentación de Lenovo ThinkSystem"^].
+
++
+
+NOTE: Un controlador de administración en placa base (BMC), conocido a veces como procesador de servicios, es el nombre genérico para la capacidad de administración fuera de banda integrada en varias plataformas de servidor que pueden proporcionar acceso remoto aunque el sistema operativo no esté instalado o sea accesible. Los proveedores suelen comercializar esta funcionalidad con su propia Marca. Por ejemplo, en el Lenovo SR665, el BMC se denomina _Lenovo XClarity Controller (XCC)_.
+
+. Configure los ajustes del sistema para obtener el máximo rendimiento.
++
+Puede configurar los ajustes del sistema utilizando la configuración UEFI (anteriormente conocida como BIOS) o utilizando las API Redfish proporcionadas por muchos BMCs. La configuración del sistema varía según el modelo de servidor utilizado como nodo de archivo.
+
++
+Para aprender a configurar los ajustes del sistema para los nodos de archivo Lenovo SR665 validados, consulte link:beegfs-deploy-file-node-tuning.html["Ajuste la configuración del sistema para obtener rendimiento"].
+
+. Instale Red Hat 8.4 y configure el nombre de host y el puerto de red que se usan para gestionar el sistema operativo, incluida la conectividad SSH desde el nodo de control Ansible.
++
+No configure las IP en ninguno de los puertos InfiniBand en este momento.
+
++
+
+NOTE: Si bien no es estrictamente necesario, las secciones posteriores suponen que los nombres de host están numerados secuencialmente (como h1-HN) y hacen referencia a tareas que deben completarse en hosts pares versus impar.
+
+. Utilice RedHat Subscription Manager para registrar y suscribirse al sistema para permitir la instalación de los paquetes necesarios desde los repositorios oficiales de Red Hat y para limitar las actualizaciones a la versión compatible de Red Hat: `subscription-manager release --set=8.4`. Para ver instrucciones, consulte https://access.redhat.com/solutions/253273["Cómo registrar y suscribirse a un sistema RHEL"^] y..  https://access.redhat.com/solutions/2761031["Cómo limitar las actualizaciones"^].
+. Active el repositorio de Red Hat que contiene los paquetes necesarios para la alta disponibilidad.
++
+....
+subscription-manager repo-override --repo=rhel-8-for-x86_64-highavailability-rpms --add=enabled:1
+....
+. Actualice todo el firmware de HCA ConnectX-6 a la versión recomendada en link:beegfs-technology-requirements.html["Requisitos tecnológicos"].
++
+Esta actualización se puede realizar descargando y ejecutando una versión de la herramienta mlxup que incluye el firmware recomendado. Puede descargar esta herramienta desde https://network.nvidia.com/support/firmware/mlxup-mft/["Mlxup: Utilidad de actualización y consulta"^] (link:https://docs.nvidia.com/networking/display/MLXUPFWUTILITY/mlxup+-+Firmware+Utility+User+Guide["guía del usuario"^]).
+
+
+
+
+
+== Configure los nodos de bloque
+
+Configure los nodos de bloque EF600 configurando el puerto de gestión en cada controladora.
+
+. Configure el puerto de gestión en cada controladora EF600.
++
+Para obtener instrucciones sobre cómo configurar los puertos, vaya a la https://docs.netapp.com/us-en/e-series/maintenance-ef600/hpp-overview-supertask-concept.html["Centro de documentación de E-Series"^].
+
+. De manera opcional, establezca el nombre de la cabina de almacenamiento para cada sistema.
++
+Establecer un nombre puede facilitar la referencia a cada sistema en las secciones siguientes. Para obtener instrucciones sobre cómo configurar el nombre de la matriz, vaya a la https://docs.netapp.com/us-en/e-series/maintenance-ef600/hpp-overview-supertask-concept.html["Centro de documentación de E-Series"^].
+
+
+
+
+NOTE: Si bien no es estrictamente necesario, los temas posteriores presumen que los nombres de las cabinas de almacenamiento están numerados secuencialmente (como c1 - CN) y consulte los pasos que deben completarse en sistemas impar frente a sistemas numerados.

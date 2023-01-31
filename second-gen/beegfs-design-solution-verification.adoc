@@ -1,0 +1,144 @@
+---
+sidebar: sidebar 
+permalink: beegfs-design-solution-verification.html 
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
+summary: El diseño de segunda generación de BeeGFS en la solución de NetApp se verificó mediante tres perfiles de configuración de bloques básicos. 
+---
+= Verificación del diseño
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+El diseño de segunda generación de BeeGFS en la solución de NetApp se verificó mediante tres perfiles de configuración de bloques básicos.
+
+Los perfiles de configuración incluyen lo siguiente:
+
+* Un único elemento básico, incluidos los servicios de gestión, metadatos y almacenamiento de BeeGFS.
+* Metadatos BeeGFS más un elemento básico de almacenamiento.
+* Un elemento básico de sólo almacenamiento BeeGFS.
+
+
+Los elementos básicos se adjuntaron a dos switches Mellanox Quantum InfiniBand (MQM8700). También se adjuntaron diez clientes BeeGFS a los switches InfiniBand y se utilizaron para ejecutar utilidades de análisis de rendimiento sintéticos.
+
+En la siguiente figura, se muestra la configuración de BeeGFS que se utiliza para validar BeeGFS en la solución de NetApp.
+
+image:beegfs-design-image12.png[""]
+
+
+
+== Segmentación de archivos BeeGFS
+
+Una ventaja de los sistemas de archivos paralelos es la capacidad de resegmentar archivos individuales en múltiples destinos de almacenamiento, lo que podría representar volúmenes en los mismos sistemas de almacenamiento subyacentes o en diferentes.
+
+En BeeGFS, puede configurar la segmentación por directorio y por archivo para controlar el número de destinos utilizados para cada archivo y para controlar el tamaño de bloque (o el tamaño de bloque) utilizado para cada franja de archivo. Esta configuración permite al sistema de archivos admitir distintos tipos de cargas de trabajo y perfiles de I/o sin necesidad de reconfigurar o reiniciar los servicios. Puede aplicar la configuración de franja mediante `beegfs-ctl` Herramienta de línea de comandos o con aplicaciones que usan la API de segmentación. Para obtener más información, consulte la documentación de BeeGFS para https://doc.beegfs.io/latest/advanced_topics/striping.html["Segmentación"^] y.. https://doc.beegfs.io/latest/reference/striping_api.html["API de segmentación"^].
+
+Para lograr el mejor rendimiento, los patrones de franjas se ajustaron durante la prueba, y se señalan los parámetros utilizados para cada prueba.
+
+
+
+== Pruebas de ancho de banda IOR: Múltiples clientes
+
+Las pruebas de ancho de banda IOR utilizaban OpenMPI para ejecutar trabajos paralelos de la herramienta de generador de E/S sintético IOR (disponible en https://github.com/hpc/ior["GitHub de HPC"^]) A través de los 10 nodos de cliente a uno o más bloques de creación de BeeGFS. A menos que se indique lo contrario:
+
+* Todas las pruebas utilizaron E/S directa con un tamaño de transferencia 1MiB.
+* La segmentación de archivos BeeGFS se ha establecido en un tamaño de archivo de 1 MB y un objetivo por archivo.
+
+
+Se utilizaron los siguientes parámetros para IOR con el recuento de segmentos ajustado para mantener el tamaño del archivo agregado a 5 TIB para un bloque básico y 40 TIB para tres bloques básicos.
+
+....
+mpirun --allow-run-as-root --mca btl tcp -np 48 -map-by node -hostfile 10xnodes ior -b 1024k --posix.odirect -e -t 1024k -s 54613 -z -C -F -E -k
+....
+.Un elemento básico de BeeGFS (gestión, metadatos y almacenamiento)
+En la siguiente figura, se muestran los resultados de la prueba IOR con un solo elemento básico de BeeGFS (gestión, metadatos y almacenamiento).
+
+image:beegfs-design-image13.png[""]
+
+.Metadatos BeeGFS + elemento básico de almacenamiento
+En la siguiente figura se muestran los resultados de la prueba IOR con un único bloque de creación de almacenamiento y metadatos BeeGFS.
+
+image:beegfs-design-image14.png[""]
+
+.Elemento básico de sólo almacenamiento BeeGFS
+En la siguiente figura se muestran los resultados de la prueba IOR con un solo elemento básico de almacenamiento BeeGFS.
+
+image:beegfs-design-image15.png[""]
+
+.Tres elementos básicos de BeeGFS
+En la siguiente figura se muestran los resultados de la prueba IOR con tres bloques de construcción BeeGFS.
+
+image:beegfs-design-image16.png[""]
+
+Según lo esperado, la diferencia de rendimiento entre el bloque básico y el bloque básico de metadatos + almacenamiento posterior es mínima. Si comparamos el elemento básico de metadatos + almacenamiento con un elemento básico exclusivo del almacenamiento, el rendimiento de lectura se aprecia un ligero aumento en el rendimiento de lectura debido a las unidades adicionales utilizadas como destino del almacenamiento. Sin embargo, no existe una diferencia significativa en el rendimiento de escritura. Para lograr un mayor rendimiento, puede añadir varios elementos básicos juntos para escalar el rendimiento de forma lineal.
+
+
+
+== Pruebas de ancho de banda IOR: Un único cliente
+
+La prueba de ancho de banda IOR utilizó OpenMPI para ejecutar varios procesos IOR utilizando un único servidor GPU de alto rendimiento para explorar el rendimiento que se puede obtener en un único cliente.
+
+En esta prueba también se compara el comportamiento y el rendimiento de BeeGFS cuando el cliente está configurado para utilizar la caché de páginas del kernel de Linux (`tuneFileCacheType = native`) frente al valor predeterminado `buffered` ajuste.
+
+El modo de almacenamiento en caché nativo utiliza la memoria caché de página del kernel de Linux en el cliente, lo que permite que las operaciones de nueva lectura provengan de la memoria local en lugar de retransmitirse a través de la red.
+
+En el siguiente diagrama se muestran los resultados de las pruebas IOR con tres bloques de creación BeeGFS y un único cliente.
+
+image:beegfs-design-image17.png[""]
+
+
+NOTE: La segmentación de BeeGFS para estas pruebas se estableció en un tamaño de archivo de 1 MB con ocho objetivos por archivo.
+
+Aunque el rendimiento de escritura y lectura inicial es superior mediante el modo de búfer predeterminado, en el caso de cargas de trabajo que releer los mismos datos varias veces, se produce un aumento significativo del rendimiento en el modo de almacenamiento en caché nativo. Este rendimiento mejorado de nueva obtención es importante para cargas de trabajo como el aprendizaje profundo que relecan el mismo conjunto de datos varias veces a lo largo de muchas épocas.
+
+
+
+== Prueba de rendimiento de metadatos
+
+En las pruebas de rendimiento de metadatos se utilizó la herramienta MDTest (incluida como parte de IOR) para medir el rendimiento de los metadatos de BeeGFS. Las pruebas utilizaron OpenMPI para ejecutar trabajos paralelos en los diez nodos cliente.
+
+Se utilizaron los siguientes parámetros para ejecutar la prueba de referencia con el número total de procesos escalados de 10 a 320 en el paso del doble y con un tamaño de archivo de 4k.
+
+....
+mpirun -h 10xnodes –map-by node np $processes mdtest -e 4k -w 4k -i 3 -I 16 -z 3 -b 8 -u
+....
+El rendimiento de los metadatos se midió primero con uno entonces dos metadatos + elementos básicos del almacenamiento, para mostrar cómo se escala el rendimiento añadiendo elementos básicos adicionales.
+
+.Un elemento básico de metadatos BeeGFS + almacenamiento
+En el siguiente diagrama se muestran los resultados de MDTest con un bloque de creación de almacenamiento y metadatos BeeGFS.
+
+image:beegfs-design-image18.png[""]
+
+.Dos metadatos BeeGFS + elementos básicos de almacenamiento
+El siguiente diagrama muestra los resultados de MDTest con dos metadatos BeeGFS + bloques de almacenamiento.
+
+image:beegfs-design-image19.png[""]
+
+
+
+== Validación funcional
+
+Como parte de la validación de esta arquitectura, NetApp ejecutó varias pruebas funcionales incluyendo las siguientes:
+
+* Al producirse un fallo en un puerto InfiniBand de un único cliente, se deshabilita el puerto del switch.
+* Al producirse un fallo en un puerto InfiniBand de un único servidor, se deshabilita el puerto del switch.
+* Activación de un apagado inmediato del servidor mediante el BMC.
+* Colocación dignidad de un nodo en espera y conmutación por error al servicio en otro nodo.
+* Con dignidad, volver a colocar un nodo en línea y devolver servicios al nodo original.
+* Apague uno de los switches InfiniBand mediante la PDU. Todas las pruebas se realizaron mientras las pruebas de estrés estaban en curso con el `sysSessionChecksEnabled: false` Parámetro definido en los clientes BeeGFS. No se han observado errores ni interrupciones en I/O.
+
+
+
+NOTE: Hay un problema conocido (consulte https://github.com/netappeseries/beegfs/blob/master/CHANGELOG.md["Cambios"^]) Cuando las conexiones RDMA cliente/servidor BeeGFS se interrumpen inesperadamente, ya sea a través de la pérdida de la interfaz primaria (como se define en `connInterfacesFile`) O un servidor BeeGFS falla; la E/S de cliente activa se puede bloquear durante un máximo de diez minutos antes de continuar. Este problema no ocurre cuando los nodos BeeGFS se colocan correctamente dentro y fuera del modo de espera para el mantenimiento planificado o si TCP está en uso.
+
+
+
+== Validación NVIDIA DGX A100 SuperPOD y BasePOD
+
+NetApp validó una solución de almacenamiento para nVIDIAs DGX A100 SuperPOD que utiliza un sistema de archivos BeeGFS similar que consiste en tres elementos básicos con los metadatos más el perfil de configuración de almacenamiento aplicado. El esfuerzo de cualificación incluyó probar la solución descrita en este NVA con veinte servidores DGX A100 GPU que ejecutan una gran variedad de pruebas de rendimiento de almacenamiento, aprendizaje automático y aprendizaje profundo. Todo el almacenamiento certificado para su uso en DGX A100 SuperPOD de NVIDIA está certificado automáticamente para su uso en las arquitecturas NVIDIA BasePOD.
+
+Para obtener más información, consulte https://www.netapp.com/pdf.html?item=/media/72718-nva-1167-DESIGN.pdf["NVIDIA DGX SuperPOD con NetApp"^] y.. https://www.nvidia.com/en-us/data-center/dgx-basepod/["DGX BasePOD de NVIDIA"^].

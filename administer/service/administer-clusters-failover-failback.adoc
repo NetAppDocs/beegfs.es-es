@@ -1,0 +1,145 @@
+---
+sidebar: sidebar 
+permalink: administer-clusters-failover-failback.html 
+keywords: BeeGFS on NetApp, HA, Cluster, Administration, failover, failback, recovery 
+summary: Desplazamiento de servicios BeeGFS entre nodos del clúster. 
+---
+= Servicios de conmutación por error y conmutación tras recuperación
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Desplazamiento de servicios BeeGFS entre nodos del clúster.
+
+
+
+== Descripción general
+
+Los servicios BeeGFS pueden realizar una conmutación por error entre los nodos del clúster para garantizar que los clientes puedan continuar accediendo al sistema de archivos si un nodo experimenta un error o necesita realizar tareas de mantenimiento planificadas. En esta sección se describen distintas formas en las que los administradores pueden recuperar el clúster después de un fallo o mover manualmente servicios entre nodos.
+
+
+
+== Pasos
+
+
+
+=== Conmutación por error y conmutación por recuperación
+
+
+
+==== Conmutación al respaldo (planificada)
+
+En general, cuando necesite desconectar un solo nodo de archivos para realizar el mantenimiento, querrá mover (o drenar) todos los servicios de BeeGFS de ese nodo. Esto se puede lograr poniendo el nodo en espera en primer lugar:
+
+`pcs node standby <HOSTNAME>`
+
+Después de verificar utilizando `pcs status` todos los recursos se han reiniciado en el nodo de archivos alternativo, puede apagar o realizar otros cambios en el nodo según sea necesario.
+
+
+
+==== Conmutación tras recuperación (después de una conmutación al respaldo planificada)
+
+Cuando esté listo para restaurar los servicios BeeGFS en el nodo preferido, ejecute primero `pcs status` Y verifique en la "Lista de nodos" el estado es en espera. Si el nodo se reinició, aparecerá sin conexión hasta que los servicios del clúster estén en línea:
+
+[source, console]
+----
+pcs cluster start <HOSTNAME>
+----
+Una vez que el nodo esté en línea, salga del modo de espera con:
+
+[source, console]
+----
+pcs cluster node unstandby <HOSTNAME>
+----
+Por último, reubique todos los servicios de BeeGFS en sus nodos preferidos con:
+
+[source, console]
+----
+pcs resource relocate run
+----
+
+
+==== Conmutación tras recuperación (después de una conmutación al respaldo no planificada)
+
+Si un nodo experimenta un fallo de hardware o de otro tipo, el clúster de alta disponibilidad debería reaccionar automáticamente y mover sus servicios a un nodo en buen estado, lo que proporciona tiempo para que los administradores tomen acciones correctivas. Antes de proceder, consulte link:administer-clusters-troubleshoot.html["resolución de problemas"^] de la sección para determinar la causa de la conmutación por error y resolver cualquier problema pendiente. Una vez que el nodo se vuelve a encender y en buen estado, puede continuar con la conmutación tras recuperación.
+
+Cuando un nodo se arranca tras un reinicio no planificado (o planificado), los servicios de clúster no se establecen para iniciarse automáticamente, por lo que primero tendrá que conectar el nodo con:
+
+[source, console]
+----
+pcs cluster start <HOSTNAME>
+----
+A continuación, borre los errores de los recursos y restablezca el historial de cercas del nodo:
+
+[source, console]
+----
+pcs resource cleanup node=<HOSTNAME>
+pcs stonith history cleanup <HOSTNAME>
+----
+Verifique en `pcs status` el nodo está en línea y en buen estado. De forma predeterminada, los servicios de BeeGFS no se podrán recuperar automáticamente para evitar que los recursos vuelvan a un nodo que no esté en buenas estado. Cuando esté listo, devuelva todos los recursos del clúster a los nodos preferidos con:
+
+[source, console]
+----
+pcs resource relocate run
+----
+
+
+=== Mover servicios de BeeGFS individuales a nodos de archivo alternativos
+
+
+
+==== Mueva permanentemente un servicio BeeGFS a un nuevo nodo de archivo
+
+Si desea cambiar de forma permanente el nodo de archivo preferido de un servicio BeeGFS individual, ajuste el inventario de Ansible para ver primero el nodo preferido y volver a ejecutar el libro de estrategia de Ansible.
+
+Por ejemplo, en esta muestra `inventory.yml` File, ictad22h01 es el nodo de archivo preferido para ejecutar el servicio de gestión BeeGFS:
+
+[source, yaml]
+----
+        mgmt:
+          hosts:
+            ictad22h01:
+            ictad22h02:
+----
+Si se invierte el pedido, se preferirían los servicios de gestión en ictad22h02:
+
+[source, yaml]
+----
+        mgmt:
+          hosts:
+            ictad22h02:
+            ictad22h01:
+----
+
+
+==== Mueva temporalmente un servicio BeeGFS a otro nodo de archivo
+
+Generalmente, si un nodo está en proceso de mantenimiento, deberá utilizar los [pasos de conmutación por error y conmutación por recuperación](#failover-and-failback) para mover todos los servicios fuera de ese nodo.
+
+Si por algún motivo necesita mover un servicio individual a un nodo de archivo diferente ejecutado:
+
+[source, console]
+----
+pcs resource move <SERVICE>-monitor <HOSTNAME>
+----
+
+WARNING: No especifique recursos individuales ni el grupo de recursos. Especifique siempre el nombre del monitor para el servicio BeeGFS que desea reubicar. Por ejemplo, para mover el servicio de gestión de BeeGFS a ictad22h02, ejecute: `pcs resource move mgmt-monitor ictad22h02`. Este proceso se puede repetir para mover uno o varios servicios de sus nodos preferidos. Verifique utilizando `pcs status` los servicios se reubicaron o se iniciaron en el nuevo nodo.
+
+Para devolver un servicio BeeGFS a su nodo preferido, borre primero las restricciones de recursos temporales (repita este paso según sea necesario para varios servicios):
+
+[source, yaml]
+----
+pcs resource clear <SERVICE>-monitor
+----
+A continuación, cuando esté listo para mover realmente los servicios de nuevo a sus nodos preferidos ejecutar:
+
+[source, yaml]
+----
+pcs resource relocate run
+----
+Nota este comando reubicará los servicios que ya no tengan restricciones temporales de recursos que no estén en sus nodos preferidos.

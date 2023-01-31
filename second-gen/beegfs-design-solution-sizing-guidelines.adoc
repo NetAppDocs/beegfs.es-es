@@ -1,0 +1,88 @@
+---
+sidebar: sidebar 
+permalink: beegfs-design-solution-sizing-guidelines.html 
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
+summary: La solución BeeGFS incluye recomendaciones sobre el rendimiento y el ajuste de la capacidad basadas en pruebas de verificación. 
+---
+= Directrices de tamaño
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+La solución BeeGFS incluye recomendaciones sobre el rendimiento y el ajuste de la capacidad basadas en pruebas de verificación.
+
+El objetivo de una arquitectura de elementos básicos es crear una solución de tamaño sencillo mediante la adición de varios elementos básicos para satisfacer los requisitos de un sistema BeeGFS concreto. Con las siguientes pautas, puede estimar la cantidad y los tipos de bloques de construcción de BeeGFS que se necesitan para cumplir los requisitos de su entorno.
+
+Tenga en cuenta que estas estimaciones representan el mejor caso de rendimiento. Las aplicaciones de pruebas de rendimiento sintéticas se escriben y se utilizan para optimizar el uso de sistemas de archivos subyacentes de formas que las aplicaciones del mundo real podrían no.
+
+
+
+== Ajuste de tamaño del rendimiento
+
+La siguiente tabla proporciona un ajuste del tamaño del rendimiento recomendado.
+
+|===
+| Perfil de configuración | 1MiB lee | 1MiB escribe 
+
+
+| Metadatos + almacenamiento | 62GiBps | 21 GiBps 
+
+
+| Solo almacenamiento | 64 GiBps | 21 GiBps 
+|===
+Las estimaciones de tamaño de la capacidad de metadatos se basan en la "regla general" según la cual 500 GB de capacidad son suficientes para aproximadamente 150 millones de archivos en BeeGFS. (Para obtener más información, consulte la documentación de BeeGFS para https://doc.beegfs.io/latest/system_design/system_requirements.html["Requisitos del sistema"^].)
+
+El uso de funciones como las listas de control de acceso y el número de directorios y archivos por directorio también afecta a la rapidez con la que se consume el espacio de metadatos. Las estimaciones de la capacidad de almacenamiento dan cuenta de la capacidad de unidad utilizable junto con la sobrecarga de RAID 6 y XFS.
+
+
+
+== Configuración de la capacidad para metadatos + elementos básicos de almacenamiento
+
+La siguiente tabla proporciona un tamaño de capacidad recomendado para metadatos, además de los elementos básicos de almacenamiento.
+
+|===
+| Tamaño de la unidad (2+2 RAID 1) grupos de volúmenes de metadatos | Capacidad de metadatos (cantidad de archivos) | Grupos de volúmenes de almacenamiento de tamaño de unidad (8+2 RAID 6) | Capacidad de almacenamiento (contenido de archivos) 
+
+
+| 1,92 TB | 1,938,577,200 | 1,92 TB | 51,77 TB 
+
+
+| 3,84 TB | 3,880,388,400 | 3,84 TB | 103,55 TB 
+
+
+| 7,68 TB | 8,125,278,000 | 7,68 TB | 216.74 TB 
+
+
+| 15,3 TB | 17,269,854,000 | 15,3 TB | 460 TB 
+|===
+
+NOTE: Al ajustar el tamaño de los metadatos más los elementos básicos de almacenamiento, puede reducir los costes usando unidades más pequeñas para los grupos de volúmenes de metadatos frente a los grupos de volúmenes de almacenamiento.
+
+
+
+== Configuración de la capacidad para los elementos básicos solo del almacenamiento
+
+La siguiente tabla proporciona ajuste de tamaño de capacidad de regla general para elementos básicos de solo almacenamiento.
+
+|===
+| Grupos de volúmenes de almacenamiento de tamaño de unidad (10+2 RAID 6) | Capacidad de almacenamiento (contenido de archivos) 
+
+
+| 1,92 TB | 59,89 TB 
+
+
+| 3,84 TB | 1319,80 TB 
+
+
+| 7,68 TB | 251.89TB 
+
+
+| 15,3 TB | 538,55 TB 
+|===
+
+NOTE: La sobrecarga de rendimiento y capacidad de incluir el servicio de gestión en el elemento básico (primero) es mínima, a menos que se habilite el bloqueo global de archivos.

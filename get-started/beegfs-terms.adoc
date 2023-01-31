@@ -1,0 +1,137 @@
+---
+sidebar: sidebar 
+permalink: beegfs-terms.html 
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
+summary: Términos y conceptos que se aplican a BeeGFS en la solución de NetApp. 
+---
+= Términos y conceptos
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Los siguientes términos y conceptos se aplican a BeeGFS en la solución de NetApp.
+
+
+TIP: Consulte link:administer-clusters-overview.html["Administre clústeres BeeGFS"] Para obtener detalles adicionales sobre términos y conceptos específicos para interactuar con clústeres de alta disponibilidad (ha) de BeeGFS.
+
+[cols="25h,~"]
+|===
+| Duración | Descripción 
+
+
+ a| 
+IA
+ a| 
+Inteligencia artificial.
+
+
+
+ a| 
+Inventario de Ansible
+ a| 
+Estructura de directorio que contiene archivos YAML que se utilizan para describir el clúster de ha de BeeGFS deseado.
+
+
+
+ a| 
+BMC
+ a| 
+Controlador de administración de la placa base. En ocasiones se conoce como procesador de servicio.
+
+
+
+ a| 
+nodos de bloques
+ a| 
+Sistemas de almacenamiento.
+
+
+
+ a| 
+clientes
+ a| 
+Nodos del clúster HPC que ejecuta aplicaciones que deben utilizar el sistema de archivos. En ocasiones, también se denomina nodos de computación o GPU.
+
+
+
+ a| 
+DL
+ a| 
+Aprendizaje profundo.
+
+
+
+ a| 
+nodos de archivos
+ a| 
+Servidores de archivos BeeGFS.
+
+
+
+ a| 
+HA
+ a| 
+Alta disponibilidad.
+
+
+
+ a| 
+HIC
+ a| 
+Tarjeta de interfaz del host.
+
+
+
+ a| 
+HPC
+ a| 
+Informática de alto rendimiento.
+
+
+
+ a| 
+Cargas de trabajo de tipo HPC
+ a| 
+Las cargas de trabajo de estilo HPC suelen caracterizarse por la necesidad de múltiples nodos de computación o GPU que necesiten acceder al mismo conjunto de datos en paralelo para facilitar una tarea de entrenamiento o computación distribuida. Estos conjuntos de datos a menudo constan de archivos de gran tamaño que se deben dividir entre varios nodos de almacenamiento físico para eliminar los cuellos de botella de hardware tradicionales, lo que evitaría el acceso simultáneo a un único archivo.
+
+
+
+ a| 
+ML
+ a| 
+Aprendizaje automático.
+
+
+
+ a| 
+NLP
+ a| 
+Procesamiento de Lenguaje Natural.
+
+
+
+ a| 
+NLU
+ a| 
+Comprensión del lenguaje natural.
+
+
+
+ a| 
+ARQUITECTURA VALIDADA DE NETAPP
+ a| 
+El programa NetApp Verified Architecture (NVA) proporciona configuraciones de referencia y directrices de tamaño para cargas de trabajo específicas y casos prácticos. Estas soluciones han sido probadas exhaustivamente y están diseñadas para minimizar los riesgos de la puesta en marcha y acelerar el plazo de comercialización.
+
+
+
+ a| 
+red de almacenamiento/red de cliente
+ a| 
+Red utilizada por los clientes para comunicarse con el sistema de archivos BeeGFS. A menudo, se trata de la misma red que se utiliza para la interfaz de paso de mensajes (MPI) en paralelo y otra comunicación de aplicaciones entre nodos de clúster HPC.
+
+|===

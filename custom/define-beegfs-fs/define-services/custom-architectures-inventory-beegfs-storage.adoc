@@ -1,0 +1,94 @@
+---
+sidebar: sidebar 
+permalink: custom-architectures-inventory-beegfs-storage.html 
+keywords: BeeGFS on NetApp, NetApp Custom Architectures, EF600 
+summary: 'Los servicios BeeGFS se configuran mediante variables de grupo (Group_var).' 
+---
+= Defina el servicio de almacenamiento BeeGFS
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Los servicios BeeGFS se configuran mediante variables de grupo (Group_var).
+
+
+
+== Descripción general
+
+En esta sección se describe la definición del servicio de almacenamiento de BeeGFS. Al menos debe haber un servicio de este tipo en los clústeres de alta disponibilidad para un sistema de archivos determinado. La configuración de este servicio incluye la definición:
+
+* El tipo de servicio (almacenamiento).
+* Definir cualquier configuración que sólo se debe aplicar a este servicio BeeGFS.
+* Configuración de una o varias IP flotantes (interfaces lógicas) en las que se puede acceder a este servicio.
+* Especificar dónde/cómo deben ser los volúmenes para almacenar datos para este servicio (los destinos de almacenamiento BeeGFS).
+
+
+
+
+== Pasos
+
+Haciendo referencia a link:custom-architectures-plan-file-system.html["Planifique el sistema de archivos"^] cree un archivo en `group_vars/stor_<ID>.yml` para cada servicio de almacenamiento del clúster y rellene los siguientes pasos:
+
+. Indique este archivo que representa la configuración de un servicio de almacenamiento BeeGFS:
++
+[source, yaml]
+----
+beegfs_service: storage
+----
+. Defina cualquier configuración que se deba aplicar sólo a este servicio BeeGFS. Al mínimo debe especificar el puerto TCP y UDP deseado, sin embargo, cualquier parámetro de configuración compatible desde `beegfs-storage.conf` también se puede incluir. Nota los siguientes parámetros se configuran automáticamente u otros lugares y no se deben especificar aquí: `sysMgmtdHost`, `storeStorageDirectory`, `connAuthFile`, `connDisableAuthentication`, `connInterfacesFile`, y. `connNetFilterFile`.
++
+[source, yaml]
+----
+beegfs_ha_beegfs_storage_conf_resource_group_options:
+  connStoragePortTCP: <TCP PORT>
+  connStoragePortUDP: <UDP PORT>
+  tuneBindToNumaZone: <NUMA ZONE> # Recommended if using file nodes with multiple CPU sockets.
+----
+. Configure uno o varios IP flotantes que utilizarán otros servicios y clientes para conectarse a este servicio (esto establecerá automáticamente BeeGFS `connInterfacesFile` opción):
++
+[source, yaml]
+----
+floating_ips:
+  - <INTERFACE>:<IP/SUBNET> # Primary interface. Ex. i1b:100.127.101.1/16
+  - <INTERFACE>:<IP/SUBNET> # Secondary interface(s) as needed.
+----
+. Opcionalmente, especifique una o varias subredes IP permitidas que se pueden utilizar para la comunicación saliente (esto establecerá automáticamente BeeGFS `connNetFilterFile` opción):
++
+[source, yaml]
+----
+filter_ip_ranges:
+  - <SUBNET>/<MASK> # Ex. 192.168.10.0/24
+----
+. Especifique los objetivos de almacenamiento de BeeGFS en los que este servicio almacenará datos de acuerdo con las siguientes directrices (también configurará automáticamente el `storeStorageDirectory` opción):
++
+.. Se puede utilizar el mismo nombre de pool de almacenamiento o grupo de volúmenes para varios servicios/objetivos de BeeGFS; asegúrese de utilizar el mismo `name`, `raid_level`, `criteria_*`, y. `common_*` la configuración de cada uno (los volúmenes enumerados para cada servicio deben ser diferentes).
+.. Los tamaños de los volúmenes se deben especificar como un porcentaje del pool de almacenamiento/grupo de volúmenes y el total no debe ser superior a 100 en todos los servicios/volúmenes que utilizan un pool de almacenamiento/grupo de volúmenes en particular. Nota cuando se usan SSD, se recomienda dejar espacio libre en el grupo de volúmenes para maximizar el rendimiento de SSD y la vida útil (haga clic en link:beegfs-deploy-recommended-volume-percentages.html["aquí"^] para obtener más detalles).
+.. Haga clic en link:https://github.com/netappeseries/santricity/tree/release-1.3.1/roles/nar_santricity_host#role-variables["aquí"^] para obtener una lista completa de las opciones de configuración disponibles para `eseries_storage_pool_configuration`. Tenga en cuenta algunas opciones como `state`, `host`, `host_type`, `workload_name`, y. `workload_metadata` y los nombres de volúmenes se generan automáticamente y no se deben especificar aquí.
++
+[source, yaml]
+----
+beegfs_targets:
+  <BLOCK_NODE>: # The name of the block node as found in the Ansible inventory. Ex: ictad22a01
+    eseries_storage_pool_configuration:
+      - name: <NAME> # Ex: beegfs_s1_s2
+        raid_level: <LEVEL> # One of: raid1, raid5, raid6, raidDiskPool
+        criteria_drive_count: <DRIVE COUNT> # Ex. 4
+        common_volume_configuration:
+          segment_size_kb: <SEGMENT SIZE> # Ex. 128
+        volumes:
+          - size: <PERCENT> # Percent of the pool or volume group to allocate to this volume. Ex. 1
+            owning_controller: <CONTROLLER> # One of: A, B
+        # Multiple storage targets are supported / typical:
+          - size: <PERCENT> # Percent of the pool or volume group to allocate to this volume. Ex. 1
+            owning_controller: <CONTROLLER> # One of: A, B
+----
+
+
+
+
+Haga clic en link:https://github.com/netappeseries/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/group_vars/stor_01.yml["aquí"^] Para obtener un ejemplo de un archivo de inventario completo que representa un servicio de almacenamiento BeeGFS.

@@ -1,0 +1,31 @@
+---
+sidebar: sidebar 
+permalink: beegfs-design-overview.html 
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
+summary: Se requieren equipos, cables y configuraciones específicos para admitir BeeGFS en la solución de NetApp, que combina el sistema de archivos en paralelo BeeGFS con los sistemas de almacenamiento EF600 de NetApp. 
+---
+= Descripción general del diseño
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Se requieren equipos, cables y configuraciones específicos para admitir BeeGFS en la solución de NetApp, que combina el sistema de archivos en paralelo BeeGFS con los sistemas de almacenamiento EF600 de NetApp.
+
+Obtenga más información:
+
+* link:beegfs-design-hardware-architecture.html["Configuración de hardware"]
+* link:beegfs-design-software-architecture.html["Configuración de software"]
+* link:beegfs-design-solution-verification.html["Verificación del diseño"]
+* link:beegfs-design-solution-sizing-guidelines.html["Directrices de tamaño"]
+* link:beegfs-design-performance-tuning.html["Ajuste del rendimiento"]
+
+
+Arquitecturas derivadas con variaciones en el diseño y el rendimiento:
+
+* link:beegfs-design-high-capacity-building-block.html["Elementos básicos de alta capacidad"]
+

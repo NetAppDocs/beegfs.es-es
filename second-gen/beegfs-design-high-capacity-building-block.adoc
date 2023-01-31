@@ -1,0 +1,55 @@
+---
+sidebar: sidebar 
+permalink: beegfs-design-high-capacity-building-block.html 
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600, EF300, HDD, Expansion 
+summary: Las variaciones de diseño para un elemento básico de gran capacidad. 
+---
+= Elemento básico de gran capacidad
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+El diseño de la solución BeeGFS estándar se ha diseñado teniendo en cuenta las cargas de trabajo de alto rendimiento. Los clientes que busquen casos de uso de gran capacidad deben observar las variaciones en las características de diseño y rendimiento descritas aquí.
+
+
+
+== Configuración de hardware y software
+
+La configuración de hardware y software del elemento básico de alta capacidad es de serie, a excepción de que las controladoras EF600 deben sustituirse por una controladora EF300 con opción de conectarse entre 1 y 7 bandejas de expansión IOM con 60 unidades cada una para cada cabina de almacenamiento, un total de 2 a 14 bandejas de expansión por bloque de construcción.
+
+Es probable que los clientes que implementan un diseño de elemento básico de gran capacidad utilicen solo la configuración del estilo de bloque de creación base compuesta por servicios de gestión, metadatos y almacenamiento de BeeGFS para cada nodo. Para reducir la rentabilidad, los nodos de almacenamiento de gran capacidad deben aprovisionar volúmenes de metadatos en las unidades NVMe en el compartimento de controladora EF300 y deben aprovisionar volúmenes de almacenamiento a las unidades NL-SAS de las bandejas de expansión.
+
+image:high-capacity-rack-diagram.png[""]
+
+
+
+== Directrices de tamaño
+
+Estas directrices de tamaño suponen que los bloques básicos de gran capacidad se configuran con un grupo de volúmenes SSD de 2+2 NVMe para los metadatos en el compartimento EF300 básico y 6 grupos de volúmenes NL-SAS de 8+2 por bandeja de ampliación IOM para el almacenamiento.
+
+|===
+| Tamaño de unidad (HDD de capacidad) | Capacidad por BB (1 bandeja) | Capacidad por BB (2 bandejas) | Capacidad por BB (3 bandejas) | Capacidad por BB (4 bandejas) 
+
+
+| 4 TB | 439 TB | 878 TB | 1317 TB | 1756 TB 
+
+
+| 8 TB | 878 TB | 1756 TB | 2634 TB | 3512 TB 
+
+
+| 10 TB | 1097 TB | 2195 TB | 3292 TB | 4390 TB 
+
+
+| 12 TB | 1317 TB | 2634 TB | 3951 TB | 5268 TB 
+
+
+| 16 TB | 1756 TB | 3512 TB | 5268 TB | 7024 TB 
+
+
+| 18 TB | 1975 TB | 3951 TB | 5927 TB | 7902 TB 
+|===

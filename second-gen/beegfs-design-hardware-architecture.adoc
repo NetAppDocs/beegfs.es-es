@@ -1,0 +1,66 @@
+---
+sidebar: sidebar 
+permalink: beegfs-design-hardware-architecture.html 
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
+summary: La configuración de hardware para BeeGFS en NetApp incluye nodos de archivo y cableado de red. 
+---
+= Configuración de hardware
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+La configuración de hardware para BeeGFS en NetApp incluye nodos de archivo y cableado de red.
+
+
+
+== Configuración de nodos de archivos
+
+Los nodos de archivos tienen dos sockets de CPU configurados como zonas NUMA independientes, que incluyen acceso local a un mismo número de ranuras PCIe y memoria.
+
+Los adaptadores InfiniBand deben llenarse en las ranuras o elevadores PCI adecuados, por lo que la carga de trabajo se equilibrará entre los canales PCIe y los canales de memoria disponibles. Equilibre la carga de trabajo aislando completamente el trabajo de los servicios BeeGFS individuales a un nodo NUMA en particular. El objetivo es lograr un rendimiento similar en cada nodo de archivo como si se tratara de dos servidores de un único socket independientes.
+
+En la figura siguiente se muestra la configuración NUMA del nodo de archivo.
+
+image:../media/beegfs-design-image5-small.png[""]
+
+Los procesos BeeGFS se anclan a una zona NUMA en particular para garantizar que las interfaces utilizadas se encuentren en la misma zona. Esta configuración evita la necesidad de acceso remoto a través de la conexión entre sockets. La conexión entre zócalos se conoce a veces como el enlace QPI o GMI2; incluso en arquitecturas de procesador modernas, pueden crear un cuello de botella al utilizar redes de alta velocidad como HDR InfiniBand.
+
+
+
+== Configuración del cableado de red
+
+Dentro de un elemento básico, cada nodo de archivo está conectado a dos nodos de bloques mediante un total de cuatro conexiones InfiniBand redundantes. Además, cada nodo de archivo tiene cuatro conexiones redundantes a la red de almacenamiento de InfiniBand.
+
+En la siguiente figura, observe que:
+
+* Todos los puertos de nodos de archivos delineados en verde se utilizan para conectarse al entramado de almacenamiento; todos los demás puertos de nodos de archivos son los puertos de nodos de bloques.
+* Dos puertos InfiniBand en una zona NUMA específica se conectan a las controladoras A y B del mismo nodo de bloque.
+* Los puertos del nodo NUMA 0 siempre se conectan al primer nodo de bloque.
+* Los puertos del nodo NUMA 1 se conectan al segundo nodo de bloque.
+
+
+image:../media/beegfs-design-image6.png[""]
+
+
+NOTE: Para las redes de almacenamiento con switches redundantes, los puertos descritos en verde claro deben conectarse a un switch y los puertos en verde oscuro a otro switch.
+
+La configuración del cableado que se muestra en la figura permite a cada servicio BeeGFS:
+
+* Se ejecuta en la misma zona NUMA independientemente del nodo de archivo que esté ejecutando el servicio BeeGFS.
+* Tener rutas secundarias óptimas a la red de almacenamiento front-end y a los nodos de bloques de back-end, independientemente de dónde se produzca un fallo.
+* Minimice los efectos en el rendimiento si un nodo de archivo o una controladora de un nodo de bloque requiere mantenimiento.
+
+
+.Cableado para aprovechar el ancho de banda
+Para aprovechar todo el ancho de banda bidireccional de PCIe, asegúrese de que un puerto de cada adaptador InfiniBand se conecta a la estructura de almacenamiento y el otro puerto se conecta a un nodo de bloque. La velocidad máxima teórica de un puerto HDR InfiniBand es de 25 Gbps (sin tener en cuenta la señalización y otros gastos generales). El ancho de banda máximo de dirección única de una ranura PCIe 4.0 x16 es de 32 GB/s, lo que crea un posible cuello de botella al implementar nodos de archivos que incorporen adaptadores InfiniBand de puerto doble que en teoría puedan manejar 50 GB/s de ancho de banda.
+
+La siguiente figura muestra el diseño del cableado utilizado para aprovechar todo el ancho de banda bidireccional de PCIe.
+
+image:../media/beegfs-design-image7.png[""]
+
+Para cada servicio BeeGFS, utilice el mismo adaptador para conectar el puerto preferido utilizado para el tráfico de cliente con la ruta al controlador de nodos de bloque que es el propietario principal de dichos volúmenes de servicios. Para obtener más información, consulte link:beegfs-design-software-architecture.html["Configuración de software"].

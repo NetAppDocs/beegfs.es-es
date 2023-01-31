@@ -1,0 +1,108 @@
+---
+sidebar: sidebar 
+permalink: custom-architectures-inventory-common-block-node-configuration.html 
+keywords: BeeGFS on NetApp, NetApp Custom Architectures, EF600 
+summary: 'Especifique la configuración de nodos de bloque común con las variables de grupo (group_var).' 
+---
+= Especifique la configuración de nodo de bloque común
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Especifique la configuración de nodos de bloque común con las variables de grupo (group_var).
+
+
+
+== Descripción general
+
+La configuración que debería Apple a todos los nodos de bloque se define en `group_vars/eseries_storage_systems.yml`. Normalmente incluye:
+
+* Detalles sobre cómo el nodo de control Ansible debe conectarse a los sistemas de almacenamiento E-Series que se utilizan como nodos de bloques.
+* Las versiones de firmware, NVSRAM y de unidad que deben ejecutar los nodos.
+* Configuración global, que incluye la configuración de caché, la configuración de hosts y la configuración de cómo deben aprovisionarse los volúmenes.
+
+
+
+NOTE: Las opciones establecidas en este archivo también pueden definirse en nodos de bloques individuales; por ejemplo, si se están utilizando modelos de hardware mixtos o tiene contraseñas diferentes para cada nodo. La configuración en nodos de bloque individuales tendrá prioridad sobre la configuración de este archivo.
+
+
+
+== Pasos
+
+Cree el archivo `group_vars/eseries_storage_systems.yml` y rellenarlo de la siguiente manera:
+
+. Ansible no utiliza SSH para conectarse a los nodos de bloques y, en su lugar, utiliza API DE REST. Para lograrlo, debemos establecer:
++
+[source, yaml]
+----
+ansible_connection: local
+----
+. Especifique el nombre de usuario y la contraseña para gestionar cada nodo. El nombre de usuario puede omitirse opcionalmente (y, de forma predeterminada, admin), si no es posible especificar cualquier cuenta con privilegios de administrador. Especifique también si los certificados SSL deben verificarse o ignorarse:
++
+[source, yaml]
+----
+eseries_system_username: admin
+eseries_system_password: <PASSWORD>
+eseries_validate_certs: false
+----
++
+
+WARNING: No se recomienda enumerar las contraseñas en texto sin formato. Use el almacén de Ansible o proporcione el `eseries_system_password` Al ejecutar Ansible con distribuidores de valor añadido de --extra.
+
+. Opcionalmente, especifique qué firmware de la controladora, NVSRAM y firmware de la unidad se debe instalar en los nodos. Deberá descargarse en el `packages/` directorio antes de ejecutar Ansible. El firmware de la controladora E-Series y NVSRAM se pueden descargar link:https://mysupport.netapp.com/site/products/all/details/eseries-santricityos/downloads-tab/["aquí"^] y el firmware de la unidad link:https://mysupport.netapp.com/site/downloads/firmware/e-series-disk-firmware["aquí"^]:
++
+[source, yaml]
+----
+eseries_firmware_firmware: "packages/<FILENAME>.dlp" # Ex. "packages/RCB_11.70.2_6000_61b1131d.dlp"
+eseries_firmware_nvsram: "packages/<FILENAME>.dlp" # Ex. "packages/N6000-872834-D06.dlp"
+eseries_drive_firmware_firmware_list:
+  - "packages/<FILENAME>.dlp"
+  # Additional firmware versions as needed.
+eseries_drive_firmware_upgrade_drives_online: true # Recommended unless BeeGFS hasn't been deployed yet, as it will disrupt host access if set to "false".
+----
++
+
+WARNING: Si se especifica esta configuración, Ansible actualizará automáticamente todo el firmware, incluido el reinicio de las controladoras (si es necesario) sin ningún aviso adicional. Se espera que esto no sea disruptivo para la I/o del host de BeeGFS, pero podría provocar un descenso temporal del rendimiento.
+
+. Ajuste los valores predeterminados de configuración global del sistema. BeeGFS en NetApp suele recomendar las opciones y valores que se incluyen en esta lista, pero se pueden ajustar en caso necesario:
++
+[source, yaml]
+----
+eseries_system_cache_block_size: 32768
+eseries_system_cache_flush_threshold: 80
+eseries_system_default_host_type: linux dm-mp
+eseries_system_autoload_balance: disabled
+eseries_system_host_connectivity_reporting: disabled
+eseries_system_controller_shelf_id: 99 # Required by default.
+----
+. Configure las opciones predeterminadas de aprovisionamiento de volúmenes globales. BeeGFS en NetApp suele recomendar las opciones y valores que se incluyen en esta lista, pero se pueden ajustar en caso necesario:
++
+[source, yaml]
+----
+eseries_volume_size_unit: pct # Required by default. This allows volume capacities to be specified as a percentage, simplifying putting together the inventory.
+eseries_volume_read_cache_enable: true
+eseries_volume_read_ahead_enable: false
+eseries_volume_write_cache_enable: true
+eseries_volume_write_cache_mirror_enable: true
+eseries_volume_cache_without_batteries: false
+----
+. Si es necesario, ajuste el orden en el que Ansible seleccionará las unidades para los pools de almacenamiento y los grupos de volúmenes, teniendo en cuenta las siguientes prácticas recomendadas:
++
+.. Enumere cualquier unidad (potencialmente menor) que se deben usar para los volúmenes de metadatos o gestión primero, y los volúmenes de almacenamiento en último lugar.
+.. Asegúrese de equilibrar el orden de selección de las unidades en los canales de unidad disponibles según los modelos de bandeja de discos/compartimento de unidades. Por ejemplo, con EF600 y sin expansiones, las unidades 0-11 están en el canal de unidades 1 y las unidades 12-23 están en el canal de unidades. Por lo tanto, una estrategia para equilibrar la selección de conducción es seleccionar `disk shelf:drive` 99:0, 99:23, 99:1, 99:22, etc. En el caso de que haya más de un compartimento, el primer dígito representa el ID de bandeja de unidades.
++
+[source, yaml]
+----
+# Optimal/recommended order for the EF600 (no expansion):
+eseries_storage_pool_usable_drives: "99:0,99:23,99:1,99:22,99:2,99:21,99:3,99:20,99:4,99:19,99:5,99:18,99:6,99:17,99:7,99:16,99:8,99:15,99:9,99:14,99:10,99:13,99:11,99:12"
+----
+
+
+
+
+Haga clic en link:https://github.com/netappeseries/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/group_vars/eseries_storage_systems.yml["aquí"^] para obtener un ejemplo de un archivo de inventario completo que representa la configuración común de nodos de bloques.

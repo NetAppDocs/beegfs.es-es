@@ -1,0 +1,154 @@
+---
+sidebar: sidebar 
+permalink: beegfs-deploy-bestpractice.html 
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
+summary: Siga las directrices de prácticas recomendadas para poner en marcha BeeGFS en una solución de NetApp. 
+---
+= Revise las prácticas recomendadas
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Siga las directrices de prácticas recomendadas para poner en marcha BeeGFS en una solución de NetApp.
+
+
+
+== Convenciones estándar
+
+Al ensamblar y crear físicamente el archivo de inventario de Ansible, siga estas convenciones estándar (para obtener más información, consulte link:beegfs-deploy-beegfs-general-config.html["Cree el inventario de Ansible"]).
+
+* Los nombres de host de los nodos de archivos se numeran secuencialmente (h01-HN) con números inferiores en la parte superior del rack y números superiores en la parte inferior.
++
+Por ejemplo, la convención de nomenclatura `[location][row][rack]hN` aspecto: `ictad22h01`.
+
+* Cada nodo de bloques se compone de dos controladoras de almacenamiento, cada una con su propio nombre de host.
++
+Se utiliza el nombre de una cabina de almacenamiento para hacer referencia a todo el sistema de almacenamiento basado en bloques como parte de un inventario de Ansible. Los nombres de las cabinas de almacenamiento deben numerarse secuencialmente (a01 - an), y los nombres de host para las controladoras individuales provienen de esa convención de nomenclatura.
+
++
+Por ejemplo, un nodo de bloque llamado `ictad22a01` por lo general, puede tener nombres de host configurados para cada controladora como `ictad22a01-a` y.. `ictad22a01-b`, Pero ser referido en un inventario de Ansible como `ictad22a01`.
+
+* Los nodos de archivo y de bloque dentro del mismo bloque básico comparten el mismo esquema de numeración y están adyacentes uno al otro en el rack con ambos nodos de archivo en la parte superior y ambos nodos de bloque directamente debajo de ellos.
++
+Por ejemplo, en el primer bloque de creación, los nodos de archivo h01 y h02 están conectados directamente a los nodos de bloque a01 y a02. De arriba a abajo, los nombres de host son h01, h02, a01 y a02.
+
+* Los bloques de creación se instalan en orden secuencial en función de sus nombres de host, de modo que los nombres de host con el número inferior se encuentran en la parte superior del rack y los nombres de host con un número superior se encuentran en la parte inferior.
++
+El objetivo es minimizar la longitud del cable que se ejecuta en la parte superior de los switches del bastidor y definir una práctica de implementación estándar para simplificar la solución de problemas. En los centros de datos en los que no se permite esto debido a preocupaciones en torno a la estabilidad del rack, la inversa está permitida, rellenando el rack desde la parte inferior hacia arriba.
+
+
+
+
+
+== Configuración de la red de almacenamiento InfiniBand
+
+La mitad de los puertos InfiniBand de cada nodo de archivos se utilizan para conectarse directamente a los nodos de bloques. La otra mitad está conectada a los switches InfiniBand y se utiliza para la conectividad cliente-servidor BeeGFS. Al determinar el tamaño de las subredes IPoIB que se utilizan para los clientes y servidores de BeeGFS, debe tener en cuenta el crecimiento previsto del clúster de computación/GPU y del sistema de archivos BeeGFS. Si debe desviarse de los rangos de IP recomendados, tenga en cuenta que cada conexión directa en un único bloque de creación tiene una subred única y que no se solapan con las subredes utilizadas para la conectividad cliente-servidor.
+
+
+
+=== Conexiones directas
+
+Los nodos de archivo y bloque dentro de cada elemento básico siempre utilizan las direcciones IP de la tabla siguiente para sus conexiones directas.
+
+
+NOTE: Este esquema de direccionamiento se adhiere a la siguiente regla: El tercer octeto siempre es impar o incluso, que depende de si el nodo de archivo es impar o par.
+
+|===
+| Nodo de archivo | Puerto IB | Dirección IP | Nodo de bloques | Puerto IB | IP física | IP virtual 
+
+
+| Impar (h1) | i1a | 192.168.1.10 | Impar (c1) | 2 a | 192.168.1.100 | 192.168.1.101 
+
+
+| Impar (h1) | i2a | 192.168.3.10 | Impar (c1) | 2 a | 192.168.3.100 | 192.168.3.101 
+
+
+| Impar (h1) | i3a | 192.168.5.10 | Par (c2) | 2 a | 192.168.5.100 | 192.168.5.101 
+
+
+| Impar (h1) | i4a | 192.168.7.10 | Par (c2) | 2 a | 192.168.7.100 | 192.168.7.101 
+
+
+| Par (h2) | i1a | 192.168.2.10 | Impar (c1) | 2b | 192.168.2.100 | 192.168.2.101 
+
+
+| Par (h2) | i2a | 192.168.4.10 | Impar (c1) | 2b | 192.168.4.100 | 192.168.4.101 
+
+
+| Par (h2) | i3a | 192.168.6.10 | Par (c2) | 2b | 192.168.6.100 | 192.168.6.101 
+
+
+| Par (h2) | i4a | 192.168.8.10 | Par (c2) | 2b | 192.168.8.100 | 192.168.8.101 
+|===
+
+
+=== Esquema de direccionamiento IPoIB de cliente-servidor BeeGFS (dos subredes)
+
+Para permitir que los clientes BeeGFS utilicen dos puertos InfiniBand, se necesitan dos subredes IPoIB con la mitad de los servicios de servidor BeeGFS configurados con una IP preferida en cada subred, a fin de garantizar que los clientes utilicen dos puertos InfiniBand para maximizar la redundancia y el posible rendimiento del sistema de archivos.
+
+Cada nodo de archivos ejecuta varios servicios de servidor BeeGFS (gestión, metadatos o almacenamiento). Para permitir que cada servicio conmute al nodo de archivos de manera independiente, cada uno de ellos está configurado con direcciones IP únicas que pueden flotarse entre ambos nodos (a veces denominados una interfaz lógica o LIF).
+
+Aunque no es obligatorio, esta implementación presupone que los siguientes rangos de subred IPoIB están en uso para estas conexiones y define un esquema de direccionamiento estándar que aplica las siguientes reglas:
+
+* El segundo octeto siempre es impar o par, según si el puerto InfiniBand del nodo de archivo es impar o par.
+* Las IP del clúster de BeeGFS siempre lo son `xxx. 127.100.yyy` o. `xxx.128.100.yyy`.
+
+
+
+NOTE: Además de la interfaz utilizada para la gestión del SO en banda, Corosync puede utilizar interfaces adicionales para la sincronización y la golpiza de corazón en cluster. De este modo se garantiza que la pérdida de una única interfaz no apague todo el clúster.
+
+* El servicio de gestión de BeeGFS siempre está en `xxx.yyy.101.0` o. `xxx.yyy.102.0`.
+* Los servicios de metadatos de BeeGFS siempre están en `xxx.yyy.101.zzz` o. `xxx.yyy.102.zzz`.
+* Los servicios de almacenamiento BeeGFS están siempre en `xxx.yyy.103.zzz` o. `xxx.yyy.103.zzz`.
+* Direcciones del intervalo `100.xxx.1.1` por `100.xxx.99.255` están reservados para clientes.
+
+
+.Subred A: 100.127.0.0/16
+En la tabla siguiente se muestra el intervalo de la subred A: 100.127.0.0/16.
+
+|===
+| Específico | Puerto InfiniBand | Dirección IP o rango 
+
+
+| IP de clúster de BeeGFS | i1b | 100.127.100.1 - 100.127.100.255 
+
+
+| Gestión de BeeGFS | i1b | 100.127.101.0 
+
+
+| Metadatos de BeeGFS | i1b o i3b | 100.127.101.1 - 100.127.101.255 
+
+
+| Almacenamiento de BeeGFS | i1b o i3b | 100.127.103.1 - 100.127.103.255 
+
+
+| Clientes BeeGFS | (varía según el cliente) | 100.127.1.1 - 100.127.99.255 
+|===
+.Subred B: 100.128.0.0/16
+En la tabla siguiente se muestra el intervalo para la subred B: 100.128.0.0/16.
+
+|===
+| Específico | Puerto InfiniBand | Dirección IP o rango 
+
+
+| IP de clúster de BeeGFS | i4b | 100.128.100.1 - 100.128.100.255 
+
+
+| Gestión de BeeGFS | i2b | 100.128.102.0 
+
+
+| Metadatos de BeeGFS | i2b o i4b | 100.128.102.1 - 100.128.102.255 
+
+
+| Almacenamiento de BeeGFS | i2b o i4b | 100.128.104.1 - 100.128.104.255 
+
+
+| Clientes BeeGFS | (varía según el cliente) | 100.128.1.1 - 100.128.99.255 
+|===
+
+NOTE: No todas las IP de los rangos anteriores se utilizan en esta arquitectura verificada de NetApp. Muestran cómo se pueden preasignar direcciones IP para permitir una sencilla expansión del sistema de archivos mediante un esquema de direccionamiento IP coherente. En este esquema, los nodos de archivo BeeGFS y los ID de servicio corresponden con el cuarto octeto de un rango conocido de IP. El sistema de archivos podría escalarse más allá de los 255 nodos o servicios si fuera necesario.

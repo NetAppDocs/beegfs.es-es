@@ -1,0 +1,56 @@
+---
+sidebar: sidebar 
+permalink: administer-clusters-stop-start-cluster.html 
+keywords: BeeGFS on NetApp, HA, Cluster, Administration, stop, start 
+summary: Detener e iniciar correctamente el clúster de alta disponibilidad. 
+---
+= Detenga e inicie el clúster
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Detener e iniciar correctamente el clúster de alta disponibilidad.
+
+
+
+== Descripción general
+
+En esta sección se describe cómo apagar y reiniciar correctamente el clúster BeeGFS. Algunos ejemplos de casos en los que esto puede ser necesario son el mantenimiento eléctrico o la migración entre centros de datos o racks.
+
+
+
+== Pasos
+
+Si por algún motivo necesita detener todo el clúster BeeGFS y apagar todos los servicios que se ejecutan:
+
+[source, console]
+----
+pcs cluster stop --all
+----
+También es posible detener el clúster en nodos individuales (lo que conmuta automáticamente al nodo de respaldo en otro nodo), aunque se recomienda poner primero el nodo en espera (consulte la link:administer-clusters-failover-failback.html["conmutación al respaldo"^] sección):
+
+[source, console]
+----
+pcs cluster stop <HOSTNAME>
+----
+Para iniciar los servicios y recursos del clúster en todos los nodos ejecutados:
+
+[source, console]
+----
+pcs cluster start --all
+----
+O inicie servicios en un nodo específico con:
+
+[source, console]
+----
+pcs cluster start <HOSTNAME>
+----
+En este momento, corre `pcs status` Compruebe que el clúster y los servicios BeeGFS se inicien en todos los nodos y que los servicios se estén ejecutando en los nodos que espera.
+
+
+TIP: Según el tamaño del clúster, puede tardar en detenerse de algún momento (segundos a minutos) para que todo el clúster se detenga o se muestre iniciado en `pcs status`. Si `pcs cluster <COMMAND>` Se bloquea durante más de cinco minutos antes de ejecutar "Ctrl+C" para cancelar el comando, iniciar sesión en cada nodo del clúster y utilizar `pcs status` Para ver si los servicios de clúster (Corosync/Pacemaker) aún se están ejecutando en ese nodo. Desde cualquier nodo en el que el clúster siga estando activo, puede comprobar qué recursos están bloqueando el clúster. Solucione manualmente el problema y el comando debería estar completo o se puede volver a ejecutar para detener el resto de servicios.

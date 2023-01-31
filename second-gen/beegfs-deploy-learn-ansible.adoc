@@ -1,0 +1,103 @@
+---
+sidebar: sidebar 
+permalink: beegfs-deploy-learn-ansible.html 
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
+summary: Antes de iniciar la puesta en marcha, asegúrese de comprender cómo usar Ansible para configurar y poner en marcha BeeGFS en la solución de NetApp con el diseño de elementos básicos de segunda generación de BeeGFS. 
+---
+= Obtenga más información sobre el inventario de Ansible
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Antes de iniciar la puesta en marcha, asegúrese de comprender cómo usar Ansible para configurar y poner en marcha BeeGFS en la solución de NetApp con el diseño de elementos básicos de segunda generación de BeeGFS.
+
+El inventario de Ansible define la configuración para los nodos de archivos y bloques, y representa el sistema de archivos BeeGFS que desea poner en marcha. El inventario incluye hosts, grupos y variables que describen el sistema de archivos BeeGFS deseado. Los inventarios de muestras se pueden descargar desde https://github.com/netappeseries/beegfs/tree/master/getting_started/["E-Series BeeGFS GitHub de NetApp"^].
+
+
+
+== Módulos y roles de Ansible
+
+Para aplicar la configuración descrita en el inventario de Ansible, use los distintos módulos y roles de Ansible que se proporcionan en la colección de Ansible E-Series de NetApp, en particular el rol de ha 7.2 de BeeGFS (disponible en la https://github.com/netappeseries/beegfs/tree/master/roles/beegfs_ha_7_2["E-Series BeeGFS GitHub de NetApp"^]) que despliega la solución completa.
+
+Cada rol de la colección de Ansible de E-Series de NetApp es una puesta en marcha completa de BeeGFS en una solución de NetApp. Los roles utilizan las colecciones SANtricity, host y BeeGFS de E-Series de NetApp que permiten configurar el sistema de archivos BeeGFS con alta disponibilidad (alta disponibilidad). Luego, podrá aprovisionar y asignar almacenamiento, y garantizar que el almacenamiento del clúster esté listo para su uso.
+
+Aunque se proporciona documentación en profundidad con los roles, los procedimientos de implementación describen cómo usar el rol para implementar una arquitectura verificada de NetApp mediante el diseño de elementos básicos BeeGFS de segunda generación.
+
+
+NOTE: Aunque los pasos de puesta en marcha intentan proporcionar información suficiente para que la experiencia previa con Ansible no sea un requisito previo, debe tener algo de familiaridad con Ansible y la terminología relacionada.
+
+
+
+== Diseño de inventario para un clúster de alta disponibilidad de BeeGFS
+
+Use la estructura de inventario de Ansible para definir un clúster de alta disponibilidad de BeeGFS.
+
+Cualquier persona con experiencia de Ansible anterior debe tener en cuenta que el rol de ha de BeeGFS implementa un método personalizado para descubrir qué variables (o hechos) se aplican a cada host. Esto es necesario para simplificar la creación de un inventario de Ansible que describa los recursos que se pueden ejecutar en varios servidores.
+
+Un inventario de Ansible suele consistir en los archivos de `host_vars` y.. `group_vars`, y un `inventory.yml` archivo que asigna hosts a grupos específicos (y potencialmente grupos a otros grupos).
+
+
+NOTE: No cree ningún archivo con el contenido de esta subsección, que se piensa sólo como ejemplo.
+
+A pesar de que esta configuración se basa por predeterminado en el perfil de configuración, debe tener un conocimiento general de cómo se presenta todo como un inventario de Ansible, tal y como se indica a continuación:
+
+....
+# BeeGFS HA (High Availability) cluster inventory.
+all:
+  children:
+    # Ansible group representing all block nodes:
+    eseries_storage_systems:
+      hosts:
+        ictad22a01:
+        ictad22a02:
+        ictad22a03:
+        ictad22a04:
+        ictad22a05:
+        ictad22a06:
+    # Ansible group representing all file nodes:
+    ha_cluster:
+      children:
+        meta_01:  # Group representing a metadata service with ID 01.
+          hosts:
+            file_node_01:  # This service is preferred on the first file node.
+            file_node_02:  # And can failover to the second file node.
+        meta_02:  # Group representing a metadata service with ID 02.
+          hosts:
+            file_node_02:  # This service is preferred on the second file node.
+            file_node_01: # And can failover to the first file node.
+....
+Para cada servicio, se crea un archivo adicional en `group_vars` descripción de su configuración:
+
+....
+# meta_01 - BeeGFS HA Metadata Resource Group
+beegfs_ha_beegfs_meta_conf_resource_group_options:
+  connMetaPortTCP: 8015
+  connMetaPortUDP: 8015
+  tuneBindToNumaZone: 0
+floating_ips:
+  - i1b: <IP>/<SUBNET_MASK>
+  - i4b: <IP>/<SUBNET_MASK>
+# Type of BeeGFS service the HA resource group will manage.
+beegfs_service: metadata # Choices: management, metadata, storage.
+# What block node should be used to create a volume for this service:
+beegfs_targets:
+  ictad22a01:
+    eseries_storage_pool_configuration:
+      - name: beegfs_m1_m2_m5_m6
+        raid_level: raid1
+        criteria_drive_count: 4
+        owning_controller: A
+        common_volume_configuration:
+          segment_size_kb: 128
+        volumes:
+          - size: 21.25
+....
+Este diseño permite definir el servicio, la red y la configuración de almacenamiento de BeeGFS para cada recurso en un único lugar. En segundo plano, el rol BeeGFS agrega la configuración necesaria para cada nodo de archivo y bloque basándose en esta estructura de inventario. Para obtener más información, consulte esta publicación de blog: https://www.netapp.com/blog/accelerate-deployment-of-ha-for-beegfs-with-ansible/["NetApp acelera la puesta en marcha de alta disponibilidad para BeeGFS con Ansible"^].
+
+
+NOTE: El código numérico y el ID de nodo de cadena de BeeGFS para cada servicio se configuran automáticamente en función del nombre del grupo. Por lo tanto, además del requisito general de Ansible para que los nombres de grupo sean únicos, los grupos que representan un servicio BeeGFS deben finalizar en un número único para el tipo de servicio BeeGFS que representa el grupo. Por ejemplo, se permiten meta_01 y stor_01, pero los metadatos_01 y meta_01 no lo están.
