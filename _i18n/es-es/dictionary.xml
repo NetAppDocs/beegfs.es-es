@@ -1811,7 +1811,6 @@
   <block id="e4c2850d67996ecfe5e0b56e9637a470" category="cell">251.89TB</block>
   <block id="f7c8918f0c24047e89e5842785e7b8ef" category="cell">538,55 TB</block>
   <block id="3cf8b9e44b7a1eb7154f2b777094e670" category="admonition">La sobrecarga de rendimiento y capacidad de incluir el servicio de gestión en el elemento básico (primero) es mínima, a menos que se habilite el bloqueo global de archivos.</block>
-  <block id="4929a64464b43e326e35b25ce7e3ceeb" category="sidebar">BeeGFS en la solución de NetApp es una arquitectura verificada de NetApp (NVA), que combina el sistema de archivos paralelo BeeGFS con los sistemas de almacenamiento EF600 de NetApp. Esta solución es una infraestructura fiable, escalable y rentable que puede adaptarse al ritmo de las cargas de trabajo más extremas.</block>
   <block id="be11c74c1dd7f307bb80183a90dc2067" category="sidebar">Manos a la obra</block>
   <block id="12623d7cc9dff74b7325aa809ffc84df" category="sidebar">Blog: Obtenga más información sobre BeeGFS y E-Series</block>
   <block id="0af9e7bf64a8e8c1b37ec554248f3d14" category="sidebar">Blog - BeeGFS para principiantes</block>
@@ -1862,4 +1861,5 @@
   <block id="dd38f906b37d412de7d1c1dcf4cbf31c" category="paragraph"><block ref="dd38f906b37d412de7d1c1dcf4cbf31c" category="inline-link-macro-rx"></block></block>
   <block id="8acb58cbd50ef1b468a020ee0bd351d3" category="inline-link-macro"><block ref="8acb58cbd50ef1b468a020ee0bd351d3" category="inline-link-rx"></block></block>
   <block id="2352c4e1f4d0024ade0869e00e6243f4" category="paragraph"><block ref="2352c4e1f4d0024ade0869e00e6243f4" category="inline-link-macro-rx"></block></block>
+  <block id="e8afe31a21b6aae9717484d865743dae" category="sidebar">BeeGFS basado en NetApp con almacenamiento E-Series es una solución demostrada e integrada con una infraestructura de informática de alto rendimiento sencilla, fiable, escalable y rentable que se adapta al ritmo de sus cargas de trabajo más extremas.</block>
 </blocks>
