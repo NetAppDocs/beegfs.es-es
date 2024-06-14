@@ -20,7 +20,7 @@ Siga las directrices de prácticas recomendadas para poner en marcha BeeGFS en u
 
 == Convenciones estándar
 
-Al ensamblar y crear físicamente el archivo de inventario de Ansible, siga estas convenciones estándar (para obtener más información, consulte link:beegfs-deploy-beegfs-general-config.html["Cree el inventario de Ansible"]).
+Al ensamblar y crear físicamente el archivo de inventario de Ansible, siga estas convenciones estándar (para obtener más información, consulte link:beegfs-deploy-create-inventory.html["Cree el inventario de Ansible"]).
 
 * Los nombres de host de los nodos de archivos se numeran secuencialmente (h01-HN) con números inferiores en la parte superior del rack y números superiores en la parte inferior.
 +
