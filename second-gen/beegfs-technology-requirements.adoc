@@ -58,8 +58,8 @@ Cada nodo de archivos debe cumplir o superar la siguiente configuración para lo
 
 *Miscelánea:*
 
-* Dos unidades SATA de 1 TB a 7200 rpm (o comparables) configuradas en RAID 1 para el SO.
-* Adaptador OCP 3.0 de 10 GbE (o comparable) para la gestión de sistemas operativos en banda.
+* Dos unidades SATA de 1TB 7,2K TB (o comparable o superior) configuradas en RAID 1 para el sistema operativo.
+* Puerto 1GbE GbE (o superior) para la administración de sistemas operativos en banda.
 * BMC de 1 GbE con API Redfish para la gestión de servidores fuera de banda.
 * Sistemas de alimentación duales intercambiables en caliente y ventiladores de rendimiento.
 * Deben admitir cables InfiniBand ópticos Mellanox si se requiere para llegar a los switches InfiniBand de almacenamiento.
