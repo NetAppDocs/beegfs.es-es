@@ -24,14 +24,14 @@ Al ensamblar y crear físicamente el archivo de inventario de Ansible, siga esta
 
 * Los nombres de host de los nodos de archivos se numeran secuencialmente (h01-HN) con números inferiores en la parte superior del rack y números superiores en la parte inferior.
 +
-Por ejemplo, la convención de nomenclatura `[location][row][rack]hN` aspecto: `ictad22h01`.
+Por ejemplo, la convención de nomenclatura `[location][row][rack]hN` se parece a `beegfs_01`: .
 
 * Cada nodo de bloques se compone de dos controladoras de almacenamiento, cada una con su propio nombre de host.
 +
 Se utiliza el nombre de una cabina de almacenamiento para hacer referencia a todo el sistema de almacenamiento basado en bloques como parte de un inventario de Ansible. Los nombres de las cabinas de almacenamiento deben numerarse secuencialmente (a01 - an), y los nombres de host para las controladoras individuales provienen de esa convención de nomenclatura.
 
 +
-Por ejemplo, un nodo de bloque llamado `ictad22a01` por lo general, puede tener nombres de host configurados para cada controladora como `ictad22a01-a` y.. `ictad22a01-b`, Pero ser referido en un inventario de Ansible como `ictad22a01`.
+Por ejemplo, un nodo de bloque llamado `ictad22a01` normalmente puede tener nombres de host configurados para cada controladora como `ictad22a01-a` y `ictad22a01-b`, pero se puede consultar en un inventario de Ansible como `netapp_01`.
 
 * Los nodos de archivo y de bloque dentro del mismo bloque básico comparten el mismo esquema de numeración y están adyacentes uno al otro en el rack con ambos nodos de archivo en la parte superior y ambos nodos de bloque directamente debajo de ellos.
 +
@@ -87,9 +87,7 @@ NOTE: Este esquema de direccionamiento se adhiere a la siguiente regla: El terce
 |===
 
 
-=== Esquema de direccionamiento IPoIB de cliente-servidor BeeGFS (dos subredes)
-
-Para permitir que los clientes BeeGFS utilicen dos puertos InfiniBand, se necesitan dos subredes IPoIB con la mitad de los servicios de servidor BeeGFS configurados con una IP preferida en cada subred, a fin de garantizar que los clientes utilicen dos puertos InfiniBand para maximizar la redundancia y el posible rendimiento del sistema de archivos.
+=== Esquemas de direccionamiento IPoIB cliente-servidor BeeGFS
 
 Cada nodo de archivos ejecuta varios servicios de servidor BeeGFS (gestión, metadatos o almacenamiento). Para permitir que cada servicio conmute al nodo de archivos de manera independiente, cada uno de ellos está configurado con direcciones IP únicas que pueden flotarse entre ambos nodos (a veces denominados una interfaz lógica o LIF).
 
@@ -104,9 +102,51 @@ NOTE: Además de la interfaz utilizada para la gestión del SO en banda, Corosyn
 
 * El servicio de gestión de BeeGFS siempre está en `xxx.yyy.101.0` o. `xxx.yyy.102.0`.
 * Los servicios de metadatos de BeeGFS siempre están en `xxx.yyy.101.zzz` o. `xxx.yyy.102.zzz`.
-* Los servicios de almacenamiento BeeGFS están siempre en `xxx.yyy.103.zzz` o. `xxx.yyy.103.zzz`.
+* Los servicios de almacenamiento de BeeGFS siempre están en `xxx.yyy.103.zzz` o `xxx.yyy.104.zzz`.
 * Direcciones del intervalo `100.xxx.1.1` por `100.xxx.99.255` están reservados para clientes.
 
+
+
+
+==== Esquema de direccionamiento de subred única IPoIB
+
+Esta guía de despliegue utilizará un único esquema de subred dadas las ventajas enumeradas en link:beegfs-design-software-architecture.html#beegfs-network-configuration["arquitectura de software"].
+
+.Subred: 100.127.0.0/16
+La siguiente tabla proporciona el rango para una sola subred: 100.127.0.0/16.
+
+|===
+| Específico | Puerto InfiniBand | Dirección IP o rango 
+
+
+| IP de clúster de BeeGFS | i1b o i4b | 100.127.100.1 - 100.127.100.255 
+
+
+.2+| Gestión de BeeGFS | i1b | 100.127.101.0 
+
+
+| i2b | 100.127.102.0 
+
+
+.2+| Metadatos de BeeGFS | i1b o i3b | 100.127.101.1 - 100.127.101.255 
+
+
+| i2b o i4b | 100.127.102.1 - 100.127.102.255 
+
+
+.2+| Almacenamiento de BeeGFS | i1b o i3b | 100.127.103.1 - 100.127.103.255 
+
+
+| i2b o i4b | 100.127.104.1 - 100.127.104.255 
+
+
+| Clientes BeeGFS | (varía según el cliente) | 100.127.1.1 - 100.127.99.255 
+|===
+
+
+==== IPoIB Esquema de direccionamiento de dos subredes
+
+Ya no se recomienda un esquema de direccionamiento de dos subredes, pero aún se puede implementar. Consulte las siguientes tablas para ver un esquema de dos subredes recomendado.
 
 .Subred A: 100.127.0.0/16
 En la tabla siguiente se muestra el intervalo de la subred A: 100.127.0.0/16.

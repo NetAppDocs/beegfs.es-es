@@ -32,20 +32,20 @@ La configuración del sistema varía en función del modelo de servidor que util
 +
 ** Parámetros de configuración del servicio BeeGFS
 +
-Es posible anular la configuración predeterminada para los parámetros de configuración según sea necesario. Para ver los parámetros que se pueden ajustar para sus cargas de trabajo específicas o sus casos de uso, consulte https://github.com/netappeseries/beegfs/blob/135d9a04ae96f4d202300bae870c6404b77b6865/roles/beegfs_ha_7_2/defaults/main.yml#L155["Parámetros de configuración del servicio BeeGFS"^].
+Es posible anular la configuración predeterminada para los parámetros de configuración según sea necesario. Para obtener los parámetros que puede ajustar a sus cargas de trabajo específicas o casos de uso, consulte la https://github.com/NetApp/beegfs/blob/master/roles/beegfs_ha_7_4/defaults/main.yml#L237["Parámetros de configuración del servicio BeeGFS"^].
 
 ** El formato de los volúmenes y los parámetros de montaje se establecen en los valores predeterminados recomendados y solo se deben ajustar en casos prácticos avanzados. Los valores predeterminados harán lo siguiente:
 +
 *** Optimización del formato de volumen inicial basado en el tipo de destino (como la gestión, los metadatos o el almacenamiento), junto con la configuración de RAID y el tamaño de segmentos del volumen subyacente.
 *** Ajuste cómo monta Pacemaker cada volumen para garantizar que los cambios se vacíen inmediatamente a los nodos de bloque E-Series. De este modo se evita la pérdida de datos cuando fallan nodos de archivos con las escrituras activas en curso.
 +
-Para ver los parámetros que se pueden ajustar para sus cargas de trabajo específicas o sus casos de uso, consulte https://github.com/netappeseries/beegfs/blob/135d9a04ae96f4d202300bae870c6404b77b6865/roles/beegfs_ha_7_2/defaults/main.yml#L258["parámetros de configuración de formato de volumen y montaje"^].
+Para obtener los parámetros que puede ajustar a sus cargas de trabajo específicas o casos de uso, consulte la https://github.com/NetApp/beegfs/blob/master/roles/beegfs_ha_7_4/defaults/main.yml#L279["parámetros de configuración de formato de volumen y montaje"^].
 
 
 
 
 
-. *Configuración del sistema en el sistema operativo Linux instalado en los nodos de archivo.* puede anular la configuración predeterminada del sistema operativo Linux cuando cree el inventario de Ansible en el paso 4 de link:beegfs-deploy-beegfs-general-config.html["Cree el inventario de Ansible"].
+. *Configuración del sistema en el sistema operativo Linux instalado en los nodos de archivos.* Puede anular la configuración predeterminada del sistema operativo Linux al crear el inventario de Ansible en el paso 4 de link:beegfs-deploy-create-inventory.html["Cree el inventario de Ansible"].
 +
 La configuración predeterminada se utilizó para validar BeeGFS en la solución de NetApp, pero es posible modificarla para adaptarla a sus cargas de trabajo o casos de uso específicos. Algunos ejemplos de la configuración del sistema operativo Linux que puede cambiar son los siguientes:
 
@@ -71,7 +71,7 @@ Puede ajustar el regulador de frecuencia de la CPU y otras configuraciones de la
 
 ** Tamaño de solicitud de lectura.
 +
-Puede aumentar el tamaño máximo de solicitud de lectura para los profesionales de Mellanox.
+Puede aumentar el tamaño máximo de solicitud de lectura para las HCA de NVIDIA.
 
 
 

@@ -37,7 +37,7 @@ Al planificar la instalación, es importante que todo el equipo de cada bloque d
 
 Ejemplo de un solo elemento básico:
 
-image:../media/buildingblock.png["ejemplo de bloque de construcción"]
+image:../media/buildingblock-sr665v3.png["ejemplo de bloque de construcción"]
 
 Ejemplo de una instalación de BeeGFS de gran tamaño en la que hay varios elementos básicos en cada clúster de alta disponibilidad y varios clústeres de alta disponibilidad en el sistema de archivos:
 

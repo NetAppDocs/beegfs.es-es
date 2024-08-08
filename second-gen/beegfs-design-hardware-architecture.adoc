@@ -47,7 +47,7 @@ En la siguiente figura, observe que:
 image:../media/beegfs-design-image6.png[""]
 
 
-NOTE: Para las redes de almacenamiento con switches redundantes, los puertos descritos en verde claro deben conectarse a un switch y los puertos en verde oscuro a otro switch.
+NOTE: Cuando se utilizan cables divisores para conectar el switch de almacenamiento a nodos de archivos, un cable debe ramificarse y conectarse a los puertos descritos en verde claro. Otro cable debe ramificarse y conectarse a los puertos señalados en verde oscuro. Además, para las redes de almacenamiento con switches redundantes, los puertos descritos en verde claro deben conectarse a un switch, mientras que los puertos de verde oscuro deben conectarse a otro switch.
 
 La configuración del cableado que se muestra en la figura permite a cada servicio BeeGFS:
 
@@ -57,7 +57,7 @@ La configuración del cableado que se muestra en la figura permite a cada servic
 
 
 .Cableado para aprovechar el ancho de banda
-Para aprovechar todo el ancho de banda bidireccional de PCIe, asegúrese de que un puerto de cada adaptador InfiniBand se conecta a la estructura de almacenamiento y el otro puerto se conecta a un nodo de bloque. La velocidad máxima teórica de un puerto HDR InfiniBand es de 25 Gbps (sin tener en cuenta la señalización y otros gastos generales). El ancho de banda máximo de dirección única de una ranura PCIe 4.0 x16 es de 32 GB/s, lo que crea un posible cuello de botella al implementar nodos de archivos que incorporen adaptadores InfiniBand de puerto doble que en teoría puedan manejar 50 GB/s de ancho de banda.
+Para aprovechar todo el ancho de banda bidireccional de PCIe, asegúrese de que un puerto de cada adaptador InfiniBand se conecta a la estructura de almacenamiento y el otro puerto se conecta a un nodo de bloque.
 
 La siguiente figura muestra el diseño del cableado utilizado para aprovechar todo el ancho de banda bidireccional de PCIe.
 

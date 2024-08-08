@@ -52,7 +52,7 @@ Utilice RedHat Subscription Manager para registrar y suscribirse al sistema para
 Active el repositorio de Red Hat que contiene los paquetes necesarios para la alta disponibilidad:
 
 ....
-subscription-manager repo-override --repo=rhel-8-for-x86_64-highavailability-rpms --add=enabled:1
+subscription-manager repo-override --repo=rhel-9-for-x86_64-highavailability-rpms --add=enabled:1
 ....
 
 

@@ -17,18 +17,23 @@ summary: 'Cada elemento básico consta de dos nodos de archivos x86 validados co
 Cada elemento básico consta de dos nodos de archivos x86 validados conectados directamente a dos nodos de bloque mediante cables InfiniBand HDR (200 GB).
 
 
-NOTE: Debido a que cada bloque de creación incluye dos nodos de archivo BeeGFS, se requiere un mínimo de dos bloques de construcción para establecer el quórum en el clúster de conmutación por error. Si bien es posible configurar un clúster de dos nodos, existen limitaciones en esta configuración que pueden evitar que se produzca una conmutación al respaldo correcta en algunos casos. Si se requiere un clúster de dos nodos, también es posible incorporar un tercer dispositivo como tiebreaker, aunque este procedimiento no se contempla.
+NOTE: Se necesita un mínimo de dos bloques de construcción para establecer el quórum en el clúster de conmutación por error. Un clúster de dos nodos tiene limitaciones que podrían impedir que se produzca una conmutación al respaldo correcta. Puede configurar un clúster de dos nodos incorporando un tercer dispositivo como tiebreaker; sin embargo, esta documentación no describe ese diseño.
 
-A menos que se indique lo contrario, los pasos siguientes son idénticos para cada bloque de creación del clúster independientemente de si se utiliza únicamente para ejecutar metadatos y servicios de almacenamiento o servicios de almacenamiento de BeeGFS.
+Los siguientes pasos son idénticos para cada elemento básico del clúster, independientemente de si se utiliza para ejecutar servicios de metadatos y almacenamiento de BeeGFS, o solo servicios de almacenamiento, a menos que se especifique lo contrario.
 
 .Pasos
-. Configure cada nodo de archivo BeeGFS con cuatro adaptadores de canal host (HCA) de doble puerto PCIe 4.0 ConnectX-6 en modo InfiniBand e instálelos en las ranuras PCIe 2, 3, 5 y 6.
+. Configure cada nodo de archivo BeeGFS con cuatro adaptadores de canal de host (HCA) utilizando los modelos especificados en la link:beegfs-technology-requirements.html["Requisitos técnicos"]. Inserte las HCA en las ranuras PCIe del nodo de archivo de acuerdo con las especificaciones siguientes:
++
+** *Servidor Lenovo ThinkSystem SR665 V3:* Utilice las ranuras PCIe 1, 2, 4 y 5.
+** *Servidor Lenovo ThinkSystem SR665:* Utilice las ranuras PCIe 2, 3, 5 y 6.
+
+
 . Configure cada nodo de bloque BeeGFS con una tarjeta de interfaz del host (HIC) de 200 GB de puerto doble e instale la HIC en cada una de sus dos controladoras de almacenamiento.
 +
-Monte en rack los bloques de creación de forma que los dos nodos de archivo BeeGFS se encuentren por encima de los nodos de bloque BeeGFS. La siguiente figura muestra la configuración de hardware correcta para el bloque de creación BeeGFS (vista trasera).
+Monte en rack los bloques de creación de forma que los dos nodos de archivo BeeGFS se encuentren por encima de los nodos de bloque BeeGFS. La siguiente figura muestra la configuración correcta del hardware para el bloque de construcción BeeGFS que utiliza los servidores Lenovo ThinkSystem SR665 V3 como nodos de archivo (vista posterior).
 
 +
-image:../media/buildingblock.png[""]
+image:../media/buildingblock-sr665v3.png[""]
 
 +
 
@@ -43,17 +48,20 @@ image:../media/driveslots.png[""]
 
 
 
-. Para cablear los nodos de archivos y bloques, utilice cables de cobre de conexión directa HDR de 1 m para que coincidan con la topología que se muestra en la siguiente figura.
+. Conecte los nodos de bloque y archivo con link:beegfs-technology-requirements.html#block-file-cables["1M cables de cobre de conexión directa InfiniBand HDR 200GB"], de modo que coincidan con la topología que se muestra en la siguiente figura.
 +
-image:../media/directattachcable.png[""]
+image:../media/directattachcable-sr665v3.png[""]
 
 +
 
 NOTE: Los nodos de varios elementos básicos nunca están conectados directamente. Cada bloque se debe tratar como una unidad independiente y toda la comunicación entre los bloques de construcción se produce a través de conmutadores de red.
 
-. Utilice 2 m (o la longitud adecuada) InfiniBand HDR 200 GB cables de cobre de conexión directa para conectar los puertos InfiniBand restantes de cada nodo de archivo a los switches InfiniBand que se usarán para la red de almacenamiento.
+. Conecte los puertos InfiniBand restantes del nodo de archivos al switch InfiniBand de la red de almacenamiento mediante el link:beegfs-technology-requirements.html#file-switch-cables["2m cables InfiniBand"] switch de almacenamiento InfiniBand específico del switch de almacenamiento.
 +
-Si hay switches InfiniBand redundantes en uso, conecte los puertos resaltados en verde claro en la siguiente figura a switches diferentes.
+Cuando se utilizan cables divisores para conectar el switch de almacenamiento a nodos de archivos, un cable debe ramificarse del switch y conectarse a los puertos descritos en verde claro. Otro cable del divisor debe desviarse del interruptor y conectarse a los puertos señalados en verde oscuro.
+
++
+Además, para las redes de almacenamiento con switches redundantes, los puertos descritos en verde claro deben conectarse a un switch, mientras que los puertos de verde oscuro deben conectarse a otro switch.
 
 +
 image:../media/networkcable.png[""]

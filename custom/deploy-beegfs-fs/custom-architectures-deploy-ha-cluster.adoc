@@ -111,7 +111,7 @@ Cree el archivo `playbook.yml` y rellenarlo de la siguiente manera:
   tasks:
     - name: Verify the BeeGFS HA cluster is properly deployed.
       import_role:
-        name: beegfs_ha_7_3 # Alternatively specify: beegfs_ha_7_2.
+        name: beegfs_ha_7_4 # Alternatively specify: beegfs_ha_7_3.
 ----
 +
 

@@ -55,47 +55,59 @@ Los cuatro servicios principales se ejecutan en una amplia gama de distribucione
 
 
 
+== Arquitectura de ALTA DISPONIBILIDAD
+
+BeeGFS en NetApp amplía la funcionalidad de la edición empresarial de BeeGFS mediante la creación de una solución totalmente integrada en hardware de NetApp que permite una arquitectura de alta disponibilidad (ha) de disco compartido.
+
+
+NOTE: Aunque la edición de la comunidad BeeGFS puede utilizarse de forma gratuita, la edición para empresas requiere adquirir un contrato de suscripción de soporte profesional de un partner como NetApp. La edición empresarial permite utilizar varias funciones adicionales como la resiliencia, la aplicación de cuotas y pools de almacenamiento.
+
+En la figura siguiente se comparan las arquitecturas de alta disponibilidad de disco compartido y nada compartido.
+
+image:../media/beegfs-design-image1.png[""]
+
+Para obtener más información, consulte https://www.netapp.com/blog/high-availability-beegfs/["Anuncio de alta disponibilidad de BeeGFS compatible con NetApp"^].
+
+
+
 == Nodos verificados
 
-BeeGFS en la solución NetApp incluye los siguientes nodos verificados: El sistema de almacenamiento EF600 de NetApp (nodo de bloque) y el servidor Lenovo ThinkSystem SR665 (nodo de archivo).
+La solución BeeGFS en NetApp ha verificado los nodos que se indican a continuación.
+
+[cols="10%,20%,70%"]
+|===
+| Nodo | Hardware subyacente | Detalles 
 
 
-
-=== Nodo de bloques: Sistema de almacenamiento EF600
-
-La cabina all-flash EF600 de NetApp ofrece acceso a los datos consistente y casi en tiempo real al tiempo que admite cualquier número de cargas de trabajo de forma simultánea. Para posibilitar una alimentación continua y rápida de datos en aplicaciones de IA y HPC, los sistemas de almacenamiento EF600 proporcionan hasta dos millones de IOPS de lectura en caché, tiempos de respuesta inferiores a 100 microsegundos y ancho de banda de lectura secuencial de 42 Gbps en un compartimento.
+| Bloque | Sistema de almacenamiento EF600 de NetApp | Una cabina de almacenamiento 2U íntegramente con NVMe de alto rendimiento diseñada para cargas de trabajo exigentes. 
 
 
+.2+| Archivo | Servidor Lenovo ThinkSystem SR665 V3 | Un servidor 2U de dos zócalos con PCIe 5,0, procesadores dobles AMD EPYC 9124. Para obtener más información sobre el Lenovo SR665 V3, consulte https://lenovopress.lenovo.com/lp1608-thinksystem-sr665-v3-server["El sitio web de Lenovo"^]. 
 
-=== Nodo de archivo: Servidor Lenovo ThinkSystem SR665
 
-El SR665 es un servidor 2U de dos sockets con PCIe 4.0. Cuando se configura para cumplir los requisitos de esta solución, proporciona un gran rendimiento para ejecutar servicios de archivos BeeGFS en una configuración equilibrada con la disponibilidad del rendimiento y los IOPS proporcionados por los nodos E-Series de conexión directa.
-
-Para obtener más información sobre el Lenovo SR665, consulte https://lenovopress.com/lp1269-thinksystem-sr665-server["El sitio web de Lenovo"^].
-
+| Servidor Lenovo ThinkSystem SR665 | Un servidor 2U de dos zócalos con PCIe 4,0, procesadores dobles AMD EPYC 7003. Para obtener más información sobre el Lenovo SR665, consulte https://lenovopress.lenovo.com/lp1269-thinksystem-sr665-server["El sitio web de Lenovo"^]. 
+|===
 
 
 == Diseño de hardware verificado
 
-Los elementos básicos de la solución (que se muestran en la siguiente figura) utilizan dos servidores compatibles con PCIe de 4.0 socket doble para la capa de archivo BeeGFS y dos sistemas de almacenamiento EF600 como la capa de bloque.
+Los elementos básicos de la solución (que se muestran en la siguiente figura) utilizan los servidores de nodos de archivo verificados para la capa de archivo BeeGFS y dos sistemas de almacenamiento EF600 como capa de bloques.
 
 image:../media/beegfs-design-image2-small.png[""]
 
+La solución BeeGFS en NetApp se ejecuta en todos los elementos básicos de la puesta en marcha. El primer elemento básico puesto en marcha debe ejecutar los servicios de gestión, metadatos y almacenamiento de BeeGFS (conocido como el elemento básico). Todos los componentes posteriores se pueden configurar a través de software para ampliar los metadatos y los servicios de almacenamiento, o bien para proporcionar servicios de almacenamiento de forma exclusiva. Este enfoque modular permite escalar el sistema de archivos a las necesidades de una carga de trabajo utilizando las mismas plataformas de hardware subyacentes y el diseño de elementos básicos.
 
-NOTE: Debido a que cada bloque de creación incluye dos nodos de archivo BeeGFS, se requiere un mínimo de dos bloques de construcción para establecer el quórum en el clúster de conmutación por error. Si bien puede configurar un clúster de dos nodos, esta configuración tiene límites que podrían impedir que se produzca una conmutación al respaldo correcta. Si necesita un clúster de dos nodos, puede incorporar un tercer dispositivo como tiebreaker (sin embargo, ese diseño no está incluido en este sitio).
+Se pueden desplegar hasta cinco elementos básicos para formar un clúster de alta disponibilidad de Linux independiente. Esto optimiza la gestión de recursos con Pacemaker y mantiene una sincronización eficiente con Corosync. Uno o varios de estos clústeres HA de BeeGFS independientes se han combinado para crear un sistema de archivos BeeGFS al que pueden acceder los clientes como un único espacio de nombres de almacenamiento. En cuanto al hardware, un solo rack de 42U puede acomodar hasta cinco elementos básicos, junto con dos switches InfiniBand de 1U Gb para la red de almacenamiento/datos. Consulte el gráfico siguiente para obtener una representación visual.
 
-Cada elemento básico proporciona una alta disponibilidad mediante un diseño de hardware de dos niveles que separa los dominios de fallo de las capas de archivos y bloques. Cada nivel puede conmutar por error de forma independiente, lo que proporciona mayor resiliencia y reduce el riesgo de fallos en cascada. El uso de HDR InfiniBand junto con NVMeOF proporciona un alto rendimiento y una latencia mínima entre los nodos de archivo y bloque, con total redundancia y suficiente sobresuscripción de enlace para evitar que el diseño desagregado se convierta en un cuello de botella, incluso cuando el sistema se encuentra parcialmente degradado.
 
-La solución BeeGFS en NetApp se ejecuta en todos los elementos básicos de la puesta en marcha. El primer elemento básico puesto en marcha debe ejecutar los servicios de gestión, metadatos y almacenamiento de BeeGFS (lo que se denomina bloque básico). Todos los elementos básicos siguientes se configuran mediante el software para ejecutar los servicios de almacenamiento y metadatos de BeeGFS, o solo los servicios de almacenamiento. La disponibilidad de diferentes perfiles de configuración para cada elemento básico permite escalar los metadatos del sistema de archivos o la capacidad de almacenamiento y el rendimiento utilizando las mismas plataformas de hardware subyacentes y el diseño de elementos básicos.
-
-Se combinan hasta cinco elementos básicos en un clúster ha independiente de Linux, lo que garantiza un número razonable de recursos por administrador de recursos de clúster (Pacemaker) y reduce la sobrecarga de mensajería necesaria para mantener los miembros del clúster sincronizados (Corosync). Se recomienda un mínimo de dos bloques de creación por clúster para permitir que haya suficientes miembros para establecer quórum. Uno o varios de estos clústeres de alta disponibilidad de BeeGFS independientes se combinan para crear un sistema de archivos BeeGFS (que se muestra en la siguiente figura) al que los clientes pueden acceder como un único espacio de nombres de almacenamiento.
+NOTE: Se necesita un mínimo de dos bloques de construcción para establecer el quórum en el clúster de conmutación por error. Un clúster de dos nodos tiene limitaciones que podrían impedir que se produzca una conmutación al respaldo correcta. Puede configurar un clúster de dos nodos incorporando un tercer dispositivo como tiebreaker; sin embargo, esta documentación no describe ese diseño.
 
 image:../media/beegfs-design-image3.png[""]
 
-Aunque en última instancia, el número de elementos básicos por rack depende de los requisitos de alimentación y refrigeración de un determinado sitio, La solución se diseñó de manera que se puedan poner en marcha hasta cinco elementos básicos en un único rack de 42U, sin dejar espacio para dos switches InfiniBand de 1U que se utilicen para la red de almacenamiento/datos. Cada bloque de construcción requiere ocho puertos IB (cuatro por switch para obtener redundancia), de modo que cinco bloques de construcción dejan la mitad de los puertos en un conmutador HDR InfiniBand de 40 puertos (como NVIDIA QM8700) disponibles para implementar un árbol de grasa o una topología similar sin bloqueo. Esta configuración garantiza que se pueda escalar el número de racks de almacenamiento o de computación o GPU sin que se produzcan cuellos de botella en la red. De manera opcional, se puede utilizar una estructura de almacenamiento suscripción excesiva por recomendación del proveedor de estructuras de almacenamiento.
 
-La siguiente imagen muestra una topología de árbol FAT de 80 nodos.
 
-image:../media/beegfs-design-image4.png[""]
+== Ansible
 
-Con Ansible como motor de puesta en marcha para poner en marcha BeeGFS en NetApp, los administradores pueden mantener todo el entorno usando una infraestructura moderna como prácticas de código. Esto simplifica drásticamente lo que, de lo contrario, sería un sistema complejo, lo que permitiría a los administradores definir y ajustar la configuración en un único lugar y, a continuación, garantizar que se aplica de forma consistente independientemente del tamaño del entorno escalable. La colección BeeGFS está disponible en https://galaxy.ansible.com/netapp_eseries/beegfs["Galaxia de ansible"^] y.. https://github.com/netappeseries/beegfs/["GitHub de E-Series de NetApp"^].
+BeeGFS en NetApp se entrega y se pone en marcha mediante la automatización de Ansible, que se encuentra alojado en GitHub y Ansible Galaxy (puede acceder a la colección BeeGFS en https://galaxy.ansible.com/netapp_eseries/beegfs["Galaxia de ansible"^] y.. https://github.com/netappeseries/beegfs/["GitHub de E-Series de NetApp"^]). A pesar de que Ansible se prueba principalmente con el hardware utilizado para ensamblar los elementos básicos de BeeGFS, puede configurarlo para que se ejecute prácticamente en cualquier servidor basado en x86 utilizando una distribución de Linux compatible.
+
+Para obtener más información, consulte https://www.netapp.com/blog/deploying-beegfs-eseries/["Puesta en marcha de BeeGFS con almacenamiento E-Series"^].
