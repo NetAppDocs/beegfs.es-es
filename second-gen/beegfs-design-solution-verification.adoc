@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar 
-permalink: beegfs-design-solution-verification.html 
+permalink: second-gen/beegfs-design-solution-verification.html 
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
 summary: El diseño de segunda generación de BeeGFS en la solución de NetApp se verificó mediante tres perfiles de configuración de bloques básicos. 
 ---
@@ -10,7 +10,7 @@ summary: El diseño de segunda generación de BeeGFS en la solución de NetApp s
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [role="lead"]
@@ -27,7 +27,7 @@ Los elementos básicos se conectaron a dos switches NVIDIA Quantum InfiniBand (M
 
 En la siguiente figura, se muestra la configuración de BeeGFS que se utiliza para validar BeeGFS en la solución de NetApp.
 
-image:beegfs-design-image12.png[""]
+image:beegfs-design-image12.png["Configuración de validación de BeeGFS"]
 
 
 
@@ -57,22 +57,22 @@ mpirun --allow-run-as-root --mca btl tcp -np 48 -map-by node -hostfile 10xnodes 
 .Un elemento básico de BeeGFS (gestión, metadatos y almacenamiento)
 En la siguiente figura, se muestran los resultados de la prueba IOR con un solo elemento básico de BeeGFS (gestión, metadatos y almacenamiento).
 
-image:beegfs-design-image13.png[""]
+image:beegfs-design-image13.png["Resultados de IOR de bloque de construcción base de BeeGFS individual"]
 
 .Metadatos BeeGFS + elemento básico de almacenamiento
 En la siguiente figura se muestran los resultados de la prueba IOR con un único bloque de creación de almacenamiento y metadatos BeeGFS.
 
-image:beegfs-design-image14.png[""]
+image:beegfs-design-image14.png["Resultados de IOR de metadatos y elementos básicos de almacenamiento únicos de BeeGFS"]
 
 .Elemento básico de sólo almacenamiento BeeGFS
 En la siguiente figura se muestran los resultados de la prueba IOR con un solo elemento básico de almacenamiento BeeGFS.
 
-image:beegfs-design-image15.png[""]
+image:beegfs-design-image15.png["Resultados de IOR del almacenamiento BeeGFS único"]
 
 .Tres elementos básicos de BeeGFS
 En la siguiente figura se muestran los resultados de la prueba IOR con tres bloques de construcción BeeGFS.
 
-image:beegfs-design-image16.png[""]
+image:beegfs-design-image16.png["Tres resultados de los bloques de construcción de BeeGFS IOR"]
 
 Según lo esperado, la diferencia de rendimiento entre el bloque básico y el bloque básico de metadatos + almacenamiento posterior es mínima. Si comparamos el elemento básico de metadatos + almacenamiento con un elemento básico exclusivo del almacenamiento, el rendimiento de lectura se aprecia un ligero aumento en el rendimiento de lectura debido a las unidades adicionales utilizadas como destino del almacenamiento. Sin embargo, no existe una diferencia significativa en el rendimiento de escritura. Para lograr un mayor rendimiento, puede añadir varios elementos básicos juntos para escalar el rendimiento de forma lineal.
 
@@ -88,7 +88,7 @@ El modo de almacenamiento en caché nativo utiliza la memoria caché de página 
 
 En el siguiente diagrama se muestran los resultados de las pruebas IOR con tres bloques de creación BeeGFS y un único cliente.
 
-image:beegfs-design-image17.png[""]
+image:beegfs-design-image17.png["Tres elementos básicos BeeGFS con resultados IOR de un solo cliente"]
 
 
 NOTE: La segmentación de BeeGFS para estas pruebas se estableció en un tamaño de archivo de 1 MB con ocho objetivos por archivo.
@@ -111,12 +111,12 @@ El rendimiento de los metadatos se midió primero con uno entonces dos metadatos
 .Un elemento básico de metadatos BeeGFS + almacenamiento
 En el siguiente diagrama se muestran los resultados de MDTest con un bloque de creación de almacenamiento y metadatos BeeGFS.
 
-image:beegfs-design-image18.png[""]
+image:beegfs-design-image18.png["Resultados de MDTest de metadatos y elementos básicos de almacenamiento únicos de BeeGFS"]
 
 .Dos metadatos BeeGFS + elementos básicos de almacenamiento
 El siguiente diagrama muestra los resultados de MDTest con dos metadatos BeeGFS + bloques de almacenamiento.
 
-image:beegfs-design-image19.png[""]
+image:beegfs-design-image19.png["Dos metadatos BeeGFS y elementos básicos de almacenamiento Resultados de MDTest"]
 
 
 

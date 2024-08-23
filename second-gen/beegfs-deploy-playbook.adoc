@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar 
-permalink: beegfs-deploy-playbook.html 
+permalink: second-gen/beegfs-deploy-playbook.html 
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
 summary: La puesta en marcha y gestión de la configuración implica la ejecución de uno o más libros de estrategia que contengan las tareas que Ansible necesita para ejecutar y llevar el sistema general al estado deseado. 
 ---
@@ -10,7 +10,7 @@ summary: La puesta en marcha y gestión de la configuración implica la ejecuci�
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [role="lead"]
@@ -103,7 +103,7 @@ ansible-playbook -i inventory.yml playbook.yml --forks 20
 ....
 +
 
-NOTE: Especialmente para puestas en marcha más grandes, sobreponiendo el número predeterminado de horquillas (5) utilizando el `forks` Se recomienda aumentar el número de hosts que Ansible configura en paralelo. (Para obtener más información, consulte  https://www.ansible.com/blog/ansible-performance-tuning["Ajuste del rendimiento de Ansible"^] y.. https://docs.ansible.com/ansible/latest/user_guide/playbooks_strategies.html["Control de la ejecución del libro de estrategia"^].) El valor máximo depende de la potencia de procesamiento disponible en el nodo de control Ansible. El ejemplo anterior de 20 se ejecutó en un nodo de control de Ansible virtual con 4 CPU (CPU Intel(R) Xeon(R) Gold 6146 a 3,20 GHz).
+NOTE: Especialmente para implementaciones más grandes, `forks` se recomienda sobrescribir el número predeterminado de forks (5) que utiliza el parámetro para aumentar el número de hosts que Ansible configura en paralelo. (Para obtener más información, consulte https://docs.ansible.com/ansible/latest/user_guide/playbooks_strategies.html["Control de la ejecución del libro de estrategia"^].) El valor máximo depende de la potencia de procesamiento disponible en el nodo de control de Ansible. El ejemplo anterior de 20 se ejecutó en un nodo de control de Ansible virtual con 4 CPU (CPU Intel(R) Xeon(R) Gold 6146 a 3,20 GHz).
 
 +
 Según el tamaño de la puesta en marcha y el rendimiento de la red entre el nodo de control de Ansible y los nodos de archivo y bloque de BeeGFS, el tiempo de puesta en marcha puede variar.

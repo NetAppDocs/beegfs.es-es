@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar 
-permalink: beegfs-deploy-setting-up-an-ansible-control-node.html 
+permalink: second-gen/beegfs-deploy-setting-up-an-ansible-control-node.html 
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
 summary: Para configurar un nodo de control de Ansible, identifique una máquina virtual o física con acceso de red a los puertos de gestión de todos los nodos de archivos y bloques que puedan usarse para configurar la solución. 
 ---
@@ -10,7 +10,7 @@ summary: Para configurar un nodo de control de Ansible, identifique una máquina
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [role="lead"]

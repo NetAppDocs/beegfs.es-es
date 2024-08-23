@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar 
-permalink: beegfs-deploy-hardware.html 
+permalink: second-gen/beegfs-deploy-hardware.html 
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
 summary: 'Cada elemento básico consta de dos nodos de archivos x86 validados conectados directamente mediante InfiniBand HDR (200 GB) a dos nodos de bloque de NetApp.' 
 ---
@@ -10,7 +10,7 @@ summary: 'Cada elemento básico consta de dos nodos de archivos x86 validados co
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [role="lead"]
@@ -33,7 +33,7 @@ Los siguientes pasos son idénticos para cada elemento básico del clúster, ind
 Monte en rack los bloques de creación de forma que los dos nodos de archivo BeeGFS se encuentren por encima de los nodos de bloque BeeGFS. La siguiente figura muestra la configuración correcta del hardware para el bloque de construcción BeeGFS que utiliza los servidores Lenovo ThinkSystem SR665 V3 como nodos de archivo (vista posterior).
 
 +
-image:../media/buildingblock-sr665v3.png[""]
+image:buildingblock-sr665v3.png["Elemento básico"]
 
 +
 
@@ -44,13 +44,13 @@ NOTE: La configuración de la fuente de alimentación para los casos de uso de p
 .. Si se va a utilizar el bloque de creación para ejecutar metadatos y servicios de almacenamiento de BeeGFS y unidades más pequeñas para volúmenes de metadatos, compruebe que estén ocupados en las ranuras de unidad más externas, como se muestra en la siguiente figura.
 .. Para todas las configuraciones de bloques de construcción, si un compartimento de unidades no está completamente cargado, asegúrese de que se llena un mismo número de unidades en las ranuras 0–11 y 12–23 para obtener un rendimiento óptimo.
 +
-image:../media/driveslots.png[""]
+image:driveslots.png["EF600 ranuras de unidad"]
 
 
 
 . Conecte los nodos de bloque y archivo con link:beegfs-technology-requirements.html#block-file-cables["1M cables de cobre de conexión directa InfiniBand HDR 200GB"], de modo que coincidan con la topología que se muestra en la siguiente figura.
 +
-image:../media/directattachcable-sr665v3.png[""]
+image:directattachcable-sr665v3.png["Cableado de conexión directa SR665V3"]
 
 +
 
@@ -64,7 +64,7 @@ Cuando se utilizan cables divisores para conectar el switch de almacenamiento a 
 Además, para las redes de almacenamiento con switches redundantes, los puertos descritos en verde claro deben conectarse a un switch, mientras que los puertos de verde oscuro deben conectarse a otro switch.
 
 +
-image:../media/networkcable.png[""]
+image:networkcable-sr665v3.png["Cableado de red de almacenamiento"]
 
 . Según sea necesario, monte elementos básicos adicionales siguiendo las mismas directrices de cableado.
 +

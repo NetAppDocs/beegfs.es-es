@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar 
-permalink: beegfs-deploy-recommended-volume-percentages.html 
+permalink: second-gen/beegfs-deploy-recommended-volume-percentages.html 
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
 summary: Si sigue los cuatro volúmenes estándar por configuración de pool de almacenamiento para bloques básicos de segunda generación, consulte estos porcentajes recomendados. 
 ---
@@ -10,7 +10,7 @@ summary: Si sigue los cuatro volúmenes estándar por configuración de pool de 
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [role="lead"]

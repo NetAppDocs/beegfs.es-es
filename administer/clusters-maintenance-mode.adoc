@@ -1,0 +1,53 @@
+---
+sidebar: sidebar 
+permalink: administer/clusters-maintenance-mode.html 
+keywords: BeeGFS on NetApp, HA, Cluster, Administration, maintenance 
+summary: Evite que el clúster de alta disponibilidad reaccione accidentalmente a los cambios previstos del entorno. 
+---
+= Coloque el clúster en modo de mantenimiento
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Evite que el clúster de alta disponibilidad reaccione accidentalmente a los cambios previstos del entorno.
+
+
+
+== Descripción general
+
+Si pone el clúster en el modo de mantenimiento, se deshabilita toda la supervisión de recursos y se impide que Pacemaker mueva o gestione los recursos del clúster de algún otro modo. Todos los recursos permanecerán en ejecución en sus nodos originales, independientemente de que haya una condición de fallo temporal que impida que se pueda acceder a ellos. Los escenarios en los que esto es recomendable/útil incluyen:
+
+* Mantenimiento de red que puede interrumpir temporalmente las conexiones entre nodos de archivo y servicios BeeGFS.
+* Actualizaciones de nodos de bloques.
+* Actualizaciones del sistema operativo, el kernel u otros paquetes del nodo de archivos.
+
+
+Por lo general, el único motivo para poner manualmente el clúster en modo de mantenimiento es impedir que este reaccione a cambios externos en el entorno. Si un nodo individual del clúster requiere reparación física no utilice modo de mantenimiento y simplemente coloque ese nodo en espera tras el procedimiento anterior. Tenga en cuenta que el nuevo enrutamiento de Ansible pondrá automáticamente el clúster en modo de mantenimiento para facilitar la mayoría de las tareas de mantenimiento de software, incluidas las actualizaciones y los cambios de configuración.
+
+
+
+== Pasos
+
+Para comprobar si el clúster se encuentra en modo de mantenimiento ejecutar:
+
+[source, console]
+----
+pcs property show maintenance-mode
+----
+Esto devolverá el valor false cuando el clúster esté funcionando normalmente. Para habilitar la ejecución del modo de mantenimiento:
+
+[source, console]
+----
+pcs property set maintenance-mode=true
+----
+Puede verificar ejecutando el estado del pc y asegurando que todos los recursos muestren "(no administrado)". Para desconectar el clúster del modo de mantenimiento ejecute:
+
+[source, console]
+----
+pcs property set maintenance-mode=false
+----

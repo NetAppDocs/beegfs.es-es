@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar 
-permalink: beegfs-architecture-overview.html 
+permalink: second-gen/beegfs-architecture-overview.html 
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
 summary: BeeGFS en la solución de NetApp incluye consideraciones de diseño arquitectónico utilizadas para determinar el equipo, el cableado y las configuraciones específicos necesarios para admitir cargas de trabajo validadas. 
 ---
@@ -10,7 +10,7 @@ summary: BeeGFS en la solución de NetApp incluye consideraciones de diseño arq
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [role="lead"]
@@ -47,7 +47,7 @@ El sistema de archivos BeeGFS incluye los siguientes servicios principales:
 
 En la siguiente figura, se muestran los componentes de la solución BeeGFS y las relaciones que se utilizan con los sistemas E-Series de NetApp.
 
-image:../media/beegfs-components.png[""]
+image:beegfs-components.png["Componentes BeeGFS"]
 
 Como sistema de archivos paralelo, BeeGFS segmenta sus archivos en varios nodos de servidor para maximizar el rendimiento de lectura/escritura y la escalabilidad. Los nodos de servidor funcionan juntos para proporcionar un único sistema de archivos que se puede montar y acceder simultáneamente por otros nodos de servidor, comúnmente conocidos como _clients_. Estos clientes pueden ver y consumir el sistema de archivos distribuido de forma similar a un sistema de archivos local como NTFS, XFS o ext4.
 
@@ -64,7 +64,7 @@ NOTE: Aunque la edición de la comunidad BeeGFS puede utilizarse de forma gratui
 
 En la figura siguiente se comparan las arquitecturas de alta disponibilidad de disco compartido y nada compartido.
 
-image:../media/beegfs-design-image1.png[""]
+image:beegfs-design-image1.png["Comparación de arquitecturas de ALTA DISPONIBILIDAD"]
 
 Para obtener más información, consulte https://www.netapp.com/blog/high-availability-beegfs/["Anuncio de alta disponibilidad de BeeGFS compatible con NetApp"^].
 
@@ -93,7 +93,7 @@ La solución BeeGFS en NetApp ha verificado los nodos que se indican a continuac
 
 Los elementos básicos de la solución (que se muestran en la siguiente figura) utilizan los servidores de nodos de archivo verificados para la capa de archivo BeeGFS y dos sistemas de almacenamiento EF600 como capa de bloques.
 
-image:../media/beegfs-design-image2-small.png[""]
+image:beegfs-design-image2-small.png["Elemento básico"]
 
 La solución BeeGFS en NetApp se ejecuta en todos los elementos básicos de la puesta en marcha. El primer elemento básico puesto en marcha debe ejecutar los servicios de gestión, metadatos y almacenamiento de BeeGFS (conocido como el elemento básico). Todos los componentes posteriores se pueden configurar a través de software para ampliar los metadatos y los servicios de almacenamiento, o bien para proporcionar servicios de almacenamiento de forma exclusiva. Este enfoque modular permite escalar el sistema de archivos a las necesidades de una carga de trabajo utilizando las mismas plataformas de hardware subyacentes y el diseño de elementos básicos.
 
@@ -102,7 +102,7 @@ Se pueden desplegar hasta cinco elementos básicos para formar un clúster de al
 
 NOTE: Se necesita un mínimo de dos bloques de construcción para establecer el quórum en el clúster de conmutación por error. Un clúster de dos nodos tiene limitaciones que podrían impedir que se produzca una conmutación al respaldo correcta. Puede configurar un clúster de dos nodos incorporando un tercer dispositivo como tiebreaker; sin embargo, esta documentación no describe ese diseño.
 
-image:../media/beegfs-design-image3.png[""]
+image:beegfs-design-image3.png["Escalado de clúster de alta disponibilidad de BeeGFS"]
 
 
 

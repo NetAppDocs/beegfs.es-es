@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar 
-permalink: beegfs-design-hardware-architecture.html 
+permalink: second-gen/beegfs-design-hardware-architecture.html 
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
 summary: La configuración de hardware para BeeGFS en NetApp incluye nodos de archivo y cableado de red. 
 ---
@@ -10,7 +10,7 @@ summary: La configuración de hardware para BeeGFS en NetApp incluye nodos de ar
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [role="lead"]
@@ -26,7 +26,7 @@ Los adaptadores InfiniBand deben llenarse en las ranuras o elevadores PCI adecua
 
 En la figura siguiente se muestra la configuración NUMA del nodo de archivo.
 
-image:../media/beegfs-design-image5-small.png[""]
+image:beegfs-design-image5-small.png["Configuración de NUMA"]
 
 Los procesos BeeGFS se anclan a una zona NUMA en particular para garantizar que las interfaces utilizadas se encuentren en la misma zona. Esta configuración evita la necesidad de acceso remoto a través de la conexión entre sockets. La conexión entre zócalos se conoce a veces como el enlace QPI o GMI2; incluso en arquitecturas de procesador modernas, pueden crear un cuello de botella al utilizar redes de alta velocidad como HDR InfiniBand.
 
@@ -44,7 +44,7 @@ En la siguiente figura, observe que:
 * Los puertos del nodo NUMA 1 se conectan al segundo nodo de bloque.
 
 
-image:../media/beegfs-design-image6.png[""]
+image:beegfs-design-image6.png["Cableado de red"]
 
 
 NOTE: Cuando se utilizan cables divisores para conectar el switch de almacenamiento a nodos de archivos, un cable debe ramificarse y conectarse a los puertos descritos en verde claro. Otro cable debe ramificarse y conectarse a los puertos señalados en verde oscuro. Además, para las redes de almacenamiento con switches redundantes, los puertos descritos en verde claro deben conectarse a un switch, mientras que los puertos de verde oscuro deben conectarse a otro switch.
@@ -61,6 +61,6 @@ Para aprovechar todo el ancho de banda bidireccional de PCIe, asegúrese de que 
 
 La siguiente figura muestra el diseño del cableado utilizado para aprovechar todo el ancho de banda bidireccional de PCIe.
 
-image:../media/beegfs-design-image7.png[""]
+image:beegfs-design-image7.png["Ancho de banda bidireccional HCA"]
 
 Para cada servicio BeeGFS, utilice el mismo adaptador para conectar el puerto preferido utilizado para el tráfico de cliente con la ruta al controlador de nodos de bloque que es el propietario principal de dichos volúmenes de servicios. Para obtener más información, consulte link:beegfs-design-software-architecture.html["Configuración de software"].

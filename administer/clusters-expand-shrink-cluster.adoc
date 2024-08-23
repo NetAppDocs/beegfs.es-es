@@ -1,0 +1,65 @@
+---
+sidebar: sidebar 
+permalink: administer/clusters-expand-shrink-cluster.html 
+keywords: BeeGFS on NetApp, HA, Cluster, Administration, replace 
+summary: Añada o quite bloques de creación del clúster. 
+---
+= Expanda o reduzca el clúster
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Añada o quite bloques de creación del clúster.
+
+
+
+== Descripción general
+
+En esta sección se documentan varias consideraciones y opciones para ajustar el tamaño del clúster de alta disponibilidad de BeeGFS. Normalmente, el tamaño del clúster se ajusta agregando o quitando elementos básicos, que normalmente son dos nodos de archivo configurados como un par de alta disponibilidad. También es posible agregar o quitar nodos de archivos individuales (u otros tipos de nodos de clústeres) si es necesario.
+
+
+
+== Añadir una elemento básico al clúster
+
+
+
+=== Consideraciones
+
+El crecimiento del clúster mediante la adición de elementos básicos adicionales es un proceso sencillo. Antes de empezar a tener en cuenta las restricciones en torno al número mínimo y máximo de nodos de clúster en cada clúster de alta disponibilidad, y determinar si debe añadir nodos al clúster de alta disponibilidad existente o crear un nuevo clúster de alta disponibilidad. Normalmente, cada bloque de creación consta de dos nodos de archivo, pero tres nodos son el número mínimo de nodos por clúster (para establecer quórum), y diez son el máximo recomendado (probado). En situaciones avanzadas es posible añadir un solo nodo "tiebreaker" que no ejecute ningún servicio BeeGFS al poner en marcha un clúster de dos nodos. Póngase en contacto con el servicio de soporte de NetApp si está considerando realizar dicha implementación.
+
+Tenga en cuenta estas restricciones y cualquier crecimiento futuro del clúster anticipado al decidir cómo ampliar el clúster. Por ejemplo, si tiene un clúster de seis nodos y necesita añadir cuatro nodos más, se recomienda simplemente iniciar un nuevo clúster de alta disponibilidad.
+
+
+TIP: Recuerde que un solo sistema de archivos BeeGFS puede consistir en varios clústeres de alta disponibilidad independientes. Esto permite que los sistemas de archivos sigan escalando entre los límites de hardware recomendado y los componentes de clúster de alta disponibilidad subyacentes.
+
+
+
+=== Pasos
+
+Al agregar un elemento básico al clúster, deberá crear los `host_vars` archivos para cada uno de los nuevos nodos de archivo y los nodos de bloque (cabinas E-Series). Los nombres de estos hosts deben agregarse al inventario, junto con los nuevos recursos que se van a crear.  `group_vars`Se deberán crear los archivos correspondientes para cada nuevo recurso. Consulte la link:../custom/architectures-overview.html["utilizar arquitecturas personalizadas"^] sección para obtener más información.
+
+Una vez creados los archivos correctos, todo lo que se necesita es volver a ejecutar la automatización mediante el comando:
+
+[source, console]
+----
+ansible-playbook -i <inventory>.yml <playbook>.yml
+----
+
+
+== Eliminación de un elemento básico del clúster
+
+Hay una serie de consideraciones que tener en cuenta cuando se necesita retirar un bloque de construcción, por ejemplo:
+
+* ¿Qué servicios BeeGFS se están ejecutando en este bloque de creación?
+* ¿Solo se retiran los nodos de archivos y los nodos de bloque deben adjuntarse a nuevos nodos de archivos?
+* Si se retira todo el elemento básico, ¿deben moverse los datos a un nuevo elemento básico, dispersarse en nodos existentes en el clúster o moverse a un nuevo sistema de archivos BeeGFS u otro sistema de almacenamiento?
+* ¿Puede suceder esto durante una interrupción o se debe realizar de forma no disruptiva?
+* ¿El elemento básico se está utilizando de forma activa o contiene principalmente datos que ya no están activos?
+
+
+Debido a la diversidad de puntos de partida posibles y a los estados finales deseados, póngase en contacto con el soporte de NetApp para que podamos identificar y ayudar a implementar la mejor estrategia en función de su entorno y sus requisitos.

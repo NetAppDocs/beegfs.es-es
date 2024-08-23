@@ -1,0 +1,70 @@
+---
+sidebar: sidebar 
+permalink: custom/architectures-inventory-map-services-to-file-nodes.html 
+keywords: BeeGFS on NetApp, NetApp Custom Architectures, EF600 
+summary: Especifique qué nodos de archivo pueden ejecutar cada servicio BeeGFS mediante el archivo Inventory.yml. 
+---
+= Asigne servicios BeeGFS a los nodos de archivo
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Especifique qué nodos de archivo pueden ejecutar cada servicio BeeGFS mediante `inventory.yml` archivo.
+
+
+
+== Descripción general
+
+En esta sección se explica cómo crear la `inventory.yml` archivo. Esto incluye una lista de todos los nodos de bloque y especificar qué nodos de archivo pueden ejecutar cada servicio BeeGFS.
+
+
+
+== Pasos
+
+Cree el archivo `inventory.yml` y rellenarlo de la siguiente manera:
+
+. Desde la parte superior del archivo, cree la estructura de inventario estándar de Ansible:
++
+[source, yaml]
+----
+# BeeGFS HA (High_Availability) cluster inventory.
+all:
+  children:
+----
+. Cree un grupo que contenga todos los nodos de bloques que participan en este clúster de alta disponibilidad:
++
+[source, yaml]
+----
+    # Ansible group representing all block nodes:
+    eseries_storage_systems:
+      hosts:
+        <BLOCK NODE HOSTNAME>:
+        <BLOCK NODE HOSTNAME>:
+        # Additional block nodes as needed.
+----
+. Cree un grupo que contendrá todos los servicios BeeGFS del clúster y los nodos de archivo que los ejecutarán:
++
+[source, yaml]
+----
+    # Ansible group representing all file nodes:
+    ha_cluster:
+      children:
+----
+. Para cada servicio BeeGFS del clúster, defina los nodos de archivos preferidos y secundarios que deben ejecutar ese servicio:
++
+[source, yaml]
+----
+        <SERVICE>: # Ex. "mgmt", "meta_01", or "stor_01".
+          hosts:
+            <FILE NODE HOSTNAME>:
+            <FILE NODE HOSTNAME>:
+            # Additional file nodes as needed.
+----
+
+
+Haga clic en link:https://github.com/netappeseries/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/inventory.yml["aquí"^] para obtener un ejemplo de un archivo de inventario completo.

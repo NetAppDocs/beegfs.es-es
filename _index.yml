@@ -14,9 +14,9 @@ indexpage:
   - title: Manos a la obra
     links:
     - title: Descripción general de la solución
-      url: "/beegfs-solution-overview.html"
+      url: "/second-gen/beegfs-solution-overview.html"
     - title: Información general de la arquitectura
-      url: "/beegfs-architecture-overview.html"
+      url: "/second-gen/beegfs-architecture-overview.html"
     - title: 'Blog: Obtenga más información sobre BeeGFS y E-Series'
       url: https://www.netapp.com/blog/solution-support-for-beegfs-and-e-series/
     - title: Blog - BeeGFS para principiantes

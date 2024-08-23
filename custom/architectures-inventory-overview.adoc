@@ -1,0 +1,52 @@
+---
+sidebar: sidebar 
+permalink: custom/architectures-inventory-overview.html 
+keywords: BeeGFS on NetApp, NetApp Custom Architectures, EF600 
+summary: El inventario de Ansible es un conjunto de archivos de configuración que definen el clúster de alta disponibilidad de BeeGFS deseado. 
+---
+= Descripción general del inventario de Ansible
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+El inventario de Ansible es un conjunto de archivos de configuración que definen el clúster de alta disponibilidad de BeeGFS deseado.
+
+
+
+== Descripción general
+
+Se recomienda seguir las prácticas de Ansible estándar para organizar el link:https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html["inventario"], incluido el uso de link:https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html#organizing-host-and-group-variables["subdirectorios/archivos"] en lugar de almacenar todo el inventario en un archivo.
+
+El inventario de Ansible para un único clúster de alta disponibilidad de BeeGFS está organizado de la siguiente forma:
+
+image:ansible-inventory-overview.png["Descripción general del inventario de Ansible"]
+
+
+NOTE: Dado que un único sistema de archivos BeeGFS puede abarcar varios clústeres de alta disponibilidad, es posible que las instalaciones de gran tamaño tengan varios inventarios de Ansible. Por lo general, no se recomienda intentar definir varios clústeres de alta disponibilidad como un único inventario de Ansible para evitar problemas.
+
+
+
+== Pasos
+
+. En el nodo de control de Ansible, cree un directorio vacío que contendrá el inventario de Ansible para el clúster de BeeGFS que desea implementar.
++
+.. Si su sistema de archivos contendrá en algún momento varios clústeres de alta disponibilidad, se recomienda crear primero un directorio para el sistema de archivos y, a continuación, subdirectorios para el inventario que represente cada clúster de alta disponibilidad. Por ejemplo:
++
+[listing]
+----
+beegfs_file_system_1/
+    beegfs_cluster_1/
+    beegfs_cluster_2/
+    beegfs_cluster_N/
+----
+
+
+. En el directorio que contiene el inventario del clúster de alta disponibilidad que desea implementar, cree dos directorios `group_vars` y.. `host_vars` y dos archivos `inventory.yml` y.. `playbook.yml`.
+
+
+En las siguientes secciones se describe la definición del contenido de cada uno de estos archivos.
