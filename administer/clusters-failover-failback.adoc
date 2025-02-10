@@ -54,7 +54,7 @@ Una vez que el nodo esté en línea, salga del modo de espera con:
 
 [source, console]
 ----
-pcs cluster node unstandby <HOSTNAME>
+pcs node unstandby <HOSTNAME>
 ----
 Por último, reubique todos los servicios de BeeGFS en sus nodos preferidos con:
 
