@@ -14,13 +14,13 @@ summary: Pasos para actualizar las cabinas de almacenamiento E-Series del clúst
 
 
 [role="lead"]
-Siga estos pasos para actualizar las cabinas de almacenamiento E-Series del clúster de alta disponibilidad (nodos de bloque).
+Siga estos pasos para actualizar los componentes de la cabina de almacenamiento E-Series del clúster HA.
 
 
 
 == Descripción general
 
-Mantener las cabinas de almacenamiento de NetApp E-Series del clúster de alta disponibilidad actualizadas con el firmware más reciente garantiza un rendimiento óptimo y una mayor seguridad. Las actualizaciones de firmware para la cabina de almacenamiento se aplican a través de archivos de sistema operativo SANtricity, NVSRAM y firmware de la unidad.
+Mantener las cabinas de almacenamiento de NetApp E-Series del clúster de alta disponibilidad actualizadas con el firmware más reciente garantiza un rendimiento óptimo y una mayor seguridad. Las actualizaciones de firmware para la cabina de almacenamiento se aplican a través de sistema operativo SANtricity, NVSRAM y archivos de firmware de la unidad.
 
 
 IMPORTANT: Aunque las cabinas de almacenamiento se pueden actualizar con el clúster de alta disponibilidad en línea, se recomienda colocar el clúster en modo de mantenimiento para todas las actualizaciones.
@@ -65,7 +65,7 @@ Consulte link:https://docs.ansible.com/ansible/latest/collections_guide/collecti
 
 
 . Si es necesario, actualice los archivos de inventario de Ansible del clúster para incluir todas las cabinas de almacenamiento (nodos de bloque) que requieran actualizaciones. Para obtener orientación, consulte la link:../custom/architectures-inventory-overview.html["Descripción general del inventario de Ansible"^] sección.
-. Compruebe que el clúster tenga un estado óptimo y cada servicio BeeGFS se encuentre en su nodo preferido. Consulte link:clusters-examine-state.html["Examine el estado del clúster"^] para obtener más información.
+. Compruebe que el clúster tenga un estado óptimo con cada servicio de BeeGFS en el nodo preferido. Consulte link:clusters-examine-state.html["Examine el estado del clúster"^] para obtener más información.
 . Coloque el clúster en modo de mantenimiento siguiendo las instrucciones que se indican en link:clusters-maintenance-mode.html["Coloque el clúster en modo de mantenimiento"^].
 . Cree un nuevo libro de estrategia de Ansible llamado `update_block_node_playbook.yml`. Complete el libro de estrategia con el siguiente contenido, sustituyendo las versiones del sistema operativo SANtricity, NVSRAM y firmware de la unidad a la ruta de actualización que desee:
 +
