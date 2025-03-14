@@ -49,10 +49,7 @@ NOTE: Si bien no es estrictamente necesario, las secciones posteriores suponen q
 ....
 subscription-manager repo-override --repo=rhel-9-for-x86_64-highavailability-rpms --add=enabled:1
 ....
-. Actualice todo el firmware de HCA a la versión recomendada en link:beegfs-technology-requirements.html["Requisitos tecnológicos"].
-+
-Esta actualización se puede realizar descargando y ejecutando una versión de la herramienta mlxup que incluye el firmware recomendado. Puede descargar esta herramienta desde https://network.nvidia.com/support/firmware/mlxup-mft/["Mlxup: Utilidad de actualización y consulta"^] (link:https://docs.nvidia.com/networking/display/mlxupfwutility["guía del usuario"^]).
-
+. Actualice todo el firmware de HCA a la versión recomendada en link:beegfs-technology-requirements.html["Requisitos tecnológicos"] Uso de la link:..administer/clusters-update-hca-firmware.html["Actualice el firmware del adaptador de nodo de archivo"^]guía.
 
 
 
@@ -63,11 +60,11 @@ Configure los nodos de bloque EF600 configurando el puerto de gestión en cada c
 
 . Configure el puerto de gestión en cada controladora EF600.
 +
-Para obtener instrucciones sobre cómo configurar los puertos, vaya a la https://docs.netapp.com/us-en/e-series/maintenance-ef600/hpp-overview-supertask-concept.html["Centro de documentación de E-Series"^].
+Para obtener instrucciones sobre la configuración de puertos, vaya a la https://docs.netapp.com/us-en/e-series/install-hw-ef600/complete-setup-task.html#step-2-connect-and-configure-the-management-connection["Centro de documentación de E-Series"^].
 
 . De manera opcional, establezca el nombre de la cabina de almacenamiento para cada sistema.
 +
-Establecer un nombre puede facilitar la referencia a cada sistema en las secciones siguientes. Para obtener instrucciones sobre cómo configurar el nombre de la matriz, vaya a la https://docs.netapp.com/us-en/e-series/maintenance-ef600/hpp-overview-supertask-concept.html["Centro de documentación de E-Series"^].
+Establecer un nombre puede facilitar la referencia a cada sistema en las secciones siguientes. Para obtener instrucciones sobre cómo configurar el nombre de la matriz, vaya a la https://docs.netapp.com/us-en/e-series-santricity/sm-interface/setup-wizard-overview.html#first-time-setup["Centro de documentación de E-Series"^].
 
 
 

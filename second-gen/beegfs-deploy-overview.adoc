@@ -14,15 +14,15 @@ summary: Puede poner en marcha BeeGFS en NetApp para nodos de archivos y bloques
 
 
 [role="lead"]
-Puede poner en marcha BeeGFS en NetApp para nodos de archivos y bloques validados mediante la segunda generación del diseño de bloques básicos BeeGFS de NetApp.
+BeeGFS en NetApp puede ponerse en marcha en nodos de archivos y bloques validados utilizando Ansible con el diseño de elementos básicos BeeGFS de NetApp.
 
 
 
 == Colecciones y roles de Ansible
 
-BeeGFS se pone en marcha en una solución de NetApp con Ansible, un motor DE automatización TECNOLÓGICA más popular que se utiliza para automatizar la puesta en marcha de aplicaciones. Ansible utiliza una serie de archivos conocidos colectivamente como un inventario, que modela el sistema de archivos BeeGFS que desea implementar.
+La solución BeeGFS en NetApp se pone en marcha usando Ansible, un motor de automatización TECNOLÓGICA muy conocido que automatiza las puestas en marcha de aplicaciones. Ansible utiliza una serie de archivos conocidos colectivamente como el inventario, que modela el sistema de archivos BeeGFS que desea implementar.
 
-Ansible permite a empresas como NetApp ampliar la funcionalidad incorporada mediante colecciones en Ansible Galaxy (consulte https://galaxy.ansible.com/netapp_eseries/santricity["Colección BeeGFS de NetApp E-Series"^]). Las colecciones incluyen módulos que realizan alguna función o tarea específica (como crear un volumen E-Series) e incluyen roles que pueden llamar a varios módulos y otras funciones. Este método automatizado reduce el tiempo necesario para poner en marcha el sistema de archivos BeeGFS y el clúster de alta disponibilidad subyacente. Además, simplifica la incorporación de elementos básicos para ampliar los sistemas de archivos existentes.
+Ansible permite a empresas como NetApp ampliar su funcionalidad incorporada mediante colecciones disponibles en Ansible Galaxy (consulte https://galaxy.ansible.com/netapp_eseries/santricity["Colección BeeGFS de NetApp E-Series"^]). Las recopilaciones incluyen módulos que realizan funciones o tareas específicas (como crear un volumen E-Series) y roles que pueden llamar a varios módulos y otros roles. Este método automatizado reduce el tiempo necesario para poner en marcha el sistema de archivos BeeGFS y el clúster de alta disponibilidad subyacente. Además, simplifica el mantenimiento y expansión del clúster y el sistema de archivos BeeGFS.
 
 Para obtener detalles adicionales, consulte link:beegfs-deploy-learn-ansible.html["Obtenga más información sobre el inventario de Ansible"].
 
@@ -40,7 +40,7 @@ Los procedimientos de implementación cubren los siguientes perfiles de configur
 * Un tercer elemento básico que únicamente incluye servicios de almacenamiento.
 
 
-Estos perfiles muestran toda la gama de perfiles de configuración recomendados para los elementos básicos de BeeGFS de NetApp. Para cada puesta en marcha, el número de metadatos y bloques básicos de almacenamiento o de elementos básicos solo de servicios de almacenamiento pueden variar en los procedimientos, según los requisitos de capacidad y rendimiento.
+Estos perfiles muestran toda la gama de perfiles de configuración recomendados para los elementos básicos de BeeGFS de NetApp. Para cada puesta en marcha, el número de elementos básicos de metadatos y almacenamiento o de servicios de almacenamiento, o los elementos básicos de uso exclusivo de servicios de almacenamiento, pueden variar en función de los requisitos de capacidad y rendimiento.
 
 
 

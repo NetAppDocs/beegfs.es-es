@@ -32,6 +32,13 @@ Inteligencia artificial.
 
 
  a| 
+Nodo de control de Ansible
+ a| 
+Una máquina física o virtual que se usa para ejecutar la CLI de Ansible.
+
+
+
+ a| 
 Inventario de Ansible
  a| 
 Estructura de directorio que contiene archivos YAML que se utilizan para describir el clúster de ha de BeeGFS deseado.
@@ -46,14 +53,14 @@ Controlador de administración de la placa base. En ocasiones se conoce como pro
 
 
  a| 
-nodos de bloques
+Bloquear nodos
  a| 
-Sistemas de almacenamiento.
+Sistemas de almacenamiento E-Series.
 
 
 
  a| 
-clientes
+Clientes
  a| 
 Nodos del clúster HPC que ejecuta aplicaciones que deben utilizar el sistema de archivos. En ocasiones, también se denomina nodos de computación o GPU.
 
