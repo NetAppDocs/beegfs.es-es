@@ -246,7 +246,7 @@ Pasos para resolver:
 . Compruebe que el nodo esté apagado.
 +
 
-IMPORTANT: Si el nodo que especifique no está apagado pero si ejecuta servicios o recursos del clúster, se producirán errores en los datos o en el clúster.
+CAUTION: Si el nodo que especifique no está apagado pero si ejecuta servicios o recursos del clúster, se producirán errores en los datos o en el clúster.
 
 . Confirmar manualmente la esgrima con: `pcs stonith confirm <NODE>`
 
@@ -264,7 +264,7 @@ En este punto, los servicios deben terminar de conmutar por error y reiniciarse 
 Normalmente, si es necesario reiniciar un servicio BeeGFS (por ejemplo, para facilitar un cambio en la configuración), debe hacerlo actualizando el inventario de Ansible y volviendo a ejecutar el libro de estrategia. En algunos casos, puede que sea conveniente reiniciar servicios individuales para facilitar la solución de problemas más rápida, por ejemplo, cambiar el nivel de registro sin tener que esperar a que se ejecute el libro de estrategia completo.
 
 
-IMPORTANT: A menos que también se añadan cambios manuales al inventario de Ansible, se revertirá la próxima vez que se ejecute el libro de estrategia de Ansible.
+CAUTION: A menos que también se añadan cambios manuales al inventario de Ansible, se revertirá la próxima vez que se ejecute el libro de estrategia de Ansible.
 
 
 

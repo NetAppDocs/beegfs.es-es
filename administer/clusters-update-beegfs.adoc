@@ -25,7 +25,7 @@ BeeGFS sigue un `major.minor.patch` esquema de control de versiones. Se proporci
 Ansible se debe utilizar en todas las actualizaciones de BeeGFS, incluido el desplazamiento entre versiones principales, secundarias y parches de BeeGFS. Para actualizar BeeGFS, primero tendrá que actualizar la colección BeeGFS Ansible, que también incluye las correcciones y mejoras más recientes para la automatización de la puesta en marcha/gestión y el clúster de alta disponibilidad subyacente. Incluso después de actualizar a la última versión de la colección, BeeGFS no se actualizará hasta que `ansible-playbook` se realiza con el `-e "beegfs_ha_force_upgrade=true"` configurado.
 
 
-NOTE: Para obtener más información sobre las versiones de BeeGFS, consulte link:https://doc.beegfs.io/latest/advanced_topics/upgrade.html["Documentación de actualización de BeeGFS"^].
+TIP: Para obtener más información sobre las versiones de BeeGFS, consulte link:https://doc.beegfs.io/latest/advanced_topics/upgrade.html["Documentación de actualización de BeeGFS"^].
 
 
 

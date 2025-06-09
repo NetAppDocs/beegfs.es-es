@@ -50,7 +50,7 @@ all:
 . De uno de los otros nodos del clúster, quite el nodo antiguo: `pcs cluster node remove <HOSTNAME>`.
 +
 
-IMPORTANT: NO CONTINÚE ANTES DE EJECUTAR ESTE PASO.
+CAUTION: NO CONTINÚE ANTES DE EJECUTAR ESTE PASO.
 
 . En el nodo de control Ansible:
 +

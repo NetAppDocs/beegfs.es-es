@@ -47,7 +47,7 @@ Instale un sistema operativo compatible basado en los requisitos de nodo de arch
 
 ==== Red Hat
 
-Utilice RedHat Subscription Manager para registrar y suscribirse al sistema para permitir la instalación de los paquetes necesarios desde los repositorios oficiales de Red Hat y para limitar las actualizaciones a la versión compatible de Red Hat: `subscription-manager release --set=<MAJOR_VERSION>.<MINOR_VERSION>`. Para ver instrucciones, consulte https://access.redhat.com/solutions/253273["Cómo registrar y suscribirse a un sistema RHEL"^] y..  https://access.redhat.com/solutions/2761031["Cómo limitar las actualizaciones"^].
+Utilice Red Hat Subscription Manager para registrar y suscribir el sistema para permitir la instalación de los paquetes necesarios desde los repositorios oficiales de Red Hat y para limitar las actualizaciones a la versión compatible de Red Hat:  `subscription-manager release --set=<MAJOR_VERSION>.<MINOR_VERSION>` . Para obtener instrucciones, consulte  https://access.redhat.com/solutions/253273["Cómo registrar y suscribirse a un sistema RHEL"^] y  https://access.redhat.com/solutions/2761031["Cómo limitar las actualizaciones"^] .
 
 Active el repositorio de Red Hat que contiene los paquetes necesarios para la alta disponibilidad:
 

@@ -24,7 +24,7 @@ Consulte la link:beegfs-technology-requirements.html#ansible-control-node-requir
 ----
 sudo apt-get install python3 python3-pip python3-setuptools python3.10-venv
 ----
-. Cree un entorno virtual de Python
+. Crear un entorno virtual de Python.
 +
 [source, console]
 ----
@@ -74,4 +74,4 @@ ssh-copy-id <ip_or_hostname>
 
 
 
-IMPORTANT: *No* configure SSH sin contraseñas para los nodos de bloque. No se admite ni se requiere.
+CAUTION: *No* configure SSH sin contraseñas para los nodos de bloque. No se admite ni se requiere.

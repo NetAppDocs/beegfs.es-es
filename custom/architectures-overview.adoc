@@ -67,7 +67,7 @@ Ansible gestiona todas las tareas de configuración y aprovisionamiento del soft
 
 Ya está disponible el soporte para BeeGFS en Ansible link:https://galaxy.ansible.com/netapp_eseries/beegfs["Galaxia de ansible"] Como un conjunto de funciones y módulos que automatizan la implementación y gestión integral de clústeres de alta disponibilidad de BeeGFS.
 
-BeeGFS se versión siguiendo un esquema de control de versiones <major>.<minor>.<patch> y la colección mantiene roles para cada versión compatible de <major>.<minor> de BeeGFS, por ejemplo BeeGFS 7.2 o BeeGFS 7.3. A medida que se publican actualizaciones de la colección, la versión de revisión de cada rol se actualizará para señalar la última versión disponible de BeeGFS para esa rama de versión (por ejemplo: 7.2.8). Cada versión de la colección también está probada y compatible con distribuciones y versiones específicas de Linux, actualmente Red Hat para nodos de archivos, y RedHat y Ubuntu para clientes. No se admite la ejecución de otras distribuciones; no se recomienda ejecutar otras versiones (especialmente otras versiones principales).
+BeeGFS se versión siguiendo un esquema de control de versiones <major>.<minor>.<patch> y la colección mantiene roles para cada versión compatible de <major>.<minor> de BeeGFS, por ejemplo BeeGFS 7.2 o BeeGFS 7.3. A medida que se publican actualizaciones de la colección, la versión de revisión de cada rol se actualizará para señalar la última versión disponible de BeeGFS para esa rama de versión (por ejemplo: 7.2.8). Cada versión de la colección también está probada y es compatible con distribuciones y versiones de Linux específicas, actualmente Red Hat para nodos de archivos y Red Hat y Ubuntu para clientes. No se admite la ejecución de otras distribuciones; no se recomienda ejecutar otras versiones (especialmente otras versiones principales).
 
 
 
@@ -86,7 +86,7 @@ También es recomendable configurar SSH sin contraseñas desde el nodo de contro
 
 === Nodos de archivo BeeGFS
 
-Los nodos de archivo deben ejecutar RedHat 9.3 y tener acceso al repositorio ha que contenga los paquetes requeridos (marcapaso, corosync, valla-agents-all, Resource-agents). Por ejemplo, se puede ejecutar el siguiente comando para habilitar el repositorio apropiado en RedHat 9:
+Los nodos de archivo deben ejecutar Red Hat Enterprise Linux (RHEL) 9.4 y tener acceso al repositorio de alta disponibilidad (HA) que contiene los paquetes necesarios (pacemaker, corosync, fencing-agents-all y resource-agents). Por ejemplo, se puede ejecutar el siguiente comando para habilitar el repositorio correspondiente en RHEL 9:
 
 [source, bash]
 ----
@@ -96,6 +96,6 @@ subscription-manager repo-override repo=rhel-9-for-x86_64-highavailability-rpms 
 
 === Nodos de cliente BeeGFS
 
-Hay disponible un rol de Ansible para el cliente BeeGFS para instalar el paquete de cliente BeeGFS y gestionar los montajes BeeGFS. Esta función se ha probado con RedHat 8.4 y Ubuntu 22.04.
+Hay disponible un rol de Ansible para el cliente BeeGFS para instalar el paquete de cliente BeeGFS y gestionar los montajes BeeGFS. Esta función se ha probado con RHEL 9.4 y Ubuntu 22.04.
 
 Si no utiliza Ansible para configurar el cliente BeeGFS y montar BeeGFS, any link:https://doc.beegfs.io/latest/release_notes.html#supported-linux-distributions-and-kernels["Distribución y kernel de Linux compatibles con BeeGFS"] puede utilizarse.

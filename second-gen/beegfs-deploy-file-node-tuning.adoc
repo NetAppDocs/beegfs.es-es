@@ -22,7 +22,7 @@ La configuración del sistema varía en función del modelo de servidor que util
 
 == Utilice la interfaz UEFI para ajustar la configuración del sistema
 
-El firmware del sistema del servidor Lenovo SR665 contiene numerosos parámetros de ajuste que se pueden establecer a través de la interfaz UEFI. Estos parámetros de ajuste pueden afectar a todos los aspectos del funcionamiento del servidor y el rendimiento del mismo.
+El firmware del sistema del servidor Lenovo SR665 V3 contiene numerosos parámetros de ajuste que se pueden configurar a través de la interfaz UEFI. Estos parámetros de ajuste pueden afectar a todos los aspectos del funcionamiento del servidor y el rendimiento del mismo.
 
 En *Configuración de UEFI > Configuración del sistema*, ajuste los siguientes ajustes del sistema:
 

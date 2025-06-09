@@ -61,7 +61,7 @@ Cada nodo de archivo debe cumplir o superar las especificaciones de los nodos de
 
 
 | 8 | Adaptadores de tarjeta de host InfiniBand (para nodos de archivo).  a| 
-Los adaptadores de tarjeta de host variarán según el modelo de servidor utilizado para el nodo de archivo. Las recomendaciones para los nodos de archivo verificados incluyen:
+Los adaptadores de tarjeta host pueden variar según el modelo de servidor del nodo de archivo. Las recomendaciones para los nodos de archivo verificados incluyen:
 
 * *Servidor Lenovo ThinkSystem SR665 V3:*
 +
@@ -132,18 +132,18 @@ Para garantizar un rendimiento y una fiabilidad previsibles, las versiones de la
 | De NetApp | Versión 
 
 
-| Red Hat Enterprise Linux | Redhat 9.3 Server físico con alta disponibilidad (2 sockets). IMPORTANTE: Los nodos de archivos requieren una suscripción válida a RedHat Enterprise Linux Server y el complemento Red Hat Enterprise Linux High Availability Add-On. 
+| Red Hat Enterprise Linux (RHEL) | Servidor físico RHEL 9.4 con alta disponibilidad (2 sockets). *Nota:* Los nodos de archivo requieren una suscripción válida a Red Hat Enterprise Linux Server y el complemento de alta disponibilidad de Red Hat Enterprise Linux. 
 
 
-| Kernel de Linux | 5.14.0-362.24.1.el9_3.x86_64 
+| Kernel de Linux | 5.14.0-427.42.1.el9_4.x86_64 
 
 
  a| 
 Firmware de HCA
  a| 
-*ConnectX-7 HCA Firmware* FW: 28.42.1000 + PXE: 3.7.0500 + UEFI: 14.35.0015
+*ConnectX-7 HCA Firmware* FW: 28.43.1014 + PXE: 3.7.0500 + UEFI: 14.36.0016
 
-*ConnectX-6 HCA Firmware* FW: 20.43.1014 + PXE: 3.7.0500 + UEFI: 14.36.0016
+*ConnectX-6 HCA Firmware* FW: 20.43.2566 + PXE: 3.7.0500 + UEFI: 14.37.0013
 
 |===
 
@@ -161,7 +161,7 @@ Firmware de HCA
 | NVSRAM | N6000-890834-D02.dlp 
 
 
-| Firmware de la unidad | La última versión disponible para los modelos de unidad en uso. 
+| Firmware de la unidad | La última versión disponible para los modelos de unidad en uso. Consulte la link:https://mysupport.netapp.com/site/downloads/firmware/e-series-disk-firmware["Sitio del firmware de un disco E-Series"^]. 
 |===
 
 
@@ -174,19 +174,22 @@ En la siguiente tabla se enumeran los requisitos de software puestos en marcha a
 | De NetApp | Versión 
 
 
-| BeeGFS | 7.4.4 
+| BeeGFS | 7.4.6 
 
 
-| Corosync | 3.1.7-1 
+| Corosync | 3.1.8-1 
 
 
-| Marcapasos | 2.1.6-10 
+| Marcapasos | 2.1.7-5,2 
 
 
-| Agentes de valla (sepia/apc) | 4.10.0-55 
+| PC | 0.11.7-2 
 
 
-| Controladores InfiniBand/RDMA | MLNX_OFED_LINUX-23,10-3,2.2,0-LTS 
+| Agentes de valla (sepia/apc) | 4.10.0-62 
+
+
+| Controladores InfiniBand/RDMA | MLNX_OFED_LINUX-23,10-3,2.2,1-LTS 
 |===
 
 

@@ -62,4 +62,5 @@ Pasos:
 . Para habilitar la ejecución de cercado: `pcs property set stonith-enabled=true`
 
 
-Nota: Este ajuste se anulará la próxima vez que ejecute la tableta Ansible playbook.
+
+CAUTION: Esta configuración se anulará la próxima vez que ejecute el playbook de Ansible.
