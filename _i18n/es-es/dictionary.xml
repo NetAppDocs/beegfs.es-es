@@ -751,15 +751,6 @@
   <block id="5346cef6f7de3aac02ebdfc1ae9b6f27" category="inline-link">Documentación de BeeGFS sobre modo múltiple</block>
   <block id="c4ae8913dc1f6c9fed7961516b16defd" category="admonition">De modo que se inician varios servicios BeeGFS del mismo tipo en el mismo nodo, Pacemaker se configura para iniciar servicios BeeGFS mediante el método de configuración Multi Mode. Para obtener más información, consulte<block ref="bc179f675bb7a303402ecb902ab09448" category="inline-link-rx"></block>.</block>
   <block id="553c30108a127bc2c66537e58970be9e" category="paragraph">Debido a que los servicios BeeGFS deben poder iniciarse en varios nodos, el archivo de configuración de cada servicio (normalmente ubicado en<block ref="af1cad80e288805d61b78377a6d2c339" prefix=" " category="inline-code"></block>) Se almacena en uno de los volúmenes E-Series utilizados como objetivo BeeGFS para ese servicio. Esto hace que la configuración junto con los datos de un servicio BeeGFS en particular sea accesible para todos los nodos que puedan necesitar ejecutar el servicio.</block>
-  <block id="51bfd24e79e0939d84e9230980db5f18" category="summary">BeeGFS para la solución de NetApp se encuentra en su segundo diseño generacional.</block>
-  <block id="fa0de4179a84e742d2d88028d16bf137" category="doc">Generaciones de diseño</block>
-  <block id="51c16b7415d506b9bbcedd7241c7c1c0" category="paragraph">La primera y la segunda generación incluyen una arquitectura base que incorpora un sistema de archivos BeeGFS y un sistema de almacenamiento NVMe EF600. Sin embargo, la segunda generación se basa en la primera en incluir estas ventajas adicionales:</block>
-  <block id="20667306535e51f69f34371b95abfd0b" category="list-text">Duplique el rendimiento y la capacidad al añadir solo 2U de espacio en rack</block>
-  <block id="edcc56d654a1a9362699f309c738a185" category="list-text">Alta disponibilidad (ha) basada en un diseño de hardware de dos niveles y disco compartido</block>
-  <block id="189fdda096d5b994e140eac128f464e1" category="section-title">Segundo diseño generacional</block>
-  <block id="145c927b5996411105e8a05381bfab75" category="section-title">Primer diseño generacional</block>
-  <block id="8c2de6dc6972aa428c25b73867ee0c6c" category="inline-link-macro">IA EF-Series de NetApp con sistemas NVIDIA DGX A100 y BeeGFS</block>
-  <block id="cb0e1ee82028e21bcb25d1cedee42a90" category="paragraph">Para obtener más información sobre la primera generación, consulte <block ref="7c75f12548abfaad3f9a226ecdfc54d3" category="inline-link-macro-rx"></block>.</block>
   <block id="fefc21957cc1bbb1f6a7704d95ad5e0d" category="summary">Puede poner en marcha BeeGFS en NetApp para nodos de archivos y bloques validados mediante la segunda generación del diseño de bloques básicos BeeGFS de NetApp.</block>
   <block id="42f8643eb52a942747937327c72c8361" category="doc">Información general sobre la implementación</block>
   <block id="ef200d7e9d983785df6b4e01fa65bf59" category="section-title">Colecciones y roles de Ansible</block>
@@ -1473,9 +1464,6 @@
   <block id="f7c8918f0c24047e89e5842785e7b8ef" category="cell">538,55 TB</block>
   <block id="3cf8b9e44b7a1eb7154f2b777094e670" category="admonition">La sobrecarga de rendimiento y capacidad de incluir el servicio de gestión en el elemento básico (primero) es mínima, a menos que se habilite el bloqueo global de archivos.</block>
   <block id="be11c74c1dd7f307bb80183a90dc2067" category="sidebar">Manos a la obra</block>
-  <block id="12623d7cc9dff74b7325aa809ffc84df" category="sidebar">Blog: Obtenga más información sobre BeeGFS y E-Series</block>
-  <block id="0af9e7bf64a8e8c1b37ec554248f3d14" category="sidebar">Blog - BeeGFS para principiantes</block>
-  <block id="6316c96cdd51a54d33d0011cf5f10c81" category="sidebar">Blog - ha para BeeGFS</block>
   <block id="b89fcecfac1f6b8376165aabe5b6c5ee" category="sidebar">Documentos adicionales</block>
   <block id="bc4fe2352063642d68529f2aa0ca7ca3" category="sidebar">Documentación de productos de NetApp</block>
   <block id="dbd68e15f4c30d2a47d780a9bf4f3da1" category="sidebar">Documentación de BeeGFS</block>
@@ -1483,7 +1471,6 @@
   <block id="974ad78dc53c253ebfe5b2b8b376f353" category="sidebar">Herramientas y soporte</block>
   <block id="d564be87f67790fe4b92faa0eea29c48" category="sidebar">Colecciones E-Series de NetApp sobre Ansible Galaxy</block>
   <block id="668e2078ef1b1722c77cdb5c523a4463" category="sidebar">Base de conocimientos de NetApp</block>
-  <block id="2bae42f280067110dfd52cc69a468364" category="sidebar">Active IQ (se requiere inicio de sesión)</block>
   <block id="c35665ae18bf4eff9afa413fcb281b07" category="sidebar">BeeGFS en documentos de NetApp</block>
   <block id="f40341c80e215542b4fdfe4e2f2e2a21" category="sidebar">Lo que se incluye en este sitio</block>
   <block id="2146c9256a2a3883605731032b6b8015" category="sidebar">Utilice arquitecturas verificadas</block>
@@ -1651,9 +1638,6 @@
   <block id="9d550842e04b4f253a1d3e7bb3297890" category="paragraph">Los elementos básicos se conectaron a dos switches NVIDIA Quantum InfiniBand (MQM8700). También se adjuntaron diez clientes BeeGFS a los switches InfiniBand y se utilizaron para ejecutar utilidades de análisis de rendimiento sintéticos.</block>
   <block id="16e30c156c86a2bc6240a20ed7b6fdc4" category="section-title">Validación de NVIDIA DGX SuperPOD y BasePOD</block>
   <block id="40fa362dda8b4d271b61c38987bd5131" category="paragraph">NetApp validó una solución de almacenamiento para nVIDIAs DGX A100 SuperPOD que utiliza un sistema de archivos BeeGFS similar que consiste en tres elementos básicos con los metadatos más el perfil de configuración de almacenamiento aplicado. El esfuerzo de cualificación incluyó probar la solución descrita en este NVA con veinte servidores DGX A100 GPU que ejecutan una gran variedad de pruebas de rendimiento de almacenamiento, aprendizaje automático y aprendizaje profundo. Basándose en la validación establecida con DGX A100 SuperPOD de NVIDIA, la solución BeeGFS en NetApp ha sido aprobada para los sistemas DGX SuperPOD H100, H200 y B200. Esta extensión se basa en cumplir con las pruebas de rendimiento y los requisitos del sistema previamente establecidos según la validación con el servidor DGX A100 de NVIDIA.</block>
-  <block id="21b6d1b90774505daa15a9be831436a9" category="inline-link-macro">guía de diseño</block>
-  <block id="1cba1266f00c729aee1318803f870d22" category="list-text">Arquitectura diseñada para los sistemas DGX SuperPOD A100, H100, H200 y B200 de NVIDIA, que se validó previamente en un clúster de aceptación dedicado de NVIDIA. Obtenga más información sobre DGX SuperPOD de NVIDIA con NetApp en <block ref="e98320202738eb339bebe66cbb05ad8f" category="inline-link-macro-rx"></block>el .</block>
-  <block id="10ca191b839b35e5100464ff59b95b97" category="paragraph">La primera generación de BeeGFS en NetApp se diseñó para cargas de trabajo de aprendizaje automático (ML) e inteligencia artificial (IA) utilizando sistemas de almacenamiento NVMe EF600 de NetApp, el sistema de archivos paralelo BeeGFS, los sistemas DGX™ A100 de NVIDIA y los switches IB NVIDIA® Mellanox® Quantum™ QM8700 200GB Gb/s. Este diseño también ofrece InfiniBand (IB) de 200GB Gb/s para la estructura de interconexión de clústeres de almacenamiento y de computación para proporcionar una arquitectura basada en IB completa para cargas de trabajo de alto rendimiento.</block>
   <block id="aef5a6ba281c6919d0a3e3ff7d8feaf3" category="section-title">Perspectiva general de diseño</block>
   <block id="a1d7af56cbcfca285cd257ae3430a2d3" category="inline-link-macro">información general sobre la arquitectura</block>
   <block id="61dd8d13bec6e1ac3455eb2e13d61261" category="paragraph">La solución BeeGFS en NetApp está diseñada como una arquitectura de elementos básicos escalable, configurable para varias cargas de trabajo exigentes. Ya sea para tratar muchos archivos pequeños, gestionar operaciones sustanciales de archivos grandes o una carga de trabajo híbrida, el sistema de archivos se puede personalizar para satisfacer estas necesidades. La alta disponibilidad está integrada en el diseño con el uso de una estructura de hardware de dos niveles que permite la recuperación tras fallos independiente en varias capas de hardware y garantiza un rendimiento constante, incluso durante degradaciones parciales del sistema. El sistema de archivos BeeGFS permite un entorno escalable y de alto rendimiento entre diferentes distribuciones de Linux y ofrece a los clientes un único espacio de nombres de almacenamiento de fácil acceso. Obtenga más información en el <block ref="45037eea1e64b480408f051dfe424a3c" category="inline-link-macro-rx"></block>.</block>
@@ -1837,7 +1821,6 @@
   <block id="da8d8318ceb4254068ec25272c92bc85" category="list-text">Rellene el<block ref="b8d32e4c2d78b6e404b69e5c1fbf3118" prefix=" " category="inline-code"></block> con los siguientes parámetros, sustituyendo todos los parámetros de nombre de usuario y contraseña según su configuración:</block>
   <block id="7e60d329db54d74d692f53620b366281" category="list-text">Ejecute<block ref="150063209c60b18e2173569bd82ec639" prefix=" " category="inline-code"></block> y establezca una contraseña de almacén cuando se le solicite.</block>
   <block id="1d2459ca9cef1e38badde9d192eff628" category="admonition">Si el<block ref="f2bf771afbc16045e1951ded58c56f98" prefix=" " category="inline-code"></block> ya está<block ref="63a9f0ea7bb98050796b649e85481845" prefix=" " category="inline-code"></block> , puede omitir y especificar la<block ref="13d87b4892426ec19bdc58a4643d3104" prefix=" " category="inline-code"></block> opción al ejecutar el<block ref="424240cd4e5c359372b7f199431603d5" prefix=" " category="inline-code"></block> playbook.</block>
-  <block id="49e794dd3d68025fd6943b67048e4f27" category="paragraph">La segunda generación de BeeGFS en NetApp ha sido optimizada para satisfacer los requisitos de rendimiento de las cargas de trabajo más exigentes, como la computación de alto rendimiento (HPC), el aprendizaje automático (ML), el aprendizaje profundo (DL) y otras técnicas de inteligencia artificial (IA). Al incorporar una arquitectura de alta disponibilidad de discos compartidos, este diseño garantiza la durabilidad y la disponibilidad de los datos, lo que lo convierte en el ideal para empresas y otras organizaciones que no pueden permitirse tiempos de inactividad o pérdida de datos. El diseño de segunda generación incluye componentes como servidores PCIe Gen5 y soporte para conmutadores InfiniBand NVIDIA® Quantum™ QM9700 400GB/s. Esta solución no solo ha sido verificada por NetApp, sino que también ha superado la cualificación externa como opción de almacenamiento para el superPOD NVIDIA DGX™ A100, con una certificación ampliada para los sistemas DGX SuperPOD H100, H200 y B200.</block>
   <block id="7da4cabbb2f4c4e53ccb9660355b7dd1" category="list-text">Sistemas DGX SuperPOD de NVIDIA que incorporan DGX con GPU A100, H100, H200 y B200.</block>
   <block id="e02a1b9bf28135b2931b63ac814ff7ac" category="sidebar">NVA-1174: BeeGFS en EF-Series de NetApp con sistemas DGX SuperPOD de NVIDIA</block>
   <block id="049125cf8ec62098912c4f2c8db9f61b" category="paragraph"><block ref="e6211db0073064ade016ad4558767968" prefix=" " category="inline-code"></block>La propiedad no aparecerá si el cluster funciona normalmente. Si el cluster está actualmente en modo de mantenimiento, la propiedad se informará como<block ref="b326b5062b2f0e69046810717534cb09" prefix=" " category="inline-code"></block>. Para habilitar la ejecución del modo de mantenimiento:</block>
@@ -1922,7 +1905,6 @@
   <block id="53fff94cbca4161cd31d168451033f2e" category="cell">MFP7E20-Nxxx (multimodo, cable de fibra divisora de 4 canales a dos de 2 canales)</block>
   <block id="804e83e6974e7f6076f940326b985a83" category="cell">MMA1Z00-NS400 (multimodo, IB/ETH, un puerto QSFP-112 de 400GB Gb/s)</block>
   <block id="b2f1f9abf8117b3cde0475d1adf7a64f" category="cell">MCP7Y40-N002 (cable divisor de cobre pasivo NVIDIA, InfiniBand 800GB/s a 4x 200GB/s, OSFP a 4x QSFP112)</block>
-  <block id="0d665a6c7072af8fddd1f64d9c741762" category="cell">11.90R1</block>
   <block id="6c3a5f2fbe0e1eb20af96ccd813c89b0" category="cell">N6000-890834-D02.dlp</block>
   <block id="088914339db9effda3ac57ec2e9439b6" category="cell">Agentes de valla (sepia/apc)</block>
   <block id="f8b6aa2ae96c25a05a0cc6e26a9236d7" category="sidebar">Actualice los paquetes Pacemaker y Corosync</block>
@@ -1984,7 +1966,6 @@
   <block id="eb13ea1edb52f2f7cdf4b15544892c06" category="cell">Red Hat Enterprise Linux (RHEL)</block>
   <block id="33b7125f0da71f5f4c0d1adb2490c32d" category="cell">Servidor físico RHEL 9.4 con alta disponibilidad (2 sockets). *Nota:* Los nodos de archivo requieren una suscripción válida a Red Hat Enterprise Linux Server y el complemento de alta disponibilidad de Red Hat Enterprise Linux.</block>
   <block id="6e2ccf2574232a4db553354b8bf2b912" category="cell">5.14.0-427.42.1.el9_4.x86_64</block>
-  <block id="1e921a460cdb78aac6c0658f56a63429" category="paragraph">*ConnectX-7 HCA Firmware* FW: 28.43.1014 + PXE: 3.7.0500 + UEFI: 14.36.0016</block>
   <block id="564eb0bfa4895a5fed3372708aea6e59" category="paragraph">*ConnectX-6 HCA Firmware* FW: 20.43.2566 + PXE: 3.7.0500 + UEFI: 14.37.0013</block>
   <block id="7670b29ec4dc7aed23b236d72df9dc4e" category="cell">La última versión disponible para los modelos de unidad en uso. Consulte la <block ref="dc6c914f008159d5969a25304ddfb479" category="inline-link-macro-rx"></block>.</block>
   <block id="90a84b80b2ae4bb2a14bb18a1c790012" category="cell">7.4.6</block>
@@ -1994,4 +1975,6 @@
   <block id="23df4986c6f31aaed7db4752a96b620b" category="cell">0.11.7-2</block>
   <block id="ddf60efdd8bc8468bc0a5502f1b51c47" category="cell">4.10.0-62</block>
   <block id="c83be155e8adea701991eeba59a9d048" category="cell">MLNX_OFED_LINUX-23,10-3,2.2,1-LTS</block>
+  <block id="7cd5ec19f90bf866b287afecf9a8cce0" category="paragraph">*Firmware ConnectX-7 HCA* FW: 28.45.1200 + PXE: 3.7.0500 + UEFI: 14.38.0016</block>
+  <block id="f86fe0da10c1b039adc0c656c6fe10a1" category="cell">11.90R3</block>
 </blocks>
