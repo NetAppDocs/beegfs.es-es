@@ -1,0 +1,33 @@
+---
+sidebar: sidebar 
+permalink: deploy-features-integration/beegfs-csi-driver/csi-driver-overview.html 
+keywords: BeeGFS Features, CSI, Driver 
+summary: Descripción general y configuración del controlador CSI de BeeGFS. 
+---
+= Configuración del controlador CSI de BeeGFS
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+El controlador CSI de BeeGFS permite que los clústeres de Kubernetes aprovisionen y administren dinámicamente volúmenes BeeGFS, integrando almacenamiento BeeGFS de alto rendimiento con cargas de trabajo en contenedores.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["1"]Asegúrese de que se cumplan todos los requisitos previos
+[role="quick-margin-para"]
+Revise los requisitos previos para asegurarse de tener un clúster de Kubernetes en ejecución, conectividad con el clúster BeeGFS y los permisos necesarios para instalar recursos en todo el clúster.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png["Dos"]Implementar el controlador CSI de BeeGFS
+[role="quick-margin-para"]
+Clone el repositorio del controlador CSI de BeeGFS e implemente el controlador utilizando los manifiestos o superposiciones de Kubernetes proporcionados.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png["Tres"]Verificar la implementación
+[role="quick-margin-para"]
+Verifique que todos los componentes del controlador CSI de BeeGFS estén instalados y operativos inspeccionando los pods de Kubernetes relevantes.  Solucione cualquier problema, como conflictos de programación de nodos o habilitación de intercambio en los nodos.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-4.png["Cuatro"]Implementar y validar aplicaciones de ejemplo
+[role="quick-margin-para"]
+Aplique manifiestos de Kubernetes de ejemplo y confirme que las cargas de trabajo pueden acceder al almacenamiento respaldado por BeeGFS como se esperaba.
