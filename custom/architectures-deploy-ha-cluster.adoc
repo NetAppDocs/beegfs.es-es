@@ -120,7 +120,7 @@ NOTE: Se mantiene un rol de ha de BeeGFS para cada versión principal.secundaria
 . Opcional: Si desea definir tareas adicionales, tenga en cuenta si las tareas deben ser dirigidas `all` Los hosts (incluidos los sistemas de almacenamiento E-Series) o solo los nodos de archivos. Si es necesario, defina una nueva reproducción dirigida específicamente a los nodos de archivo mediante `- hosts: ha_cluster`.
 
 
-Haga clic en link:https://github.com/netappeseries/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/playbook.yml["aquí"^] por ejemplo, un archivo de libro de estrategia completo.
+Haz clic en link:https://github.com/NetApp/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/H2_DAC_IB_A2_EF600/beegfs_cluster_building_blocks/beegfs_ha_playbook.yml["aquí"^] para ver un ejemplo de un archivo de playbook completo.
 
 
 

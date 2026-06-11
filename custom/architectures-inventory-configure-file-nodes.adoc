@@ -137,7 +137,7 @@ eseries_nvme_roce_interfaces:
 
 
 
-Haga clic en link:https://github.com/netappeseries/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/host_vars/ictad22h01.yml["aquí"^] para obtener un ejemplo de un archivo de inventario completo que representa un solo nodo de archivo.
+Haz clic en link:https://github.com/NetApp/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/H2_DAC_IB_A2_EF600/beegfs_cluster_building_blocks/beegfs_ha_building_block_cluster_1/host_vars/beegfs_01.yml["aquí"^] para ver un ejemplo de un archivo de inventario completo que representa un único nodo de archivo.
 
 
 

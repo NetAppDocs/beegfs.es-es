@@ -87,4 +87,4 @@ beegfs_targets:
           - size: <PERCENT> # Percent of the pool or volume group to allocate to this volume. Ex. 1
             owning_controller: <CONTROLLER> # One of: A, B
 ----
-Haga clic en link:https://github.com/netappeseries/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/group_vars/meta_01.yml["aquí"^] Para obtener un ejemplo de un archivo de inventario completo que representa un servicio de metadatos BeeGFS.
+Haz clic en link:https://github.com/NetApp/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/H2_DAC_IB_A2_EF600/beegfs_cluster_building_blocks/beegfs_ha_building_block_cluster_1/group_vars/meta_01.yml["aquí"^] para ver un ejemplo de un archivo de inventario completo que representa un servicio de metadatos BeeGFS.
