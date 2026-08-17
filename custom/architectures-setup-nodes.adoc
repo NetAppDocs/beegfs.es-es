@@ -18,10 +18,12 @@ Pasos manuales necesarios para configurar nodos de archivos y bloques antes de e
 
 
 
+[[file-nodes]]
 == Nodos de archivos
 
 
 
+[[configure-the-baseboard-management-controller-bmc]]
 === Configurar el controlador de administración de la placa base (BMC)
 
 Un controlador de administración en placa base (BMC), conocido a veces como procesador de servicios, es el nombre genérico para la capacidad de administración fuera de banda integrada en varias plataformas de servidor que pueden proporcionar acceso remoto aunque el sistema operativo no esté instalado o sea accesible. Los proveedores suelen comercializar esta funcionalidad con su propia Marca. Por ejemplo, en el Lenovo SR665, el BMC se conoce como controlador XClaridad Lenovo (XCC).
@@ -33,12 +35,14 @@ NOTE: Si desea utilizar la cercado basada en BMC con Redfish, asegúrese de que 
 
 
 
+[[tune-system-settings]]
 === Ajuste la configuración del sistema
 
 Utilizando la interfaz de configuración del sistema (BIOS/UEFI), asegúrese de que los ajustes se han establecido para maximizar el rendimiento. La configuración exacta y los valores óptimos variarán en función del modelo de servidor que se esté utilizando. Se proporciona orientación para link:../second-gen/beegfs-deploy-file-node-tuning.html["modelos de nodos de archivos verificados"^], de lo contrario, consulte la documentación del proveedor del servidor y las mejores prácticas basadas en su modelo.
 
 
 
+[[install-an-operating-system]]
 === Instale un sistema operativo
 
 Instale un sistema operativo compatible basado en los requisitos de nodo de archivo que se muestran link:../second-gen/beegfs-technology-requirements.html#file-node-requirements["aquí"^]. Consulte los pasos adicionales que se indican a continuación según su distribución de Linux.
@@ -56,6 +60,7 @@ subscription-manager repo-override --repo=rhel-9-for-x86_64-highavailability-rpm
 ....
 
 
+[[configure-management-network]]
 === Configure la red de gestión
 
 Configure las interfaces de red necesarias para permitir la administración en banda del sistema operativo. Los pasos exactos dependerán de la distribución y versión específicas de Linux que se esté utilizando.
@@ -65,12 +70,14 @@ NOTE: Compruebe que SSH esté habilitado y que todas las interfaces de gestión 
 
 
 
+[[update-hca-and-hba-firmware]]
 === Actualice el firmware de HCA y HBA
 
 Asegúrese de que todos los HBA y HCA están ejecutando las versiones de firmware compatibles enumeradas en link:https://imt.netapp.com/matrix/["Matriz de interoperabilidad de NetApp"^]y, si es necesario, actualícelos. Se pueden encontrar recomendaciones adicionales para los adaptadores NVIDIA ConnectX link:../second-gen/beegfs-technology-requirements.html#file-node-requirements["aquí"^].
 
 
 
+[[block-nodes]]
 == Nodos de bloques
 
 Siga los pasos a. link:https://docs.netapp.com/us-en/e-series/getting-started/getup-run-concept.html["Póngase en marcha con E-Series"^] para configurar el puerto de gestión en cada controladora del nodo de bloque y, opcionalmente, establezca el nombre de la cabina de almacenamiento para cada sistema.

@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar 
-permalink: deploy-features-integration/beegfs-csi-driver/csi-driver-tshoot.html 
+permalink: deploy-features-integration/beegfs-features-csi-driver/beegfs-features-csi-driver-tshoot.html 
 keywords: BeeGFS Features, CSI, Driver, Troubleshoot, Troubleshooting 
 summary: Solución de problemas de implementación del controlador CSI de BeeGFS. 
 ---
@@ -26,6 +26,7 @@ Para una solución de problemas en profundidad, consulte lalink:https://github.c
 
 
 
+[[kubernetes-setup-common-error-scenarios]]
 == Configuración de Kubernetes: escenarios de error comunes
 
 Ejemplo de error al intentar recuperar todos los pods que se están ejecutando actualmente en el nodo:
@@ -48,6 +49,7 @@ Hay varias áreas clave que investigar cuando se abordan cuestiones como estas. 
 
 
 
+[[error-in-containerd]]
 == Error en containerd
 
 Verifique el estado del demonio containerd:
@@ -75,6 +77,7 @@ journalctl -u containerd
 ----
 
 
+[[error-in-kubelet]]
 == Error en kubelet
 
 Verifique el estado del servicio kubelet:
@@ -112,6 +115,7 @@ tail -f /var/log/syslog | grep kubelet
 ----
 
 
+[[swap-issue]]
 == Problema de intercambio
 
 Si encuentra errores relacionados con el “swap”, desactive el intercambio y reinicie kubelet.
@@ -146,6 +150,7 @@ NOTE: El intercambio generalmente está habilitado de manera predeterminada dura
 
 
 
+[[troubleshooting-beegfs-client-and-helperd-configuration]]
 == Solución de problemas de configuración del cliente BeeGFS y Helperd
 
 . Revisar la configuración en `/etc/beegfs/beegfs-client.conf` .
@@ -232,6 +237,7 @@ tuneNumWorkers                = 2
 
 
 
+[[troubleshooting-beegfs-controller-issues]]
 == Solución de problemas del controlador BeeGFS
 
 Después de implementar las superposiciones, es posible que vea algunos recursos con un estado PENDIENTE en la salida de kubectl get all.
@@ -256,6 +262,7 @@ kubectl describe pod <pod-name> -n beegfs-csi | grep -i image
 ----
 
 
+[[checking-pod-logs]]
 === Comprobación de los registros de pods
 
 Si un pod no se inicia o se encuentra en un `CrashLoopBackOff` estado, consulte sus registros para obtener más detalles:

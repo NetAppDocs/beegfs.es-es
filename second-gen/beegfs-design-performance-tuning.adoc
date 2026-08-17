@@ -20,6 +20,7 @@ Si bien BeeGFS proporciona un rendimiento razonable desde el momento de su insta
 
 
 
+[[performance-tuning-for-file-nodes]]
 == Ajuste del rendimiento de los nodos de archivos
 
 Los parámetros de ajuste disponibles que puede configurar son los siguientes:
@@ -79,6 +80,7 @@ Puede aumentar el tamaño máximo de solicitud de lectura para las HCA de NVIDIA
 
 
 
+[[performance-tuning-for-block-nodes]]
 == Ajuste del rendimiento para nodos de bloques
 
 En función de los perfiles de configuración aplicados a un bloque de creación de BeeGFS en particular, los grupos de volúmenes configurados en los nodos de bloque cambian ligeramente. Por ejemplo, con un nodo de bloque EF600 de 24 unidades:

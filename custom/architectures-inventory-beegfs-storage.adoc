@@ -18,6 +18,7 @@ Los servicios BeeGFS se configuran mediante variables de grupo (Group_var).
 
 
 
+[[overview]]
 == Descripción general
 
 En esta sección se describe la definición del servicio de almacenamiento de BeeGFS. Al menos debe haber un servicio de este tipo en los clústeres de alta disponibilidad para un sistema de archivos determinado. La configuración de este servicio incluye la definición:
@@ -30,6 +31,7 @@ En esta sección se describe la definición del servicio de almacenamiento de Be
 
 
 
+[[steps]]
 == Pasos
 
 Haciendo referencia a la link:architectures-plan-file-system.html["Planifique el sistema de archivos"^] sección, cree un archivo en `group_vars/stor_<ID>.yml` para cada servicio de almacenamiento del clúster y rellénelo de la siguiente manera:

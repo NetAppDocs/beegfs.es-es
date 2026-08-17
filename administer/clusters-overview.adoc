@@ -18,12 +18,14 @@ Obtenga información sobre cómo administrar los clústeres de alta disponibilid
 
 
 
+[[overview]]
 == Descripción general
 
 Esta sección está destinada a administradores de clústeres que deben gestionar clústeres de alta disponibilidad de BeeGFS una vez que se han puesto en marcha. Incluso los que estén familiarizados con los clústeres de alta disponibilidad de Linux deben leer esta guía detenidamente, ya que hay varias diferencias en cómo gestionar el clúster, especialmente en lo que respecta a la reconfiguración debido al uso de Ansible.
 
 
 
+[[key-concepts]]
 == Conceptos clave
 
 Aunque algunos de estos conceptos se introducen en link:../get-started/beegfs-terms.html["términos y conceptos"]la página principal, es útil reintroducirlos en el contexto de un clúster de alta disponibilidad de BeeGFS:
@@ -50,6 +52,7 @@ Aunque algunos de estos conceptos se introducen en link:../get-started/beegfs-te
 
 
 
+[[common-terminology]]
 == Terminología común
 
 **Failover:** cada servicio BeeGFS tiene un nodo de archivo preferido en el que se ejecutará a menos que dicho nodo falle. Cuando un servicio BeeGFS se ejecuta en un nodo de archivo no preferido/secundario, se dice que está en conmutación por error.

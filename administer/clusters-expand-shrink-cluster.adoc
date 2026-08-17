@@ -18,16 +18,19 @@ Añada o quite bloques de creación del clúster.
 
 
 
+[[overview]]
 == Descripción general
 
 En esta sección se documentan varias consideraciones y opciones para ajustar el tamaño del clúster de alta disponibilidad de BeeGFS. Normalmente, el tamaño del clúster se ajusta agregando o quitando elementos básicos, que normalmente son dos nodos de archivo configurados como un par de alta disponibilidad. También es posible agregar o quitar nodos de archivos individuales (u otros tipos de nodos de clústeres) si es necesario.
 
 
 
+[[adding-a-building-block-to-the-cluster]]
 == Añadir una elemento básico al clúster
 
 
 
+[[considerations]]
 === Consideraciones
 
 El crecimiento del clúster mediante la adición de elementos básicos adicionales es un proceso sencillo. Antes de empezar a tener en cuenta las restricciones en torno al número mínimo y máximo de nodos de clúster en cada clúster de alta disponibilidad, y determinar si debe añadir nodos al clúster de alta disponibilidad existente o crear un nuevo clúster de alta disponibilidad. Normalmente, cada bloque de creación consta de dos nodos de archivo, pero tres nodos son el número mínimo de nodos por clúster (para establecer quórum), y diez son el máximo recomendado (probado). En situaciones avanzadas es posible añadir un solo nodo "tiebreaker" que no ejecute ningún servicio BeeGFS al poner en marcha un clúster de dos nodos. Póngase en contacto con el servicio de soporte de NetApp si está considerando realizar dicha implementación.
@@ -39,6 +42,7 @@ TIP: Recuerde que un solo sistema de archivos BeeGFS puede consistir en varios c
 
 
 
+[[steps]]
 === Pasos
 
 Al agregar un elemento básico al clúster, deberá crear los `host_vars` archivos para cada uno de los nuevos nodos de archivo y los nodos de bloque (cabinas E-Series). Los nombres de estos hosts deben agregarse al inventario, junto con los nuevos recursos que se van a crear.  `group_vars`Se deberán crear los archivos correspondientes para cada nuevo recurso. Consulte la link:../custom/architectures-overview.html["utilizar arquitecturas personalizadas"^] sección para obtener más información.
@@ -51,6 +55,7 @@ ansible-playbook -i <inventory>.yml <playbook>.yml
 ----
 
 
+[[removing-a-building-block-from-the-cluster]]
 == Eliminación de un elemento básico del clúster
 
 Hay una serie de consideraciones que tener en cuenta cuando se necesita retirar un bloque de construcción, por ejemplo:

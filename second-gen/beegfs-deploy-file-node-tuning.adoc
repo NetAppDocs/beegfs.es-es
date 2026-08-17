@@ -20,6 +20,7 @@ La configuración del sistema varía en función del modelo de servidor que util
 
 
 
+[[use-the-uefi-interface-to-tune-system-settings]]
 == Utilice la interfaz UEFI para ajustar la configuración del sistema
 
 El firmware del sistema del servidor Lenovo SR665 V3 contiene numerosos parámetros de ajuste que se pueden configurar a través de la interfaz UEFI. Estos parámetros de ajuste pueden afectar a todos los aspectos del funcionamiento del servidor y el rendimiento del mismo.
@@ -28,6 +29,7 @@ En *Configuración de UEFI > Configuración del sistema*, ajuste los siguientes 
 
 
 
+[[operating-mode-menu]]
 === Menú modo de funcionamiento
 
 [cols=","]
@@ -113,6 +115,7 @@ NPS1
 |===
 
 
+[[devices-and-io-ports-menu]]
 === Menú dispositivos y puertos de E/S.
 
 [cols=","]
@@ -128,6 +131,7 @@ Desactivar
 |===
 
 
+[[power-menu]]
 === Menú de encendido
 
 [cols=","]
@@ -143,6 +147,7 @@ Desactivar
 |===
 
 
+[[processors-menu]]
 === Menú procesadores
 
 [cols=","]
@@ -179,6 +184,7 @@ Desactivar
 |===
 
 
+[[use-redfish-api-to-tune-system-settings]]
 == Utilice la API de Redfish para ajustar la configuración del sistema
 
 Además de utilizar UEFI Setup, puede utilizar la API Redfish para cambiar la configuración del sistema.

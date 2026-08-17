@@ -20,6 +20,7 @@ El inventario de Ansible es una estructura de directorios que enumera los nodos 
 
 
 
+[[ansible-modules-and-roles]]
 == Módulos y roles de Ansible
 
 Para aplicar la configuración descrita en el inventario de Ansible, utilice los distintos módulos y roles de Ansible que se proporcionan en la colección Ansible de E-Series de NetApp (disponible en https://github.com/netappeseries/beegfs/tree/master/roles/beegfs_ha_7_4["E-Series BeeGFS GitHub de NetApp"^] ), que ponen en marcha la solución completa.
@@ -33,6 +34,7 @@ NOTE: Aunque los pasos de puesta en marcha intentan proporcionar información su
 
 
 
+[[inventory-layout-for-a-beegfs-ha-cluster]]
 == Diseño de inventario para un clúster de alta disponibilidad de BeeGFS
 
 Defina un clúster de alta disponibilidad de BeeGFS mediante la estructura de inventario de Ansible.

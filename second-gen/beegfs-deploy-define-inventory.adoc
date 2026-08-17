@@ -25,6 +25,7 @@ NOTE: En esta y en secciones posteriores, ajuste según sea necesario para gener
 
 
 
+[[step-1-create-the-ansible-inventory-file]]
 == Paso 1: Cree el archivo de inventario de Ansible
 
 .Pasos
@@ -54,6 +55,7 @@ En las secciones siguientes, creará grupos de Ansible adicionales en `ha_cluste
 
 
 
+[[step-2-configure-the-inventory-for-a-management-metadata-and-storage-building-block]]
 == Paso 2: Configure el inventario para un elemento básico de gestión, metadatos y almacenamiento
 
 El primer elemento básico del clúster o bloque básico debe incluir el servicio de gestión de BeeGFS junto con los servicios de metadatos y almacenamiento:
@@ -181,7 +183,7 @@ beegfs_targets:
 ....
 +
 
-NOTE: El tamaño del volumen se especifica como un porcentaje del pool de almacenamiento general (también denominado grupo de volúmenes). NetApp recomienda encarecidamente que deje cierta capacidad libre en cada pool para dejar espacio para el sobreaprovisionamiento de SSD (para obtener más información, consulte https://www.netapp.com/pdf.html?item=/media/17009-tr4800pdf.pdf["Introducción a la cabina EF600 de NetApp"^]). El pool de almacenamiento, `beegfs_m1_m2_m5_m6`, también asigna el 1% de la capacidad del pool para el servicio de administración. Por lo tanto, para volúmenes de metadatos en el pool de almacenamiento, `beegfs_m1_m2_m5_m6`, Cuando se utilizan unidades de 1,92 TB o 3,84 TB, establezca este valor en `21.25`; Para unidades de 7,65 TB, establezca este valor en `22.25`; Y para las unidades de 15,3 TB, establezca este valor en `23.75`.
+NOTE: El tamaño del volumen se especifica como un porcentaje del grupo de almacenamiento global (también denominado grupo de volúmenes). NetApp recomienda encarecidamente que dejes algo de capacidad libre en cada grupo para permitir el sobreaprovisionamiento de los SSD (para más información, consulta https://www.netapp.com/pdf.html?item=/media/17009-tr4800.pdf["Introducción a la cabina EF600 de NetApp"^]). El grupo de almacenamiento, `beegfs_m1_m2_m5_m6`, también asigna un 1 % de la capacidad del grupo al servicio de gestión. Así que, para los volúmenes de metadatos del grupo de almacenamiento, `beegfs_m1_m2_m5_m6`, cuando se usen unidades de 1,92 TB o 3,84 TB, pon este valor en `21.25`; para unidades de 7,65 TB, pon este valor en `22.25`; y para unidades de 15,3 TB, pon este valor en `23.75`.
 
 +
 |===
@@ -269,6 +271,7 @@ NOTE: Para ver el tamaño correcto de uso, consulte link:beegfs-deploy-recommend
 
 
 
+[[step-3-configure-the-inventory-for-a-metadata-storage-building-block]]
 == Paso 3: Configure el inventario para un bloque básico de metadatos + almacenamiento
 
 Estos pasos describen cómo configurar un inventario de Ansible para un elemento básico de metadatos BeeGFS + almacenamiento.
@@ -458,6 +461,7 @@ NOTE: Para conocer el tamaño correcto a utilizar, consulte link:beegfs-deploy-r
 
 
 
+[[step-4-configure-the-inventory-for-a-storage-only-building-block]]
 == Paso 4: Configure el inventario para un elemento básico de solo almacenamiento
 
 Estos pasos describen cómo configurar un inventario de Ansible para un elemento básico solo de almacenamiento de BeeGFS. La principal diferencia entre configurar una configuración para un almacenamiento y metadatos frente a un elemento básico solo de almacenamiento es la omisión de todos los grupos de recursos de metadatos y las cambios `criteria_drive_count` de 10 a 12 por cada pool de almacenamiento.

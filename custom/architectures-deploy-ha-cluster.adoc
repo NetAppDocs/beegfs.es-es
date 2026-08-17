@@ -18,16 +18,19 @@ Especifique qué tareas se deben ejecutar para poner en marcha el clúster de al
 
 
 
+[[overview]]
 == Descripción general
 
 En esta sección se describe cómo montar el libro de estrategia estándar utilizado para poner en marcha/gestionar BeeGFS en NetApp.
 
 
 
+[[steps]]
 == Pasos
 
 
 
+[[create-the-ansible-playbook]]
 === Cree el libro de aplicaciones de Ansible
 
 Cree el archivo `playbook.yml` y rellenarlo de la siguiente manera:
@@ -124,6 +127,7 @@ Haz clic en link:https://github.com/NetApp/beegfs/blob/master/getting_started/be
 
 
 
+[[install-the-netapp-ansible-collections]]
 === Instale las colecciones Ansible de NetApp
 
 Se mantiene la colección BeeGFS para Ansible y todas las dependencias link:https://galaxy.ansible.com/netapp_eseries/beegfs["Galaxia de ansible"^]. En su nodo de control de Ansible, ejecute el siguiente comando para instalar la versión más reciente:
@@ -140,6 +144,7 @@ ansible-galaxy collection install netapp_eseries.beegfs:==<MAJOR>.<MINOR>.<PATCH
 ----
 
 
+[[run-the-playbook]]
 === Ejecute el libro de aplicaciones
 
 Desde el directorio del nodo de control de Ansible que contiene el `inventory.yml` y.. `playbook.yml` ejecute el libro de estrategia de la siguiente forma:

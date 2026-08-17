@@ -18,6 +18,7 @@ Pasos necesarios para instalar y cablear el hardware utilizado para ejecutar Bee
 
 
 
+[[plan-the-installation]]
 == Planifique la instalación
 
 Cada sistema de archivos BeeGFS consistirá en un número determinado de nodos de archivo en los que se ejecutan servicios BeeGFS mediante el almacenamiento de fondo proporcionado por un número determinado de nodos de bloque. Los nodos de archivos están configurados en uno o varios clústeres de alta disponibilidad para proporcionar tolerancia a fallos en los servicios BeeGFS. Cada nodo de bloque ya es un par de alta disponibilidad activo-activo. El número mínimo de nodos de archivo admitidos en cada clúster de alta disponibilidad es de tres y el número máximo de nodos de archivo admitidos en cada clúster es de diez. Los sistemas de archivos BeeGFS pueden escalar más allá de diez nodos mediante la puesta en marcha de varios clústeres de alta disponibilidad independientes que funcionan en conjunto para proporcionar un espacio de nombres único del sistema de archivos.
@@ -31,6 +32,7 @@ CAUTION: Asegúrese de que la arquitectura del sistema de archivos deseada para 
 
 
 
+[[rack-hardware]]
 == Hardware en rack
 
 Al planificar la instalación, es importante que todo el equipo de cada bloque de construcción esté montado en rack adyacente. La práctica recomendada es que los nodos de archivo estén montados en rack inmediatamente encima de los nodos de bloque en cada bloque básico. Siga la documentación de los modelos de archivo y. link:https://docs.netapp.com/us-en/e-series/getting-started/getup-run-concept.html["bloque"^] los nodos que usa mientras instala rieles y hardware en el rack.
@@ -45,6 +47,7 @@ image:beegfs-design-image3-small.png["Ejemplo de implementación de BeeGFS"]
 
 
 
+[[cable-file-and-block-nodes]]
 == Nodos de archivos de cable y bloques
 
 Normalmente, se conectan directamente los puertos HIC de los nodos de bloque de E-Series al adaptador de canal de host designado (para protocolos InfiniBand) o al adaptador de bus de host (para el canal de fibra y otros protocolos) de los nodos de archivo. La forma exacta de establecer estas conexiones dependerá de la arquitectura del sistema de archivos deseada, aquí hay un ejemplo link:../second-gen/beegfs-design-hardware-architecture.html["Basado en BeeGFS de segunda generación en la arquitectura verificada de NetApp"^]:
@@ -53,6 +56,7 @@ image:buildingblock-sr665v3.png["Ejemplo de archivo BeeGFS para bloquear el cabl
 
 
 
+[[cable-file-nodes-to-the-client-network]]
 == Conecte los nodos de archivo a la red de cliente
 
 Cada nodo de archivo tendrá un número de puertos InfiniBand o Ethernet designados para el tráfico del cliente BeeGFS. Dependiendo de la arquitectura que tenga cada nodo de archivo tendrá una o varias conexiones a una red cliente/almacenamiento de alto rendimiento, potencialmente a varios switches para obtener redundancia y un mayor ancho de banda. A continuación se muestra un ejemplo de cableado de cliente mediante switches de red redundantes, donde los puertos resaltados en verde oscuro frente al verde claro se conectan a switches separados:
@@ -61,6 +65,7 @@ image:networkcable-sr665v3.png["Ejemplo de cableado de cliente BeeGFS"]
 
 
 
+[[connect-management-networking-and-power]]
 == Conecte la red y la alimentación de la administración
 
 Establezca las conexiones de red necesarias para la red dentro y fuera de banda.

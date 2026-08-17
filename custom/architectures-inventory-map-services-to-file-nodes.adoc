@@ -18,12 +18,14 @@ Especifique qué nodos de archivo pueden ejecutar cada servicio BeeGFS mediante 
 
 
 
+[[overview]]
 == Descripción general
 
 En esta sección se explica cómo crear la `inventory.yml` archivo. Esto incluye una lista de todos los nodos de bloque y especificar qué nodos de archivo pueden ejecutar cada servicio BeeGFS.
 
 
 
+[[steps]]
 == Pasos
 
 Cree el archivo `inventory.yml` y rellenarlo de la siguiente manera:

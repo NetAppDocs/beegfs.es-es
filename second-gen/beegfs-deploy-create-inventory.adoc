@@ -18,6 +18,7 @@ Para definir la configuración de los nodos de archivos y bloques, debe crear un
 
 
 
+[[step-1-define-configuration-for-all-building-blocks]]
 == Paso 1: Definir la configuración para todos los bloques de construcción
 
 Defina la configuración que se aplica a todos los bloques de creación, independientemente del perfil de configuración que pueda aplicar a ellos individualmente.
@@ -78,6 +79,7 @@ bmc_password: <PASSWORD>
 
 
 
+[[step-2-define-configuration-for-individual-file-and-block-nodes]]
 == Paso 2: Definir la configuración para nodos de archivos y bloques individuales
 
 Defina la configuración que se aplica a los nodos de archivo individuales y a los nodos individuales de los bloques de creación.
@@ -174,6 +176,7 @@ eseries_controller_nvme_ib_port:
 
 
 
+[[step-3-define-configuration-that-should-apply-to-all-file-and-block-nodes]]
 == Paso 3: Defina la configuración que debe aplicarse a todos los nodos de archivo y bloque
 
 Puede definir la configuración común a un grupo de hosts en `group_vars` en un nombre de archivo que corresponde al grupo. Esto evita la repetición de una configuración compartida en varios lugares.
@@ -194,6 +197,7 @@ beegfs_ha_ntp_server_pools:  # Modify the NTP server addressess if desired.
 ....
 
 
+[[step-4-define-configuration-that-should-apply-to-all-file-nodes]]
 == Paso 4: Defina la configuración que debe aplicarse a todos los nodos de archivo
 
 La configuración compartida para los nodos de archivo se define en un grupo denominado `ha_cluster`. Los pasos de esta sección crean la configuración que se debe incluir en `group_vars/ha_cluster.yml` archivo.
@@ -366,6 +370,7 @@ NOTE: En las pruebas de verificación, `randomrobin` Normalmente se utilizó par
 
 
 
+[[step-5-define-the-configuration-for-the-common-block-node]]
 == Paso 5: Defina la configuración para el nodo de bloques común
 
 La configuración compartida para los nodos de bloque se define en un grupo denominado `eseries_storage_systems`. Los pasos de esta sección crean la configuración que se debe incluir en `group_vars/ eseries_storage_systems.yml` archivo.

@@ -18,12 +18,14 @@ Planifique la puesta en marcha del sistema de archivos antes de crear el inventa
 
 
 
+[[overview]]
 == Descripción general
 
 Antes de implementar el sistema de archivos, debe definir qué direcciones IP, puertos y otra configuración serán necesarias para todos los nodos de archivos, nodos de bloques y servicios BeeGFS que se ejecuten en el clúster. Aunque la configuración exacta variará en función de la arquitectura del clúster, esta sección define las prácticas recomendadas y los pasos a seguir que son aplicables.
 
 
 
+[[steps]]
 == Pasos
 
 . Si utiliza un protocolo de almacenamiento basado en IP (como Iser, iSCSI, NVMe/IB o NVMe/roce) para conectar nodos de archivos a nodos de bloques, rellene la siguiente hoja de datos para cada elemento básico. Cada conexión directa en un único bloque de creación debería tener una subred única y no debería haber superposición con subredes utilizadas para la conectividad cliente-servidor.

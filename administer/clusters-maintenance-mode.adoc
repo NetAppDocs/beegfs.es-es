@@ -18,6 +18,7 @@ Evite que el clúster de alta disponibilidad reaccione accidentalmente a los cam
 
 
 
+[[overview]]
 == Descripción general
 
 Si pone el clúster en el modo de mantenimiento, se deshabilita toda la supervisión de recursos y se impide que Pacemaker mueva o gestione los recursos del clúster de algún otro modo. Todos los recursos permanecerán en ejecución en sus nodos originales, independientemente de que haya una condición de fallo temporal que impida que se pueda acceder a ellos. Los escenarios en los que esto es recomendable/útil incluyen:
@@ -31,6 +32,7 @@ Por lo general, el único motivo para poner manualmente el clúster en modo de m
 
 
 
+[[steps]]
 == Pasos
 
 Para comprobar si el clúster se encuentra en modo de mantenimiento ejecutar:

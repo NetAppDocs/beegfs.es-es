@@ -18,6 +18,7 @@ Aunque la mayoría de las tareas de configuración de software se automatizan a 
 
 
 
+[[set-up-file-nodes]]
 == Configure los nodos de archivo
 
 . Configure la red en el controlador de administración de la placa base (BMC) de cada servidor.
@@ -54,6 +55,7 @@ subscription-manager repo-override --repo=rhel-9-for-x86_64-highavailability-rpm
 
 
 
+[[set-up-block-nodes]]
 == Configure los nodos de bloque
 
 Configure los nodos de bloque EF600 configurando el puerto de gestión en cada controladora.

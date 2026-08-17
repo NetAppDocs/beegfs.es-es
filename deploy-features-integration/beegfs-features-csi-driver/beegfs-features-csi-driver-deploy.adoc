@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar 
-permalink: deploy-features-integration/beegfs-csi-driver/csi-driver-deploy.html 
+permalink: deploy-features-integration/beegfs-features-csi-driver/beegfs-features-csi-driver-deploy.html 
 keywords: BeeGFS Features, CSI, Driver 
 summary: Instrucciones de implementación para el controlador CSI de BeeGFS. 
 ---
@@ -18,12 +18,14 @@ Instrucciones para implementar el controlador CSI de BeeGFS en un entorno de Kub
 
 
 
+[[air-gapped-deployment]]
 == Implementación con espacio de aire
 
 Para realizar una implementación Air-Gapped (sin conexión), tanto los archivos de configuración YAML de Kubernetes como las imágenes de contenedor requeridas deben descargarse con anticipación en un sistema con acceso a Internet.  Luego, estos archivos deben transferirse a los nodos de destino donde se instalará el controlador CSI.
 
 
 
+[[retrieve-the-driver-and-images]]
 === Recuperar el controlador y las imágenes
 
 Realice los siguientes pasos para implementar el controlador CSI de BeeGFS en un entorno con espacio de aire.
@@ -83,6 +85,7 @@ Repita este comando de exportación para cada imagen requerida, reemplazando el 
 
 
 
+[[import-the-required-images]]
 === Importar las imágenes requeridas
 
 . Navegar hasta el `/home/<User>/beegfs-csi-images` directorio donde se guardan las imágenes e importa cada imagen usando containerd. Por ejemplo:
@@ -105,6 +108,7 @@ crictl images
 
 
 
+[[configure-and-deploy-the-csi-driver-overlays]]
 === Configurar e implementar las superposiciones del controlador CSI
 
 . Navegar hasta el `/home/<User>/beegfs-csi-driver` directorio.
@@ -189,6 +193,7 @@ NOTE: El `patchesStrategicMerge` La sección le permite aplicar parches personal
 
 
 
+[[install-the-beegfs-csi-driver]]
 === Instalar el controlador CSI de BeeGFS
 
 . Instale el controlador CSI de BeeGFS utilizando su superposición personalizada.  Este paso aplica todos los cambios de configuración, incluido el uso de imágenes importadas localmente y la política de extracción de imágenes actualizada.
@@ -205,12 +210,14 @@ kubectl apply -k deploy/k8s/overlays/beegfs-overlay
 
 
 
+[[online-deployment]]
 == Implementación en línea
 
 Si sus nodos de Kubernetes tienen acceso a Internet, puede implementar el controlador CSI de BeeGFS directamente sin necesidad de descargar o transferir manualmente imágenes de contenedores.  Cuando se implementan los pods, descargarán automáticamente las imágenes desde el centro de imágenes y activarán los servicios necesarios.
 
 
 
+[[retrieve-the-driver-repository]]
 === Recuperar el repositorio de controladores
 
 . Clone el repositorio de GitHub del controlador CSI de BeeGFS en su sistema local:
@@ -223,6 +230,7 @@ git clone https://github.com/ThinkParQ/beegfs-csi-driver.git
 
 
 
+[[configure-the-driver]]
 === Configurar el controlador
 
 . Navegue hasta el directorio del repositorio clonado y, si es necesario, actualice los archivos de configuración en el directorio de superposición predeterminado:
@@ -258,6 +266,7 @@ NOTE: El controlador CSI requiere que el archivo de configuración se encuentre 
 
 
 
+[[install-the-beegfs-csi-driver]]
 === Instalar el controlador CSI de BeeGFS
 
 . Instalar la superposición predeterminada usando `kubectl` .  Esto extraerá automáticamente las imágenes requeridas de sus respectivos registros y creará todos los recursos de Kubernetes necesarios:
@@ -298,12 +307,14 @@ NOTE: Usar `kubectl apply -k` para superposiciones (directorios que contienen un
 
 
 
+[[deploy-example-application]]
 == Implementar aplicación de ejemplo
 
 Después de instalar el controlador CSI de BeeGFS (ya sea con espacio de aire o en línea), puede implementar la aplicación de ejemplo para validar su configuración.  Este ejemplo incluye un StorageClass, PersistentVolumeClaim (PVC) y un pod que utiliza el controlador CSI de BeeGFS.
 
 
 
+[[before-deploying]]
 === Antes de implementar:
 
 . Obtenga la dirección IP del nodo de administración de BeeGFS:
@@ -355,6 +366,7 @@ allowVolumeExpansion: true
 
 
 
+[[deploy]]
 === Desplegar
 
 . Implementar los archivos de la aplicación de ejemplo:

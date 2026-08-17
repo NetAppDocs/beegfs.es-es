@@ -18,6 +18,7 @@ BeeGFS en la solución de NetApp incluye consideraciones de diseño arquitectón
 
 
 
+[[building-block-architecture]]
 == Arquitectura de elementos básicos
 
 El sistema de archivos BeeGFS se puede implementar y escalar de diferentes maneras en función de los requisitos de almacenamiento. Por ejemplo, los casos de uso que incluyan principalmente numerosos ficheros pequeños se beneficiarán de un rendimiento y una capacidad adicionales relacionados con los metadatos, mientras que los casos de uso que incluyan menos archivos de gran tamaño pueden favorecer una mayor capacidad de almacenamiento y un mayor rendimiento en el contenido real de los ficheros. Estas múltiples consideraciones afectan a las diferentes dimensiones de la implementación del sistema de archivos paralelos, lo que añade complejidad al diseño y la implementación del sistema de archivos.
@@ -35,6 +36,7 @@ Para obtener información detallada, consulte <<Diseño de hardware verificado>>
 
 
 
+[[file-system-services]]
 == Servicios de ficheros
 
 El sistema de archivos BeeGFS incluye los siguientes servicios principales:
@@ -55,6 +57,7 @@ Los cuatro servicios principales se ejecutan en una amplia gama de distribucione
 
 
 
+[[ha-architecture]]
 == Arquitectura de ALTA DISPONIBILIDAD
 
 BeeGFS en NetApp amplía la funcionalidad de la edición empresarial de BeeGFS mediante la creación de una solución totalmente integrada en hardware de NetApp que permite una arquitectura de alta disponibilidad (ha) de disco compartido.
@@ -70,6 +73,7 @@ Para obtener más información, consulte https://www.netapp.com/blog/high-availa
 
 
 
+[[verified-nodes]]
 == Nodos verificados
 
 La solución BeeGFS en NetApp ha verificado los nodos que se indican a continuación.
@@ -89,6 +93,7 @@ La solución BeeGFS en NetApp ha verificado los nodos que se indican a continuac
 |===
 
 
+[[verified-hardware-design]]
 == Diseño de hardware verificado
 
 Los elementos básicos de la solución (que se muestran en la siguiente figura) utilizan los servidores de nodos de archivo verificados para la capa de archivo BeeGFS y dos sistemas de almacenamiento EF600 como capa de bloques.
@@ -106,6 +111,7 @@ image:beegfs-design-image3.png["Escalado de clúster de alta disponibilidad de B
 
 
 
+[[ansible]]
 == Ansible
 
 BeeGFS en NetApp se entrega y se pone en marcha mediante la automatización de Ansible, que se encuentra alojado en GitHub y Ansible Galaxy (puede acceder a la colección BeeGFS en https://galaxy.ansible.com/netapp_eseries/beegfs["Galaxia de ansible"^] y.. https://github.com/netappeseries/beegfs/["GitHub de E-Series de NetApp"^]). A pesar de que Ansible se prueba principalmente con el hardware utilizado para ensamblar los elementos básicos de BeeGFS, puede configurarlo para que se ejecute prácticamente en cualquier servidor basado en x86 utilizando una distribución de Linux compatible.

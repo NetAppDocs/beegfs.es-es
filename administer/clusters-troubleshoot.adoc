@@ -18,16 +18,19 @@ Solucionar problemas de un clúster de alta disponibilidad de BeeGFS.
 
 
 
+[[overview]]
 == Descripción general
 
 En esta sección se explica cómo investigar y solucionar varios fallos y otros escenarios que pueden surgir al utilizar un clúster de alta disponibilidad de BeeGFS.
 
 
 
+[[troubleshooting-guides]]
 == Guías de solución de problemas
 
 
 
+[[investigating-unexpected-failovers]]
 === Investigando conmutaciones al respaldo inesperadas
 
 Cuando un nodo tiene una barrera aplicada de forma inesperada y sus servicios pasan a otro nodo, el primer paso debe ser comprobar si el clúster indica algún error de recurso en la parte inferior de `pcs status`. Por lo general, no habrá nada presente si la delimitación se ha realizado correctamente y se han reiniciado los recursos en otro nodo.
@@ -135,6 +138,7 @@ Si la acción de delimitación falló por algún motivo, los servicios BeeGFS no
 
 
 
+[[address-failed-resource-actions-found-at-the-bottom-of-pcs-status]]
 === Acciones de recursos fallidos de direcciones (que se encuentran en la parte inferior del estado de los pc)
 
 Si falla un recurso necesario para ejecutar un servicio BeeGFS, el monitor BeeGFS activará una conmutación por error. Si esto ocurre, es probable que no haya ninguna lista de acciones de recursos fallidas en la parte inferior de `pcs status` y debe consultar los pasos sobre cómo link:clusters-failover-failback.html["conmutación tras recuperación tras fallos no planificada"^].
@@ -211,10 +215,12 @@ Pasos para resolver:
 
 
 
+[[common-issues]]
 == Cuestiones comunes
 
 
 
+[[beegfs-services-dont-failover-or-failback-when-requested]]
 === Los servicios de BeeGFS no realizan una conmutación por error ni una conmutación tras recuperación cuando se le solicite
 
 *Asunto probable:* la `pcs resource relocate` se ejecutó el comando de ejecución, pero nunca se terminó correctamente.
@@ -225,6 +231,7 @@ Pasos para resolver:
 
 
 
+[[one-node-in-pcs-status-shows-standby-on-fail-when-fencing-is-disabled]]
 === Un nodo en el estado del pc muestra "standby (on-fail)" cuando está desactivado el cercado
 
 *Problema probable:* Pacemaker no pudo confirmar con éxito todos los recursos fueron detenidos en el nodo que falló.
@@ -237,6 +244,7 @@ Pasos para resolver:
 
 
 
+[[after-an-unexpected-failover-resources-show-started-on-fail-in-pcs-status-when-fencing-is-enabled]]
 === Después de una conmutación por error inesperada, los recursos muestran "iniciado (en caso de fallo)" en el estado de los pc cuando se activa la delimitación
 
 *Problema probable:* se produjo Un problema que provocó una conmutación por error, pero Pacemaker no pudo verificar que el nodo estaba vallado. Esto podría ocurrir porque la delimitación estaba mal configurada o hubo un problema con el agente de cercado (ejemplo: La PDU se desconectó de la red).
@@ -255,10 +263,12 @@ En este punto, los servicios deben terminar de conmutar por error y reiniciarse 
 
 
 
+[[common-troubleshooting-tasks]]
 == Tareas comunes de solución de problemas
 
 
 
+[[restart-individual-beegfs-services]]
 === Reinicie los servicios BeeGFS individuales
 
 Normalmente, si es necesario reiniciar un servicio BeeGFS (por ejemplo, para facilitar un cambio en la configuración), debe hacerlo actualizando el inventario de Ansible y volviendo a ejecutar el libro de estrategia. En algunos casos, puede que sea conveniente reiniciar servicios individuales para facilitar la solución de problemas más rápida, por ejemplo, cambiar el nivel de registro sin tener que esperar a que se ejecute el libro de estrategia completo.

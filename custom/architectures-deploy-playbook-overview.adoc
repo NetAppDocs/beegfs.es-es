@@ -18,12 +18,14 @@ Puesta en marcha y gestión de clústeres de alta disponibilidad de BeeGFS media
 
 
 
+[[overview]]
 == Descripción general
 
 En las secciones anteriores se han realizado los pasos necesarios para crear un inventario de Ansible que represente un clúster de alta disponibilidad de BeeGFS. En esta sección se presenta la automatización de Ansible desarrollada por NetApp para poner en marcha y gestionar el clúster.
 
 
 
+[[ansible-key-concepts]]
 == Ansible: Conceptos clave
 
 Antes de continuar, es útil estar familiarizado con algunos conceptos clave de Ansible:
@@ -53,6 +55,7 @@ Antes de continuar, es útil estar familiarizado con algunos conceptos clave de 
 
 
 
+[[beegfs-ha-role-for-ansible-key-concepts]]
 == Rol de ha de BeeGFS para Ansible: Conceptos clave
 
 Toda la automatización necesaria para poner en marcha y gestionar cada versión de BeeGFS en NetApp se presenta como un rol de Ansible y se distribuye como parte de la link:https://galaxy.ansible.com/netapp_eseries/beegfs["Colección de Ansible E-Series de NetApp para BeeGFS"^]:

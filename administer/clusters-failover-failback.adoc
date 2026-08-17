@@ -18,16 +18,19 @@ Desplazamiento de servicios BeeGFS entre nodos del clúster.
 
 
 
+[[overview]]
 == Descripción general
 
 Los servicios BeeGFS pueden realizar una conmutación por error entre los nodos del clúster para garantizar que los clientes puedan continuar accediendo al sistema de archivos si un nodo experimenta un error o necesita realizar tareas de mantenimiento planificadas. En esta sección se describen distintas formas en las que los administradores pueden recuperar el clúster después de un fallo o mover manualmente servicios entre nodos.
 
 
 
+[[steps]]
 == Pasos
 
 
 
+[[failover-and-failback]]
 === Conmutación por error y conmutación por recuperación
 
 
@@ -89,6 +92,7 @@ pcs resource relocate run
 ----
 
 
+[[moving-individual-beegfs-services-to-alternate-file-nodes]]
 === Mover servicios de BeeGFS individuales a nodos de archivo alternativos
 
 

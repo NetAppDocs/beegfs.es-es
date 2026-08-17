@@ -18,12 +18,14 @@ Detener e iniciar correctamente el clúster de alta disponibilidad.
 
 
 
+[[overview]]
 == Descripción general
 
 En esta sección se describe cómo apagar y reiniciar correctamente el clúster BeeGFS. Algunos ejemplos de casos en los que esto puede ser necesario son el mantenimiento eléctrico o la migración entre centros de datos o racks.
 
 
 
+[[steps]]
 == Pasos
 
 Si por algún motivo necesita detener todo el clúster BeeGFS y apagar todos los servicios que se ejecutan:

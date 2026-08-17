@@ -18,12 +18,14 @@ Utilice pc para ver el estado del clúster.
 
 
 
+[[overview]]
 == Descripción general
 
 Ejecutando `pcs status` Desde cualquiera de los nodos del clúster es la forma más sencilla de ver el estado general del clúster y el estado de cada recurso (como los servicios BeeGFS y sus dependencias). En esta sección se describe lo que encontrará en el resultado del `pcs status` comando.
 
 
 
+[[understanding-the-output-from-pcs-status]]
 == Comprender el resultado de `pcs status`
 
 Ejecución `pcs status` En cualquier nodo de clúster en el que se hayan iniciado los servicios de clúster (Pacemaker y Corosync). La parte superior del resultado le mostrará un resumen del clúster:

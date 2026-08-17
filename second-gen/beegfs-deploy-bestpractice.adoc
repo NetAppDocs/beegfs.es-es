@@ -18,6 +18,7 @@ Siga las directrices de prácticas recomendadas para poner en marcha BeeGFS en u
 
 
 
+[[standard-conventions]]
 == Convenciones estándar
 
 Al ensamblar y crear físicamente el archivo de inventario de Ansible, siga estas convenciones estándar (para obtener más información, consulte link:beegfs-deploy-create-inventory.html["Cree el inventario de Ansible"]).
@@ -45,12 +46,14 @@ El objetivo es minimizar la longitud del cable que se ejecuta en la parte superi
 
 
 
+[[infiniband-storage-network-configuration]]
 == Configuración de la red de almacenamiento InfiniBand
 
 La mitad de los puertos InfiniBand de cada nodo de archivos se utilizan para conectarse directamente a los nodos de bloques. La otra mitad está conectada a los switches InfiniBand y se utiliza para la conectividad cliente-servidor BeeGFS. Al determinar el tamaño de las subredes IPoIB que se utilizan para los clientes y servidores de BeeGFS, debe tener en cuenta el crecimiento previsto del clúster de computación/GPU y del sistema de archivos BeeGFS. Si debe desviarse de los rangos de IP recomendados, tenga en cuenta que cada conexión directa en un único bloque de creación tiene una subred única y que no se solapan con las subredes utilizadas para la conectividad cliente-servidor.
 
 
 
+[[direct-connects]]
 === Conexiones directas
 
 Los nodos de archivo y bloque dentro de cada elemento básico siempre utilizan las direcciones IP de la tabla siguiente para sus conexiones directas.
@@ -87,6 +90,7 @@ NOTE: Este esquema de direccionamiento se adhiere a la siguiente regla: El terce
 |===
 
 
+[[beegfs-client-server-ipoib-addressing-schemes]]
 === Esquemas de direccionamiento IPoIB cliente-servidor BeeGFS
 
 Cada nodo de archivos ejecuta varios servicios de servidor BeeGFS (gestión, metadatos o almacenamiento). Para permitir que cada servicio conmute al nodo de archivos de manera independiente, cada uno de ellos está configurado con direcciones IP únicas que pueden flotarse entre ambos nodos (a veces denominados una interfaz lógica o LIF).

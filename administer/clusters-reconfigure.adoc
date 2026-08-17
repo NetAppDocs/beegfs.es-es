@@ -18,6 +18,7 @@ Use Ansible para volver a configurar el clúster.
 
 
 
+[[overview]]
 == Descripción general
 
 Normalmente, la reconfiguración de cualquier aspecto del clúster de alta disponibilidad de BeeGFS se debe realizar actualizando `ansible-playbook` el inventario de Ansible y volviendo a ejecutar el comando. Esto incluye la actualización de alertas, el cambio de la configuración permanente de la vallado o el ajuste de la configuración del servicio BeeGFS. Estos se ajustan utilizando el `group_vars/ha_cluster.yml` archivo y se puede encontrar una lista completa de opciones en la link:../custom/architectures-inventory-common-file-node-configuration.html["Especifique la configuración de nodos de archivos comunes"^] sección.
@@ -26,12 +27,14 @@ Consulte a continuación para obtener más información sobre opciones de config
 
 
 
+[[how-to-disable-and-enable-fencing]]
 == Cómo deshabilitar y activar delimitación
 
 La cercado se habilita o requiere de forma predeterminada cuando se configura el clúster. En algunos casos, puede que sea conveniente desactivar temporalmente la delimitación para garantizar que los nodos no se cierren accidentalmente al realizar determinadas operaciones de mantenimiento (como la actualización del sistema operativo). Aunque esto se puede desactivar manualmente, hay sacrificios que los administradores deben tener en cuenta.
 
 
 
+[[option-1-disable-fencing-using-ansible-recommended]]
 === OPCIÓN 1: Desactive la esgrima con Ansible (recomendado).
 
 Cuando se desactiva el cercado mediante Ansible, la acción en caso de fallo del monitor BeeGFS cambia de "cerca" a "en espera". Esto significa que si el monitor BeeGFS detecta un fallo, intentará poner el nodo en espera y realizar una conmutación por error de todos los servicios de BeeGFS. Fuera de la solución activa de problemas/pruebas esto es normalmente más deseable que la opción 2. La desventaja es que si un recurso no se detiene en el nodo original, se impedirá que se inicie en otro lugar (por lo que normalmente se requiere cercado para los clústeres de producción).
@@ -48,6 +51,7 @@ beegfs_ha_cluster_crm_config_options:
 
 
 
+[[option-2-disable-fencing-manually]]
 === OPCIÓN 2: Desactive la delimitación manualmente.
 
 En algunos casos puede que desee deshabilitar temporalmente la delimitación sin volver a leer Ansible, quizás para facilitar la solución de problemas o las pruebas del clúster.

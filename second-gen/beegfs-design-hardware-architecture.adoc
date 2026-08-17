@@ -18,6 +18,7 @@ La configuración de hardware para BeeGFS en NetApp incluye nodos de archivo y c
 
 
 
+[[file-node-configuration]]
 == Configuración de nodos de archivos
 
 Los nodos de archivos tienen dos sockets de CPU configurados como zonas NUMA independientes, que incluyen acceso local a un mismo número de ranuras PCIe y memoria.
@@ -32,6 +33,7 @@ Los procesos BeeGFS se anclan a una zona NUMA en particular para garantizar que 
 
 
 
+[[network-cabling-configuration]]
 == Configuración del cableado de red
 
 Dentro de un elemento básico, cada nodo de archivo está conectado a dos nodos de bloques mediante un total de cuatro conexiones InfiniBand redundantes. Además, cada nodo de archivo tiene cuatro conexiones redundantes a la red de almacenamiento de InfiniBand.

@@ -18,12 +18,14 @@ Siga estos pasos para actualizar los paquetes Pacemaker y Corosync en un clúste
 
 
 
+[[overview]]
 == Descripción general
 
 La actualización de Pacemaker y Corosync garantiza que el clúster se beneficie de nuevas funciones, parches de seguridad y mejoras de rendimiento.
 
 
 
+[[upgrade-approach]]
 == Enfoque de actualización
 
 Hay dos enfoques recomendados para actualizar un clúster: Una actualización gradual o un apagado completo del clúster. Cada enfoque tiene sus propias ventajas y desventajas. El procedimiento de actualización puede variar en función de la versión de Pacemaker. Consulte la documentación de ClusterLabs link:https://clusterlabs.org/projects/pacemaker/doc/3.0/Pacemaker_Administration/html/upgrading.html["Actualización de un grupo de marcapasos"^]para determinar qué enfoque usar. Antes de seguir un enfoque de actualización, compruebe que:
@@ -35,6 +37,7 @@ Hay dos enfoques recomendados para actualizar un clúster: Una actualización gr
 
 
 
+[[rolling-upgrade]]
 === Actualización gradual
 
 Este método implica eliminar cada nodo del clúster, actualizarlo y, a continuación, volver a introducirlo al clúster hasta que todos los nodos ejecuten la nueva versión. Este método mantiene el clúster operativo, lo cual es ideal para clústeres de alta disponibilidad de mayor tamaño, pero conlleva el riesgo de ejecutar versiones mixtas durante el proceso. Este método debe evitarse en clústeres de dos nodos.
@@ -129,6 +132,7 @@ NOTE: Si los `Current DC` informes 'versión modificada', un nodo del cluster to
 
 
 
+[[complete-cluster-shutdown]]
 === Complete el cierre del clúster
 
 En este enfoque, todos los nodos y recursos del clúster están apagados, los nodos se actualizan y después se reinicia el clúster. Este enfoque es necesario si las versiones Pacemaker y Corosync no admiten una configuración de versiones mixtas.

@@ -18,6 +18,7 @@ Usa Ansible para actualizar la versión de BeeGFS que se ejecuta en tu clúster 
 
 
 
+[[overview]]
 == Descripción general
 
 BeeGFS sigue un `major.minor.patch` esquema de control de versiones. Se proporcionan los roles de Ansible de alta disponibilidad de BeeGFS para cada `major.minor` versión compatible (p. ej., `beegfs_ha_7_2` y `beegfs_ha_7_3`). Todos los roles de alta disponibilidad se fijan a la última versión de parche de BeeGFS disponible en el momento del lanzamiento de la colección Ansible.
@@ -29,6 +30,7 @@ NOTE: Si estás actualizando a BeeGFS 8, consulta el procedimiento link:clusters
 
 
 
+[[tested-upgrade-paths]]
 == Rutas de actualización probadas
 
 Se han probado y verificado las siguientes rutas de actualización:
@@ -69,12 +71,14 @@ Se han probado y verificado las siguientes rutas de actualización:
 |===
 
 
+[[beegfs-upgrade-steps]]
 == Pasos de actualización de BeeGFS
 
 En las siguientes secciones se ofrecen pasos para actualizar la colección Ansible BeeGFS y el propio BeeGFS. Preste especial atención a cualquier paso(s) adicional(s) para actualizar BeeGFS versiones mayores o menores.
 
 
 
+[[step-1-upgrade-beegfs-collection]]
 === Paso 1: Actualizar la colección BeeGFS
 
 Para actualizaciones de colecciones con acceso a. link:https://galaxy.ansible.com/netapp_eseries/beegfs["Galaxia de ansible"^], ejecute el siguiente comando:
@@ -93,12 +97,14 @@ Consulte link:https://docs.ansible.com/ansible/latest/collections_guide/collecti
 
 
 
+[[step-2-update-ansible-inventory]]
 === Paso 2: Actualice el inventario de Ansible
 
 Haz cualquier actualización necesaria o que quieras en los archivos de inventario de Ansible de tu clúster. Mira la sección <<Notas de actualización de la versión>> abajo para ver detalles sobre tus requisitos específicos de actualización. Mira la sección link:../custom/architectures-inventory-overview.html["Descripción general del inventario de Ansible"^] para información general sobre cómo configurar tu inventario de BeeGFS HA.
 
 
 
+[[step-3-update-ansible-playbook-when-updating-major-or-minor-versions-only]]
 === Paso 3: Actualizar Ansible playbook (cuando se actualizan solo versiones principales o secundarias)
 
 Si va a cambiar entre versiones principal o secundaria, en `playbook.yml` el archivo usado para implementar y mantener el clúster, actualice el nombre `beegfs_ha_<VERSION>` del rol para reflejar la versión deseada. Por ejemplo, si desea desplegar BeeGFS 7,4, esto sería `beegfs_ha_7_4`:
@@ -119,6 +125,7 @@ Si desea obtener más información sobre el contenido de este archivo de playboo
 
 
 
+[[step-4-run-the-beegfs-upgrade]]
 === Paso 4: Ejecute la actualización de BeeGFS
 
 Para aplicar la actualización de BeeGFS:
@@ -144,10 +151,12 @@ Entre bastidores, el rol de BeeGFS ha se encargará de:
 
 
 
+[[version-upgrade-notes]]
 == Notas de actualización de la versión
 
 
 
+[[upgrading-from-beegfs-version-7-2-6-or-7-3-0]]
 === Actualización desde BeeGFS versión 7.2.6 o 7.3.0
 
 

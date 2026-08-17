@@ -20,6 +20,7 @@ image:high-capacity-rack-diagram.png["Diagrama de bastidor de alta capacidad"]
 
 
 
+[[controllers]]
 == Controladoras
 
 Para los elementos básicos de gran capacidad, las controladoras EF600 deben sustituirse por controladoras EF300, cada uno con una Cascade HIC instalada para la ampliación SAS. Cada nodo de bloque tendrá un número mínimo de SSD NVMe en el compartimento de la cabina para el almacenamiento de metadatos BeeGFS y se adjuntará a bandejas de expansión completas con HDD NL-SAS para volúmenes de almacenamiento BeeGFS.
@@ -28,6 +29,7 @@ La configuración del nodo de archivo al nodo de bloque sigue siendo la misma.
 
 
 
+[[drive-placement]]
 == Ubicación de la unidad
 
 Se requiere un mínimo de 4 SSD NVMe en cada nodo de bloque para el almacenamiento de metadatos BeeGFS. Estas unidades deben colocarse en las ranuras más externas de la carcasa.
@@ -36,6 +38,7 @@ image:high-capacity-drive-slots-diagram.png["Diagrama de ranuras de unidades de 
 
 
 
+[[expansion-trays]]
 == Bandejas de expansión
 
 El elemento básico de gran capacidad se puede ajustar con 1-7, 60 bandejas de expansión por cabina de almacenamiento.

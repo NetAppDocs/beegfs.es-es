@@ -18,6 +18,7 @@ Siga estos pasos para actualizar los componentes de la cabina de almacenamiento 
 
 
 
+[[overview]]
 == Descripción general
 
 Mantener las cabinas de almacenamiento de NetApp E-Series del clúster de alta disponibilidad actualizadas con el firmware más reciente garantiza un rendimiento óptimo y una mayor seguridad. Las actualizaciones de firmware para la cabina de almacenamiento se aplican a través de sistema operativo SANtricity, NVSRAM y archivos de firmware de la unidad.
@@ -27,6 +28,7 @@ NOTE: Aunque las cabinas de almacenamiento se pueden actualizar con el clúster 
 
 
 
+[[block-node-upgrade-steps]]
 == Pasos de actualización del nodo de bloque
 
 Los siguientes pasos describen cómo actualizar el firmware de las cabinas de almacenamiento mediante `Netapp_Eseries.Santricity` la colección Ansible. Antes de continuar, revise link:https://docs.netapp.com/us-en/e-series/upgrade-santricity/overview-upgrade-consider-task.html["Consideraciones de renovación"^]para actualizar los sistemas E-Series.

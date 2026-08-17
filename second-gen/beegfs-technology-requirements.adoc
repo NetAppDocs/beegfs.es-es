@@ -18,6 +18,7 @@ Para implantar BeeGFS en la solución NetApp, asegúrese de que su entorno cumpl
 
 
 
+[[requirements-overview]]
 == Resumen de requisitos
 
 En esta página se detallan los requisitos de hardware, software y firmware para implementar BeeGFS en los bloques de construcción de NetApp. Los requisitos se organizan en las siguientes secciones:
@@ -29,12 +30,14 @@ En esta página se detallan los requisitos de hardware, software y firmware para
 
 
 
+[[hardware-requirements]]
 == Requisitos de hardware
 
 Antes de empezar, asegúrate de que tu hardware cumple las siguientes especificaciones para un diseño de bloque único de la solución BeeGFS en NetApp. Los componentes exactos para una puesta en marcha concreta pueden variar según los requisitos del cliente. Cada nodo de archivos debe cumplir o superar estas especificaciones para lograr el rendimiento esperado.
 
 
 
+[[file-node-requirements]]
 === Requisitos del nodo de archivo
 
 [cols="10%,90%"]
@@ -70,6 +73,7 @@ IMPORTANT: Los nodos de archivos requieren una suscripción válida a Red Hat En
 
 
 
+[[block-node-requirements]]
 === Requisitos de los nodos de bloque
 
 Cada bloque de construcción requiere dos E-Series del mismo modelo. No mezcles modelos de E-Series dentro del mismo bloque de construcción.
@@ -97,6 +101,7 @@ Cada bloque de construcción requiere dos E-Series del mismo modelo. No mezcles 
 |===
 
 
+[[storage-network-switch-requirements]]
 === Requisitos del switch de red de almacenamiento
 
 [cols="10%,90%"]
@@ -115,12 +120,14 @@ NOTE: Se pueden usar switches alternativos como el NVIDIA MQM8700 Quantum, pero 
 
 
 
+[[cabling-requirements]]
 === Requisitos de cableado
 
 
 
 ==== Cables de nodo de bloque a nodo de archivo
 
+[[block-file-cables]]
 Las conexiones directas de los nodos de bloque a los nodos de archivo requieren los siguientes cables:
 
 [cols="15%,60%,25%"]
@@ -134,6 +141,7 @@ Las conexiones directas de los nodos de bloque a los nodos de archivo requieren 
 
 ==== Cables de nodo de archivos a switch de almacenamiento
 
+[[file-switch-cables]]
 Se recomiendan los siguientes tipos de cable para el switch NVIDIA QM9700 Quantum 2. Elige fibra activa o cobre pasivo según lo que necesites. Las cantidades son por bloque de construcción.
 
 [cols="20%,15%,10%,55%"]
@@ -154,6 +162,7 @@ Se recomiendan los siguientes tipos de cable para el switch NVIDIA QM9700 Quantu
 |===
 
 
+[[software-deployment-requirements]]
 === Requisitos de puesta en marcha de software
 
 En la siguiente tabla se enumeran los requisitos de software puestos en marcha automáticamente como parte de la puesta en marcha de BeeGFS basada en Ansible.
@@ -179,6 +188,7 @@ En la siguiente tabla se enumeran los requisitos de software puestos en marcha a
 |===
 
 
+[[ansible-control-node-requirements]]
 === Requisitos del nodo de control de Ansible
 
 BeeGFS en la solución de NetApp se pone en marcha y se gestiona desde un nodo de control de Ansible. Para obtener más información, consulte https://docs.ansible.com/ansible/latest/network/getting_started/basic_concepts.html["Documentación de Ansible"^].

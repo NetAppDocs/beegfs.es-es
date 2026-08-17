@@ -18,12 +18,14 @@ Reemplazar un nodo de archivo si el servidor original está defectuoso.
 
 
 
+[[overview]]
 == Descripción general
 
 Esta es una descripción general de los pasos necesarios para reemplazar un nodo de archivo del clúster. Estos pasos suponen un error en el nodo de archivo debido a un problema de hardware y se reemplazaron por un nuevo nodo de archivo idéntico.
 
 
 
+[[steps]]
 == Pasos:
 
 . Sustituya físicamente el nodo de archivo y restaure todo el cableado al nodo de bloque y a la red de almacenamiento.
