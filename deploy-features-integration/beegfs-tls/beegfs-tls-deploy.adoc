@@ -10,7 +10,7 @@ summary: Configura el cifrado TLS para una comunicación segura entre los servic
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ../../media/
+:imagesdir: ../media/
 
 
 [role="lead"]
