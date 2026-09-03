@@ -25,7 +25,7 @@ La configuración de hardware y software del elemento básico de alta capacidad 
 
 Es probable que los clientes que implementan un diseño de elemento básico de gran capacidad utilicen solo la configuración del estilo de bloque de creación base compuesta por servicios de gestión, metadatos y almacenamiento de BeeGFS para cada nodo. Para reducir la rentabilidad, los nodos de almacenamiento de gran capacidad deben aprovisionar volúmenes de metadatos en las unidades NVMe en el compartimento de controladora EF300 y deben aprovisionar volúmenes de almacenamiento a las unidades NL-SAS de las bandejas de expansión.
 
-image:high-capacity-rack-diagram.png[""]
+image:high-capacity-rack-diagram.png["Un esquema que muestra un rack de gran capacidad BeeGFS con bandejas de expansión EF300 NVMe y NL-SAS IOM"]
 
 
 
