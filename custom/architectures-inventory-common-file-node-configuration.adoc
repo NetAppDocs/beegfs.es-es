@@ -51,7 +51,7 @@ ansible_become_password: <PASSWORD>
 ----
 +
 
-WARNING: Especialmente en entornos de producción, no almacene contraseñas en texto sin formato. En su lugar, use Ansible Vault (consulte link:https://docs.ansible.com/ansible/latest/vault_guide/index.html["Cifrado de contenido con Ansible Vault"^]) o el `--ask-become-pass` al ejecutar el libro de estrategia. Si la `ansible_ssh_user` es ya el usuario raíz. puede omitir de forma opcional el `ansible_become_password`.
+WARNING: Especialmente en entornos de producción, no almacenes contraseñas en texto sin cifrar. En su lugar, utiliza Ansible Vault (consulta link:https://docs.ansible.com/projects/ansible/latest/vault_guide/index.html["Cifrado de contenido con Ansible Vault"^]) o la `--ask-become-pass` opción al ejecutar el playbook. Si el `ansible_ssh_user` ya es root, puedes omitir opcionalmente el `ansible_become_password`.
 
 . Si está configurando IP estáticas en interfaces ethernet o InfiniBand (por ejemplo, IP de clúster) y varias interfaces se encuentran en la misma subred IP (por ejemplo, si ib0 está usando 192.168.1.10/24 e ib1 está usando 192.168.1.11/24), Para que el soporte multihost funcione correctamente, se deben configurar reglas y tablas de enrutamiento IP adicionales. Sólo tiene que activar el enlace de configuración de la interfaz de red proporcionado de la siguiente forma:
 +
