@@ -35,7 +35,7 @@ En esta sección se describe cómo montar el libro de estrategia estándar utili
 
 Cree el archivo `playbook.yml` y rellenarlo de la siguiente manera:
 
-. Defina primero un conjunto de tareas (comúnmente denominado a) link:https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_intro.html#playbook-syntax["repr"^]) Que solo se debe ejecutar en los nodos de bloques E-Series de NetApp. Utilizamos una tarea de pausa para preguntar antes de ejecutar la instalación (para evitar la ejecución accidental de playbook) y, a continuación, importar la `nar_santricity_management` función. Esta función se ocupa de aplicar cualquier configuración general del sistema definida en `group_vars/eseries_storage_systems.yml` o individual `host_vars/<BLOCK NODE>.yml` archivos.
+. Primero, define un conjunto de tareas (lo que se conoce comúnmente como un link:https://docs.ansible.com/projects/ansible/latest/playbook_guide/playbooks_intro.html#playbook-syntax["repr"^]) que solo deben ejecutarse en los nodos de bloque E-Series de NetApp. Usamos una tarea de pausa para pedir confirmación antes de ejecutar la instalación (para evitar ejecuciones accidentales del playbook) y luego importamos el `nar_santricity_management` rol. Este rol se encarga de aplicar cualquier configuración general del sistema definida en `group_vars/eseries_storage_systems.yml` o en archivos `host_vars/<BLOCK NODE>.yml` individuales.
 +
 [source, yaml]
 ----

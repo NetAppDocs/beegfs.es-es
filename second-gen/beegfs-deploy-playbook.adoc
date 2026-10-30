@@ -103,7 +103,7 @@ ansible-playbook -i inventory.yml playbook.yml --forks 20
 ....
 +
 
-NOTE: Especialmente para implementaciones más grandes, `forks` se recomienda sobrescribir el número predeterminado de forks (5) que utiliza el parámetro para aumentar el número de hosts que Ansible configura en paralelo. (Para obtener más información, consulte https://docs.ansible.com/ansible/latest/user_guide/playbooks_strategies.html["Control de la ejecución del libro de estrategia"^].) El valor máximo depende de la potencia de procesamiento disponible en el nodo de control de Ansible. El ejemplo anterior de 20 se ejecutó en un nodo de control de Ansible virtual con 4 CPU (CPU Intel(R) Xeon(R) Gold 6146 a 3,20 GHz).
+NOTE: Especialmente en implementaciones de mayor envergadura, se recomienda sobrescribir el número predeterminado de forks (5) mediante el parámetro  `forks` para aumentar el número de hosts que Ansible configura en paralelo. (Para obtener más información, consulta  https://docs.ansible.com/projects/ansible/latest/playbook_guide/playbooks_strategies.html["Control de la ejecución del libro de estrategia"^].) La configuración del valor máximo depende de la potencia de procesamiento disponible en el nodo de control de Ansible. El ejemplo anterior de 20 se ejecutó en un nodo de control virtual de Ansible con 4 CPUs (Intel(R) Xeon(R) Gold 6146 CPU @ 3.20GHz).
 
 +
 Según el tamaño de la puesta en marcha y el rendimiento de la red entre el nodo de control de Ansible y los nodos de archivo y bloque de BeeGFS, el tiempo de puesta en marcha puede variar.

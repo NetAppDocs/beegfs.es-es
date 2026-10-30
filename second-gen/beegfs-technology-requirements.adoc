@@ -191,7 +191,7 @@ En la siguiente tabla se enumeran los requisitos de software puestos en marcha a
 [[ansible-control-node-requirements]]
 === Requisitos del nodo de control de Ansible
 
-BeeGFS en la solución de NetApp se pone en marcha y se gestiona desde un nodo de control de Ansible. Para obtener más información, consulte https://docs.ansible.com/ansible/latest/network/getting_started/basic_concepts.html["Documentación de Ansible"^].
+La solución BeeGFS en NetApp se implementa y gestiona desde un nodo de control de Ansible. Para obtener más información, consulta https://docs.ansible.com/projects/ansible/latest/network/getting_started/basic_concepts.html["Documentación de Ansible"^].
 
 Los requisitos de software que se enumeran en las siguientes tablas son específicos de la versión de la colección de Ansible BeeGFS de NetApp que se indica a continuación.
 
